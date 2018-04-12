@@ -1,6 +1,6 @@
 /* required fields marked in red */
 .red-asterisk {
-    color: red;
+    color: #ff0000;
     font-weight: 500;
 }
 label.error {
@@ -8,4 +8,7 @@ label.error {
 }
 .border-secondary {
     border-color: rgba(108, 117, 125, 0.50) !important;
+}
+.container h2.text-center {
+    color: #ffffff;
 }
