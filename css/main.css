@@ -3,3 +3,9 @@
     color: red;
     font-weight: 500;
 }
+label.error {
+    color: rgba(255, 0, 0, 0.69);
+}
+.border-secondary {
+    border-color: rgba(108, 117, 125, 0.50) !important;
+}
