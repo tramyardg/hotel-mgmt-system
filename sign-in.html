@@ -22,11 +22,11 @@
                             <h3 class="mb-0 my-2">Login</h3>
                         </div>
                         <div class="card-body">
-                            <form class="form" role="form" autocomplete="off" id="login-form">
+                            <form class="form" role="form" autocomplete="off" id="login-form" method="post">
                                 <div class="form-group">
                                     <label for="loginEmail">Email</label>
                                     <span class="red-asterisk"> *</span>
-                                    <input type="email" class="form-control"
+                                    <input type="text" class="form-control"
                                            id="loginEmail"
                                            name="loginEmail"
                                            placeholder="email address"
@@ -58,14 +58,14 @@
 </div>
 
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
         integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
         crossorigin="anonymous"></script>
 <script src="bootstrap-4.0.0/dist/js/bootstrap.js"></script>
 <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
-<script src="js/form-validation.js"></script>
+<script src="js/util.js"></script>
+<script src="js/templates.js"></script>
+<script src="js/form-submission.js"></script>
 </body>
 </html>
