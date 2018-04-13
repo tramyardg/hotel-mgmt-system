@@ -33,8 +33,7 @@
             <h1 class="display-3">A brand new hotel beyond ordinary</h1>
             <p class="lead text-muted">Book your summer holidays with us now.</p>
             <p>
-                <a href="#" class="btn btn-primary my-2">Book now</a>
-                <a href="#" class="btn btn-secondary my-2">Search Room</a>
+                <a href="#" class="btn btn-primary my-2" data-toggle="modal" data-target=".book-now-modal-lg">Book now</a>
             </p>
         </div>
     </section>
@@ -104,6 +103,101 @@
         </div>
     </div>
 
+    <div class="modal fade book-now-modal-lg" tabindex="-1" role="dialog" aria-labelledby="bookNowLargeModal" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Reservation form</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="form-group row">
+                            <label for="datePickerFrom" class="col-sm-3 col-form-label">From</label>
+                            <div class="col-sm-9">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">
+                                            <i class="fa fa-calendar"></i>
+                                        </span>
+                                    </div>
+                                    <input type="date" class="form-control" id="datePickerFrom" >
+                                 </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="datePickerTo" class="col-sm-3 col-form-label">To</label>
+                            <div class="col-sm-9">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="inputGroupPrepend">
+                                            <i class="fa fa-calendar"></i>
+                                        </span>
+                                    </div>
+                                    <input type="date" class="form-control" id="datePickerTo" >
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row align-items-center">
+                            <label class="col-sm-3 col-form-label" for="roomTypeSelect">Room type</label>
+                            <div class="col-sm-9">
+                                <select class="custom-select mr-sm-2" id="roomTypeSelect">
+                                    <option value="deluxe">Deluxe room</option>
+                                    <option value="double">Double room</option>
+                                    <option value="single">Single room</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group row align-items-center">
+                            <label class="col-sm-3 col-form-label" for="roomReqSelect">Room requirements</label>
+                            <div class="col-sm-9">
+                                <select class="custom-select mr-sm-2" id="roomReqSelect">
+                                    <option selected>No preference</option>
+                                    <option value="nonSmoker">Non smoking</option>
+                                    <option value="smoker">Smoking</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group row align-items-center">
+                            <label class="col-sm-3 col-form-label" for="adultsSelect">Adults</label>
+                            <div class="col-sm-9">
+                                <select class="custom-select mr-sm-2" id="adultsSelect">
+                                    <option selected value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group row align-items-center">
+                            <label class="col-sm-3 col-form-label" for="childrenSelect">Children</label>
+                            <div class="col-sm-9">
+                                <select class="custom-select mr-sm-2" id="childrenSelect">
+                                    <option selected value="0">-</option>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group row align-items-center">
+                            <label class="col-sm-3 col-form-label" for="requirements">Special requirements</label>
+                            <div class="col-sm-9">
+                                <textarea rows="3" id="requirements" class="form-control"></textarea>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </main>
 
 <footer class="container">
@@ -116,6 +210,9 @@
         crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
         integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+<script defer src="https://use.fontawesome.com/releases/v5.0.10/js/all.js"
+        integrity="sha384-slN8GvtUJGnv6ca26v8EzVaR9DC58QEwsIk9q1QXdCU8Yu8ck/tL/5szYlBbqmS+"
         crossorigin="anonymous"></script>
 <script src="bootstrap-4.0.0/dist/js/bootstrap.js"></script>
 </body>
