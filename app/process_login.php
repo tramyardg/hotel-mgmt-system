@@ -7,7 +7,7 @@ require 'DB.php';
 require 'dao/CustomerDAO.php';
 require 'models/Customer.php';
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submitBtn"])) {
     $errors = array();
     $data = array();
 

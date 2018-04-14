@@ -1,6 +1,3 @@
-/**
- * Contains utility functions.
- */
 let util = {
     isEmpty: function (field) {
         return field.length === 0 || field === "";
@@ -19,13 +16,15 @@ let util = {
             phoneNumber: $("input[name='registrationPhoneNumber']").val(),
             email: $("input[name='registrationEmail']").val(),
             password: $("input[name='registrationPassword']").val(),
-            password2: $("input[name='registrationPassword2']").val()
+            password2: $("input[name='registrationPassword2']").val(),
+            submitBtn: $('input[name="registerSubmitBtn"]').val()
         }
     },
     loginFormData: function () {
         return {
             email: $('input[name="loginEmail"]').val(),
-            password: $('input[name="loginPassword"]').val()
+            password: $('input[name="loginPassword"]').val(),
+            submitBtn: $('input[name="loginSubmitBtn"]').val(),
         }
     },
     reservationData: function () {

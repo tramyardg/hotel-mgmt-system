@@ -59,7 +59,17 @@ const clickSignOut = function () {
 };
 
 const reservationSubmit = function () {
-    //console.log(util.reservationData());
+    let reservation = util.reservationData();
+    $.ajax({
+        url: "app/process_reservation.php",
+        type: "post",
+        data: reservation,
+        success: function (data) {
+            if (data === "1") {
+            } else {
+            }
+        }
+    });
 };
 
 $(document).ready(function () {
