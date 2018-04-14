@@ -14,6 +14,7 @@ class CustomerDAO extends DB
         $sql = 'SELECT * FROM ' . $this->table_name . ' WHERE email=?';
         $stmt = DB::getInstance()->prepare($sql);
         $stmt->execute([$email]);
+        // returns a customer object
         return $stmt->fetchAll(PDO::FETCH_CLASS, "Customer");
     }
 
@@ -56,6 +57,5 @@ class CustomerDAO extends DB
         $stmt = DB::getInstance()->prepare($sql);
         $stmt->execute([$customer->getId()]);
     }
-
 
 }

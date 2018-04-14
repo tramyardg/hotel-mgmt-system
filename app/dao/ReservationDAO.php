@@ -2,8 +2,6 @@
 
 class ReservationDAO
 {
-    public $table_name = "reservation";
-    public $id = "id";
 
     public function __construct()
     {
@@ -43,6 +41,15 @@ class ReservationDAO
         return $exec;
     }
 
+    public function delete(Reservation $r)
+    {
+        $sql = 'DELETE FROM `reservation` WHERE `reservation`.`id` = ? AND `reservation`.`cid` = ?';
+        $stmt = DB::getInstance()->prepare($sql);
+        $stmt->execute([$r->getBookingId(), $r->getCid()]);
+        $exec = $stmt->rowCount();
+        return $exec;
+    }
+
     public function getAll()
     {
         $sql = 'SELECT * FROM ' . $this->table_name;
@@ -55,7 +62,7 @@ class ReservationDAO
 /**
  * CRUD functions
  * [x] insert
- * [-] update
- * [-] delete
+ * [x] update
+ * [x] delete
  * [x] read
  */

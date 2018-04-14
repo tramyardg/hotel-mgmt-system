@@ -15,6 +15,7 @@
     require 'app/Util.php';
     require 'app/dao/CustomerDAO.php';
     require 'app/models/Customer.php';
+    require 'app/handlers/CustomerHandler.php';
 
     $username = null;
     $isSessionExists = false;
@@ -23,9 +24,9 @@
         $username = $_SESSION["username"];
         $isSessionExists = true;
 
-        $c = new Customer();
-        $c = $c->getCustomerByEmail($_SESSION["customerEmail"]);
-        //echo $c->getEmail();
+        $handler = new CustomerHandler();
+        $handler = $handler->getCustomerObj($_SESSION["customerEmail"]);
+
     }
 
     print_r($_SESSION);
@@ -190,7 +191,7 @@
                 <div class="modal-body" id="reservationModalBody">
                     <form role="form" autocomplete="off" id="reservation-form" method="post">
                         <?php if ($isSessionExists) { ?>
-                        <input type="number" id="cid" name="cid" value="<?php echo $c->getId() ?>" hidden>
+                        <input type="number" id="cid" name="cid" value="<?php echo $handler->getId() ?>" hidden>
                         <?php } ?>
                         <div class="form-group row">
                             <label for="startDate" class="col-sm-3 col-form-label">From
@@ -219,8 +220,7 @@
                                             <i class="fa fa-calendar"></i>
                                         </span>
                                     </div>
-                                    <input type="date" class="form-control" id="endDate"
-                                           name="endDate" min="<?php echo $nextDay; ?>" required>
+                                    <input type="date" class="form-control" id="endDate" name="endDate" required>
                                 </div>
                             </div>
                         </div>
