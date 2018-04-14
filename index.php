@@ -5,11 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <link rel="stylesheet" href="bootstrap-4.0.0/dist/css/bootstrap.css">
-
+    <link rel="stylesheet" href="css/main.css">
     <?php
 
     ob_start();
     session_start();
+
+    require 'app/DB.php';
+    require 'app/dao/CustomerDAO.php';
+    require 'app/models/Customer.php';
 
     $username = null;
     $isSessionExists = false;
@@ -17,10 +21,14 @@
     {
         $username = $_SESSION["username"];
         $isSessionExists = true;
+
+        $c = new Customer();
+        $c = $c->getCustomerByEmail($_SESSION["customerEmail"]);
+        //echo $c->getEmail();
     }
 
     print_r($_SESSION);
-    
+
     ?>
 
     <title>Home</title>
@@ -35,7 +43,7 @@
                     <h4 class="text-white">About</h4>
                     <p class="text-muted">Add some information about hotel booking.</p>
                 </div>
-                <div class="col-sm-4 offset-md-1 py-4">
+                <div class="col-sm-4 offset-md-1 py-4 text-right">
                     <!-- User full name or email if logged in -->
                     <?php if ($isSessionExists) { ?>
                     <h4 class="text-white"><?php echo $username; ?></h4>
@@ -46,7 +54,7 @@
                     </ul>
                     <?php } else { ?>
                     <h4 ><a class="text-white" href="sign-in.html">Sign in</a></h4>
-                    <p class="text-muted">Log in now so you that you can book your room</p>
+                    <p class="text-muted">Log in so you can take advantage with our hotel room prices.</p>
                     <?php } ?>
                 </div>
             </div>
@@ -96,12 +104,20 @@
                         <div class="card-header">
                             <h5 class="my-0 font-weight-normal">Deluxe Room</h5>
                         </div>
-                        <img class="card-img-top" data-src="holder.js/100px225?theme=thumb&amp;bg=55595c&amp;fg=eceeef&amp;text=Thumbnail" alt="Thumbnail [100%x225]" style="height: 225px; width: 100%; display: block;" src="data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%22348%22%20height%3D%22225%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20348%20225%22%20preserveAspectRatio%3D%22none%22%3E%3Cdefs%3E%3Cstyle%20type%3D%22text%2Fcss%22%3E%23holder_162bb556841%20text%20%7B%20fill%3A%23eceeef%3Bfont-weight%3Abold%3Bfont-family%3AArial%2C%20Helvetica%2C%20Open%20Sans%2C%20sans-serif%2C%20monospace%3Bfont-size%3A17pt%20%7D%20%3C%2Fstyle%3E%3C%2Fdefs%3E%3Cg%20id%3D%22holder_162bb556841%22%3E%3Crect%20width%3D%22348%22%20height%3D%22225%22%20fill%3D%22%2355595c%22%3E%3C%2Frect%3E%3Cg%3E%3Ctext%20x%3D%22116.7265625%22%20y%3D%22120.3%22%3EThumbnail%3C%2Ftext%3E%3C%2Fg%3E%3C%2Fg%3E%3C%2Fsvg%3E" data-holder-rendered="true">
+                        <img class="card-img-top" data-src="holder.js/100px225?theme=thumb&amp;bg=55595c&amp;fg=eceeef&amp;text=Thumbnail" alt="Thumbnail [100%x225]" style="height: 225px; width: 100%; display: block;" src="image/deluxe.jpg" data-holder-rendered="true">
                         <div class="card-body">
                             <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
                             <div class="d-flex justify-content-between align-items-center">
                                 <div class="btn-group">
-                                    <button type="button" class="btn btn-sm btn-outline-secondary">Book</button>
+                                    <?php if ($isSessionExists) { ?>
+                                    <button type="button" class="btn btn-sm btn-outline-success" data-toggle="modal" data-target=".book-now-modal-lg">
+                                        Book
+                                    </button>
+                                    <?php } else { ?>
+                                    <button type="button" class="btn btn-sm btn-outline-success" data-toggle="modal" data-target=".sign-in-to-book-modal">
+                                        Book
+                                    </button>
+                                    <?php } ?>
                                 </div>
                                 <small class="text-muted">250 / night</small>
                             </div>
@@ -113,13 +129,19 @@
                         <div class="card-header">
                             <h5 class="my-0 font-weight-normal">Double Room</h5>
                         </div>
-                        <img class="card-img-top" data-src="holder.js/100px225?theme=thumb&amp;bg=55595c&amp;fg=eceeef&amp;text=Thumbnail" alt="Thumbnail [100%x225]" src="data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%22348%22%20height%3D%22225%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20348%20225%22%20preserveAspectRatio%3D%22none%22%3E%3Cdefs%3E%3Cstyle%20type%3D%22text%2Fcss%22%3E%23holder_162bb556843%20text%20%7B%20fill%3A%23eceeef%3Bfont-weight%3Abold%3Bfont-family%3AArial%2C%20Helvetica%2C%20Open%20Sans%2C%20sans-serif%2C%20monospace%3Bfont-size%3A17pt%20%7D%20%3C%2Fstyle%3E%3C%2Fdefs%3E%3Cg%20id%3D%22holder_162bb556843%22%3E%3Crect%20width%3D%22348%22%20height%3D%22225%22%20fill%3D%22%2355595c%22%3E%3C%2Frect%3E%3Cg%3E%3Ctext%20x%3D%22116.7265625%22%20y%3D%22120.3%22%3EThumbnail%3C%2Ftext%3E%3C%2Fg%3E%3C%2Fg%3E%3C%2Fsvg%3E" data-holder-rendered="true" style="height: 225px; width: 100%; display: block;">
+                        <img class="card-img-top" data-src="holder.js/100px225?theme=thumb&amp;bg=55595c&amp;fg=eceeef&amp;text=Thumbnail" alt="Thumbnail [100%x225]" src="image/double.jpg" data-holder-rendered="true" style="height: 225px; width: 100%; display: block;">
                         <div class="card-body">
                             <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
                             <div class="d-flex justify-content-between align-items-center">
-                                <div class="btn-group">
-                                    <button type="button" class="btn btn-sm btn-outline-secondary">Book</button>
-                                </div>
+                                <?php if ($isSessionExists) { ?>
+                                <button type="button" class="btn btn-sm btn-outline-success" data-toggle="modal" data-target=".book-now-modal-lg">
+                                    Book
+                                </button>
+                                <?php } else { ?>
+                                <button type="button" class="btn btn-sm btn-outline-success" data-toggle="modal" data-target=".sign-in-to-book-modal">
+                                    Book
+                                </button>
+                                <?php } ?>
                                 <small class="text-muted">180 / night</small>
                             </div>
                         </div>
@@ -130,13 +152,19 @@
                         <div class="card-header">
                             <h5 class="my-0 font-weight-normal">Single Room</h5>
                         </div>
-                        <img class="card-img-top" data-src="holder.js/100px225?theme=thumb&amp;bg=55595c&amp;fg=eceeef&amp;text=Thumbnail" alt="Thumbnail [100%x225]" src="data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%22348%22%20height%3D%22225%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20348%20225%22%20preserveAspectRatio%3D%22none%22%3E%3Cdefs%3E%3Cstyle%20type%3D%22text%2Fcss%22%3E%23holder_162bb556845%20text%20%7B%20fill%3A%23eceeef%3Bfont-weight%3Abold%3Bfont-family%3AArial%2C%20Helvetica%2C%20Open%20Sans%2C%20sans-serif%2C%20monospace%3Bfont-size%3A17pt%20%7D%20%3C%2Fstyle%3E%3C%2Fdefs%3E%3Cg%20id%3D%22holder_162bb556845%22%3E%3Crect%20width%3D%22348%22%20height%3D%22225%22%20fill%3D%22%2355595c%22%3E%3C%2Frect%3E%3Cg%3E%3Ctext%20x%3D%22116.7265625%22%20y%3D%22120.3%22%3EThumbnail%3C%2Ftext%3E%3C%2Fg%3E%3C%2Fg%3E%3C%2Fsvg%3E" data-holder-rendered="true" style="height: 225px; width: 100%; display: block;">
+                        <img class="card-img-top" data-src="holder.js/100px225?theme=thumb&amp;bg=55595c&amp;fg=eceeef&amp;text=Thumbnail" alt="Thumbnail [100%x225]" src="image/single.jpg" data-holder-rendered="true" style="height: 225px; width: 100%; display: block;">
                         <div class="card-body">
                             <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
                             <div class="d-flex justify-content-between align-items-center">
-                                <div class="btn-group">
-                                    <button type="button" class="btn btn-sm btn-outline-secondary">Book</button>
-                                </div>
+                                <?php if ($isSessionExists) { ?>
+                                <button type="button" class="btn btn-sm btn-outline-success" data-toggle="modal" data-target=".book-now-modal-lg">
+                                    Book
+                                </button>
+                                <?php } else { ?>
+                                <button type="button" class="btn btn-sm btn-outline-success" data-toggle="modal" data-target=".sign-in-to-book-modal">
+                                    Book
+                                </button>
+                                <?php } ?>
                                 <small class="text-muted">130 / night</small>
                             </div>
                         </div>
@@ -156,9 +184,14 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form>
+                    <form role="form" autocomplete="off" id="reservation-form" method="post">
+                        <?php if ($isSessionExists) { ?>
+                        <input type="number" id="cid" name="cid" value="<?php echo $c->getId() ?>" hidden>
+                        <?php } ?>
                         <div class="form-group row">
-                            <label for="datePickerFrom" class="col-sm-3 col-form-label">From</label>
+                            <label for="startDate" class="col-sm-3 col-form-label">From
+                                <span class="red-asterisk"> *</span>
+                            </label>
                             <div class="col-sm-9">
                                 <div class="input-group">
                                     <div class="input-group-prepend">
@@ -166,12 +199,14 @@
                                             <i class="fa fa-calendar"></i>
                                         </span>
                                     </div>
-                                    <input type="date" class="form-control" id="datePickerFrom" >
+                                    <input type="date" class="form-control" id="startDate" name="startDate" required>
                                  </div>
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="datePickerTo" class="col-sm-3 col-form-label">To</label>
+                            <label for="endDate" class="col-sm-3 col-form-label">To
+                                <span class="red-asterisk"> *</span>
+                            </label>
                             <div class="col-sm-9">
                                 <div class="input-group">
                                     <div class="input-group-prepend">
@@ -179,14 +214,16 @@
                                             <i class="fa fa-calendar"></i>
                                         </span>
                                     </div>
-                                    <input type="date" class="form-control" id="datePickerTo" >
+                                    <input type="date" class="form-control" id="endDate" name="endDate" required>
                                 </div>
                             </div>
                         </div>
                         <div class="form-group row align-items-center">
-                            <label class="col-sm-3 col-form-label" for="roomTypeSelect">Room type</label>
+                            <label class="col-sm-3 col-form-label" for="roomType">Room type
+                                <span class="red-asterisk"> *</span>
+                            </label>
                             <div class="col-sm-9">
-                                <select class="custom-select mr-sm-2" id="roomTypeSelect">
+                                <select required class="custom-select mr-sm-2" id="roomType" name="roomType">
                                     <option value="deluxe">Deluxe room</option>
                                     <option value="double">Double room</option>
                                     <option value="single">Single room</option>
@@ -194,19 +231,21 @@
                             </div>
                         </div>
                         <div class="form-group row align-items-center">
-                            <label class="col-sm-3 col-form-label" for="roomReqSelect">Room requirements</label>
+                            <label class="col-sm-3 col-form-label" for="roomRequirement">Room requirements</label>
                             <div class="col-sm-9">
-                                <select class="custom-select mr-sm-2" id="roomReqSelect">
-                                    <option selected>No preference</option>
-                                    <option value="nonSmoker">Non smoking</option>
-                                    <option value="smoker">Smoking</option>
+                                <select class="custom-select mr-sm-2" id="roomRequirement" name="roomRequirement">
+                                    <option value="no preference" selected>No preference</option>
+                                    <option value="non smoking">Non smoking</option>
+                                    <option value="smoking">Smoking</option>
                                 </select>
                             </div>
                         </div>
                         <div class="form-group row align-items-center">
-                            <label class="col-sm-3 col-form-label" for="adultsSelect">Adults</label>
+                            <label class="col-sm-3 col-form-label" for="adults">Adults
+                                <span class="red-asterisk"> *</span>
+                            </label>
                             <div class="col-sm-9">
-                                <select class="custom-select mr-sm-2" id="adultsSelect">
+                                <select required class="custom-select mr-sm-2" id="adults" name="adults">
                                     <option selected value="1">1</option>
                                     <option value="2">2</option>
                                     <option value="3">3</option>
@@ -215,9 +254,9 @@
                             </div>
                         </div>
                         <div class="form-group row align-items-center">
-                            <label class="col-sm-3 col-form-label" for="childrenSelect">Children</label>
+                            <label class="col-sm-3 col-form-label" for="children">Children</label>
                             <div class="col-sm-9">
-                                <select class="custom-select mr-sm-2" id="childrenSelect">
+                                <select class="custom-select mr-sm-2" id="children" name="children">
                                     <option selected value="0">-</option>
                                     <option value="1">1</option>
                                     <option value="2">2</option>
@@ -227,15 +266,18 @@
                             </div>
                         </div>
                         <div class="form-group row align-items-center">
-                            <label class="col-sm-3 col-form-label" for="requirements">Special requirements</label>
+                            <label class="col-sm-3 col-form-label" for="specialRequests">Special requirements</label>
                             <div class="col-sm-9">
-                                <textarea rows="3" id="requirements" class="form-control"></textarea>
+                                <textarea rows="3" maxlength="500" id="specialRequests" name="specialRequests" class="form-control"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group row align-items-center">
+                            <div class="col-sm-3"></div>
+                            <div class="col-sm-9">
+                                <button type="submit" class="btn btn-primary float-right">Submit</button>
                             </div>
                         </div>
                     </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary">Submit</button>
                 </div>
             </div>
         </div>

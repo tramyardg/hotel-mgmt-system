@@ -58,6 +58,10 @@ const clickSignOut = function () {
     });
 };
 
+const reservationSubmit = function () {
+    //console.log(util.reservationData());
+};
+
 $(document).ready(function () {
     // executed when registration form is submitted
     $(util.formAndButtonIds().register).submit(function (event) {
@@ -73,8 +77,16 @@ $(document).ready(function () {
         return false;
     });
 
+    // executed when sign out link
     $(util.formAndButtonIds().logout).on("click", function (event) {
         clickSignOut();
+        event.preventDefault();
+        return false;
+    });
+
+    // executed when login form is submitted
+    $(util.formAndButtonIds().reservation).submit(function (event) {
+        reservationSubmit();
         event.preventDefault();
         return false;
     });

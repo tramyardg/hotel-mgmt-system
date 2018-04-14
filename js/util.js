@@ -9,7 +9,8 @@ let util = {
         return {
             register: "#registration-form",
             login: "#login-form",
-            logout: "#sign-out-link"
+            logout: "#sign-out-link",
+            reservation: "#reservation-form"
         }
     },
     registrationFormData: function () {
@@ -25,6 +26,18 @@ let util = {
         return {
             email: $('input[name="loginEmail"]').val(),
             password: $('input[name="loginPassword"]').val()
+        }
+    },
+    reservationData: function () {
+        return {
+            cid: $('input[name="cid"]').val(),
+            start: $('input[name="startDate"]').val(),
+            end: $('input[name="endDate"]').val(),
+            type: $('#roomType').val(),
+            requirement: $('#roomRequirement').val(),
+            adults: $('#adults').val(),
+            children: $('#children').val(),
+            requests: $('#specialRequests').val()
         }
     }
 };

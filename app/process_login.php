@@ -38,9 +38,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $data["errors"] = $errors;
                 echo json_encode($data["errors"]);
             } else {
-                $_SESSION["authenticated"] = 1;
                 $_SESSION["username"] = $customer->getUsername($_POST["email"]);
                 $_SESSION["customerEmail"] = $customer->getEmail();
+                $_SESSION["authenticated"] = 1;
                 echo $_SESSION["authenticated"];
             }
         }
