@@ -13,6 +13,7 @@ class Reservation
     private $adults;
     private $children;
     private $requests;
+    private $timestamp;
 
     public function getBookingId()
     {
@@ -102,6 +103,11 @@ class Reservation
     public function setRequests($requests)
     {
         $this->requests = $requests;
+    }
+
+    public function getTimestamp()
+    {
+        return $this->timestamp;
     }
 
 }

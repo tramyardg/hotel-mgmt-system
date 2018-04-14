@@ -1,5 +1,10 @@
 <?php
 
+require 'DB.php';
+require 'dao/ReservationDAO.php';
+require 'models/Reservation.php';
+require 'handlers/ReservationHandler.php';
+
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submitBtn"])) {
 
     $errors = [];
@@ -29,6 +34,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submitBtn"])) {
         echo json_encode($data["errors"]);
     } else {
         echo "1";
+
     }
 
 }

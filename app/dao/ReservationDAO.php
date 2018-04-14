@@ -52,7 +52,7 @@ class ReservationDAO
 
     public function getAll()
     {
-        $sql = 'SELECT * FROM ' . $this->table_name;
+        $sql = 'SELECT * FROM `reservation`';
         $stmt = DB::getInstance()->prepare($sql);
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_CLASS, "Reservation");
