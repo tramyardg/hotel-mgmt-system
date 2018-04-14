@@ -27,8 +27,10 @@ const loginSubmit = function () {
         type: "post",
         data: loginData,
         success: function (data) {
-            if (util.isEmpty(data)) {
-                $(".card").remove();
+            if (data === "1") {
+                let locHref = location.href;
+                let homePageLink = locHref.substring(0, locHref.lastIndexOf("/")) + "/index.php";
+                window.location.replace(homePageLink);
             } else {
                 let errorsArr = JSON.parse(data);
                 $(".alert-warning").remove();
@@ -40,19 +42,42 @@ const loginSubmit = function () {
     });
 };
 
+const clickSignOut = function () {
+    $.ajax({
+        url: "app/process_logout.php",
+        type: "get",
+        success: function (data) {
+            if (data === "1") {
+                let locHref = location.href;
+                let homePageLink = locHref.substring(0, locHref.lastIndexOf("/")) + "/index.php";
+                window.location.replace(homePageLink);
+            } else {
+                alert("error signing out");
+            }
+        }
+    });
+};
+
 $(document).ready(function () {
     // executed when registration form is submitted
-    $(util.formIds().register).submit(function (event) {
+    $(util.formAndButtonIds().register).submit(function (event) {
         registrationSubmit();
         event.preventDefault();
         return false;
     });
 
     // executed when login form is submitted
-    $(util.formIds().login).submit(function (event) {
+    $(util.formAndButtonIds().login).submit(function (event) {
         loginSubmit();
         event.preventDefault();
         return false;
     });
+
+    $(util.formAndButtonIds().logout).on("click", function (event) {
+        clickSignOut();
+        event.preventDefault();
+        return false;
+    });
+
 });
 

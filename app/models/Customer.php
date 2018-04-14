@@ -95,6 +95,21 @@ class Customer
         $this->phone = $phone;
     }
 
+    public function getUsername($_email)
+    {
+        // use either full name or email for username
+        $_fullName = null;
+        foreach ($this->getByEmail($_email) as $obj) {
+            $_fullName = $obj->getFullName();
+        }
+        if ($_fullName != null) {
+            return $_fullName;
+        } else {
+            $positionOfAt = strpos($_email, "@");
+            return substr($_email, 0, $positionOfAt);
+        }
+    }
+
     public function getAllCustomer()
     {
         try {

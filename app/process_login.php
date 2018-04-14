@@ -1,5 +1,8 @@
 <?php
 
+ob_start();
+session_start();
+
 require 'DB.php';
 require 'dao/CustomerDAO.php';
 require 'models/Customer.php';
@@ -35,9 +38,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $data["errors"] = $errors;
                 echo json_encode($data["errors"]);
             } else {
-                // sign the user in
+                $_SESSION["authenticated"] = 1;
+                $_SESSION["username"] = $customer->getUsername($_POST["email"]);
+                $_SESSION["customerEmail"] = $customer->getEmail();
+                echo $_SESSION["authenticated"];
             }
-
         }
     }
 }

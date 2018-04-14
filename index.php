@@ -6,6 +6,23 @@
 
     <link rel="stylesheet" href="bootstrap-4.0.0/dist/css/bootstrap.css">
 
+    <?php
+
+    ob_start();
+    session_start();
+
+    $username = null;
+    $isSessionExists = false;
+    if (isset($_SESSION["username"]))
+    {
+        $username = $_SESSION["username"];
+        $isSessionExists = true;
+    }
+
+    print_r($_SESSION);
+    
+    ?>
+
     <title>Home</title>
 </head>
 <body>
@@ -20,12 +37,17 @@
                 </div>
                 <div class="col-sm-4 offset-md-1 py-4">
                     <!-- User full name or email if logged in -->
-                    <h4 class="text-white">Sign in</h4>
+                    <?php if ($isSessionExists) { ?>
+                    <h4 class="text-white"><?php echo $username; ?></h4>
                     <ul class="list-unstyled">
                         <li><a href="#" class="text-white">View my booking(s)</a></li>
                         <li><a href="#" class="text-white">View my profile</a></li>
-                        <li><a href="#" class="text-white">Sign out</a></li>
+                        <li><a href="#" id="sign-out-link" class="text-white">Sign out</a></li>
                     </ul>
+                    <?php } else { ?>
+                    <h4 ><a class="text-white" href="sign-in.html">Sign in</a></h4>
+                    <p class="text-muted">Log in now so you that you can book your room</p>
+                    <?php } ?>
                 </div>
             </div>
         </div>
@@ -50,7 +72,11 @@
             <h1 class="display-3">A brand new hotel beyond ordinary</h1>
             <p class="lead text-muted">Book your summer holidays with us now.</p>
             <p>
+                <?php if ($isSessionExists) { ?>
                 <a href="#" class="btn btn-success my-2" data-toggle="modal" data-target=".book-now-modal-lg">Book now</a>
+                <?php } else { ?>
+                <a href="#" class="btn btn-success my-2" data-toggle="modal" data-target=".sign-in-to-book-modal">Book now</a>
+                <?php } ?>
             </p>
         </div>
     </section>
@@ -120,7 +146,7 @@
         </div>
     </div>
 
-    <div class="modal fade book-now-modal-lg" tabindex="-1" role="dialog" aria-labelledby="bookNowLargeModal" aria-hidden="true">
+    <div class="modal fade book-now-modal-lg" tabindex="-1" role="dialog" aria-labelledby="bookNowModalLarge" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -215,6 +241,22 @@
         </div>
     </div>
 
+    <div class="modal sign-in-to-book-modal" tabindex="-1" role="dialog" aria-labelledby="signInToBookModal" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Sign in required</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <h4>You have to login in to book a rom.</h4>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </main>
 
 <footer class="container">
@@ -222,9 +264,7 @@
 </footer>
 
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
         integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
         crossorigin="anonymous"></script>
@@ -232,5 +272,7 @@
         integrity="sha384-slN8GvtUJGnv6ca26v8EzVaR9DC58QEwsIk9q1QXdCU8Yu8ck/tL/5szYlBbqmS+"
         crossorigin="anonymous"></script>
 <script src="bootstrap-4.0.0/dist/js/bootstrap.js"></script>
+<script src="js/util.js"></script>
+<script src="js/form-submission.js"></script>
 </body>
 </html>

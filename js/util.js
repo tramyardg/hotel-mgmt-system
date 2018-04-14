@@ -5,10 +5,11 @@ let util = {
     isEmpty: function (field) {
         return field.length === 0 || field === "";
     },
-    formIds: function () {
+    formAndButtonIds: function () {
         return {
             register: "#registration-form",
-            login: "#login-form"
+            login: "#login-form",
+            logout: "#sign-out-link"
         }
     },
     registrationFormData: function () {
