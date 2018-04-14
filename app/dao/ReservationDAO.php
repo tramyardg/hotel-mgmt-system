@@ -27,6 +27,22 @@ class ReservationDAO
         return $exec;
     }
 
+    public function update(Reservation $r)
+    {
+        $sql = 'UPDATE `reservation`';
+        $sql .= ' SET `start`="' . $r->getStart() . '",';
+        $sql .= '`end`="' . $r->getEnd() . '",';
+        $sql .= '`type`="' . $r->getRoomType() . '",';
+        $sql .= '`requirement`="' . $r->getRequirement() . '",';
+        $sql .= '`adults`=' . $r->getAdults() . ',';
+        $sql .= '`children`=' . $r->getChildren() . ',';
+        $sql .= '`requests`="' . $r->getRequests() . '"';
+        $sql .= ' WHERE `id`=' . $r->getBookingId();
+        $stmt = DB::getInstance()->prepare($sql);
+        $exec = $stmt->execute();
+        return $exec;
+    }
+
     public function getAll()
     {
         $sql = 'SELECT * FROM ' . $this->table_name;

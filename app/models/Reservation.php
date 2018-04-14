@@ -140,6 +140,16 @@ class ReservationHandler extends Reservation {
         }
     }
 
+    public function updateReservation(Reservation $r)
+    {
+        try {
+            $dao = new ReservationDAO();
+            $this->setExecutionSuccessful($dao->update($r));
+        } catch (Exception $e) {
+            print $e->getMessage();
+        }
+    }
+
     public function getAllReservations()
     {
         try {
@@ -149,6 +159,7 @@ class ReservationHandler extends Reservation {
             return $e;
         }
     }
+
 }
 
 
