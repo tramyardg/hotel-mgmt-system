@@ -11,16 +11,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submitBtn"])) {
     $errors = array();
     $data = array();
 
-    if (empty($_POST["email"])) {
-        array_push($errors, "Email is required.");
-    } else {
-        if (!filter_var($_POST["email"], FILTER_VALIDATE_EMAIL)) {
-            array_push($errors, "Please enter a valid email address.");
-        }
-    }
-    if (empty($_POST["password"])) {
+    if (!filter_var($_POST["email"], FILTER_VALIDATE_EMAIL))
+        array_push($errors, "Please enter a valid email address.");
+    if (empty($_POST["password"]))
         array_push($errors, "Password is required.");
-    }
     if (!empty($errors)) {
         $data["errors"] = $errors;
         echo json_encode($data["errors"]);

@@ -13,7 +13,6 @@ class Reservation
     private $adults;
     private $children;
     private $requests;
-    private $timestamp;
 
     public function getBookingId()
     {
@@ -105,18 +104,51 @@ class Reservation
         $this->requests = $requests;
     }
 
-    public function getTimestamp()
-    {
-        return $this->timestamp;
-    }
-
-    public function setTimestamp()
-    {
-        $date = date("Y-m-d H:i:s");
-        $this->timestamp = $date;
-    }
-
 }
 
+class ReservationHandler extends Reservation {
+
+    public function __construct () {}
+
+
+    private $executionSuccessful;
+
+    // verifies if execution of DAO methods works
+    // and does not return error
+    // use for create, delete, update
+    public function getExecutionSuccessful()
+    {
+        if ($this->executionSuccessful)
+            return "1";
+        else
+            return "0";
+    }
+
+    public function setExecutionSuccessful($executionSuccessful)
+    {
+        $this->executionSuccessful = $executionSuccessful;
+    }
+
+
+    public function create(Reservation $r)
+    {
+        try {
+            $dao = new ReservationDAO();
+            $this->setExecutionSuccessful($dao->insert($r));
+        } catch (Exception $e) {
+            print $e->getMessage();
+        }
+    }
+
+    public function getAllReservations()
+    {
+        try {
+            $dao = new ReservationDAO();
+            return $dao->getAll();
+        } catch (Exception $e) {
+            return $e;
+        }
+    }
+}
 
 

@@ -10,24 +10,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submitBtn"])) {
     $errors = array();
     $data = array();
 
-    if (empty($_POST["email"])) {
-        array_push($errors, "Email is required.");
-    } else {
-        if (!filter_var($_POST["email"], FILTER_VALIDATE_EMAIL)) {
-            array_push($errors, "Please enter a valid email address.");
-        }
-    }
-    if (empty($_POST["password"])) {
-        array_push($errors, "Password is required.");
-    } else {
-        if(strlen($_POST["password"]) < 6) {
-            array_push($errors, "Please enter at least 6 characters password.");
-        }
-    }
+    if (!filter_var($_POST["email"], FILTER_VALIDATE_EMAIL))
+        array_push($errors, "Please enter a valid email address.");
+    if (strlen($_POST["password"]) < 6)
+        array_push($errors, "Please enter at least 6 characters password.");
+    if (strlen($_POST["password2"]) < 6)
+        array_push($errors, "Please type the password again.");
     if (!empty($_POST["password"]) && !empty($_POST["password2"])) {
-        if ($_POST["password"] != $_POST["password2"]) {
+        if ($_POST["password"] != $_POST["password2"])
             array_push($errors, "Password not match.");
-        }
     }
 
     if (!empty($errors)) {

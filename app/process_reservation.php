@@ -1,10 +1,12 @@
 <?php
 
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submitBtn"])) {
+
     $errors = [];
     $data = [];
     $startDate = null;
     $endDate = null;
+
     if (empty($_POST["start"]))
         array_push($errors, "Please select a start date.");
     if (empty($_POST["end"]))
@@ -19,8 +21,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submitBtn"])) {
         array_push($errors, "Please enter a number of adults.");
     $startDate = new DateTime($_POST["start"]);
     $endDate = new DateTime($_POST["end"]);
-    if ($endDate < $startDate)
-        array_push($errors, "End date cannot be less than start date.");
+    if ($endDate <= $startDate)
+        array_push($errors, "End date cannot be less or equal to start date.");
+
     if (!empty($errors)) {
         $data["errors"] = $errors;
         echo json_encode($data["errors"]);
