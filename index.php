@@ -12,6 +12,7 @@
     session_start();
 
     require 'app/DB.php';
+    require 'app/Util.php';
     require 'app/dao/CustomerDAO.php';
     require 'app/models/Customer.php';
 
@@ -26,6 +27,9 @@
         $c = $c->getCustomerByEmail($_SESSION["customerEmail"]);
         //echo $c->getEmail();
     }
+
+    $dateToday = Util::dateToday();
+    $nextDay   = date('Y-m-d', strtotime($dateToday. ' + 1 days'));
 
     print_r($_SESSION);
 
@@ -199,7 +203,8 @@
                                             <i class="fa fa-calendar"></i>
                                         </span>
                                     </div>
-                                    <input type="date" class="form-control" id="startDate" name="startDate" required>
+                                    <input type="date" class="form-control" id="startDate"
+                                           name="startDate" min="<?php echo Util::dateToday(); ?>" required>
                                  </div>
                             </div>
                         </div>
@@ -214,7 +219,8 @@
                                             <i class="fa fa-calendar"></i>
                                         </span>
                                     </div>
-                                    <input type="date" class="form-control" id="endDate" name="endDate" required>
+                                    <input type="date" class="form-control" id="endDate"
+                                           name="endDate" min="<?php echo $nextDay; ?>" required>
                                 </div>
                             </div>
                         </div>
@@ -274,7 +280,8 @@
                         <div class="form-group row align-items-center">
                             <div class="col-sm-3"></div>
                             <div class="col-sm-9">
-                                <button type="submit" class="btn btn-primary float-right">Submit</button>
+                                <input type="submit" class="btn btn-primary float-right"
+                                       name="reservationSubmitBtn" value="Submit">
                             </div>
                         </div>
                     </form>

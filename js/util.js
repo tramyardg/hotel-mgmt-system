@@ -24,7 +24,7 @@ let util = {
         return {
             email: $('input[name="loginEmail"]').val(),
             password: $('input[name="loginPassword"]').val(),
-            submitBtn: $('input[name="loginSubmitBtn"]').val(),
+            submitBtn: $('input[name="loginSubmitBtn"]').val()
         }
     },
     reservationData: function () {
@@ -36,7 +36,8 @@ let util = {
             requirement: $('#roomRequirement').val(),
             adults: $('#adults').val(),
             children: $('#children').val(),
-            requests: $('#specialRequests').val()
+            requests: $('#specialRequests').val(),
+            submitBtn: $('input[name="reservationSubmitBtn"]').val()
         }
     }
 };
