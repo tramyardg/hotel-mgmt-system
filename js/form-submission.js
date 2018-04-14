@@ -66,7 +66,14 @@ const reservationSubmit = function () {
         data: reservation,
         success: function (data) {
             if (data === "1") {
+                console.log(data);
+                $(".alert-warning").remove();
             } else {
+                let errorsArr = JSON.parse(data);
+                $(".alert-warning").remove();
+                for (let i = 0; i < errorsArr.length; i++) {
+                    $(util.modalSel().reservation.body).prepend(alertFailed(errorsArr[i]));
+                }
             }
         }
     });

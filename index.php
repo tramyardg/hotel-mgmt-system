@@ -28,9 +28,6 @@
         //echo $c->getEmail();
     }
 
-    $dateToday = Util::dateToday();
-    $nextDay   = date('Y-m-d', strtotime($dateToday. ' + 1 days'));
-
     print_r($_SESSION);
 
     ?>
@@ -187,7 +184,7 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <div class="modal-body">
+                <div class="modal-body" id="reservationModalBody">
                     <form role="form" autocomplete="off" id="reservation-form" method="post">
                         <?php if ($isSessionExists) { ?>
                         <input type="number" id="cid" name="cid" value="<?php echo $c->getId() ?>" hidden>
@@ -322,6 +319,7 @@
         crossorigin="anonymous"></script>
 <script src="bootstrap-4.0.0/dist/js/bootstrap.js"></script>
 <script src="js/util.js"></script>
+<script src="js/templates.js"></script>
 <script src="js/form-submission.js"></script>
 </body>
 </html>

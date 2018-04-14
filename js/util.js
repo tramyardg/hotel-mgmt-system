@@ -10,6 +10,14 @@ let util = {
             reservation: "#reservation-form"
         }
     },
+    modalSel: function () {
+        return {
+            reservation: {
+                div: ".book-now-modal-lg",
+                body: "#reservationModalBody"
+            }
+        }
+    },
     registrationFormData: function () {
         return {
             fullName: $('input[name="registrationFullName"]').val(),

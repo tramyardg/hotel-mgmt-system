@@ -1,6 +1,6 @@
 <?php
 
-class Booking
+class Reservation
 {
     public function __construct () {}
 
@@ -13,6 +13,7 @@ class Booking
     private $adults;
     private $children;
     private $requests;
+    private $timestamp;
 
     public function getBookingId()
     {
@@ -104,6 +105,16 @@ class Booking
         $this->requests = $requests;
     }
 
+    public function getTimestamp()
+    {
+        return $this->timestamp;
+    }
+
+    public function setTimestamp()
+    {
+        $date = date("Y-m-d H:i:s");
+        $this->timestamp = $date;
+    }
 
 }
 
