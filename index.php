@@ -50,9 +50,9 @@
                     <?php if ($isSessionExists) { ?>
                     <h4 class="text-white"><?php echo $username; ?></h4>
                     <ul class="list-unstyled">
-                        <li><a href="#" class="text-white">View my booking(s)</a></li>
-                        <li><a href="#" class="text-white">View my profile</a></li>
-                        <li><a href="#" id="sign-out-link" class="text-white">Sign out</a></li>
+                        <li><a href="#" class="text-white">View my bookings<i class="far fa-address-book ml-2"></i></a></li>
+                        <li><a href="#" class="text-white">View my profile<i class="fas fa-user ml-2"></i></a></li>
+                        <li><a href="#" id="sign-out-link" class="text-white">Sign out<i class="fas fa-sign-out-alt ml-2"></i></a></li>
                     </ul>
                     <?php } else { ?>
                     <h4>

@@ -1,0 +1,250 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link rel="stylesheet" href="bootstrap-4.0.0/dist/css/bootstrap.css">
+    <link rel="stylesheet" href="css/main.css">
+    <?php
+
+    ob_start();
+    session_start();
+
+    require 'app/DB.php';
+    require 'app/Util.php';
+    require 'app/dao/CustomerDAO.php';
+    require 'app/models/Customer.php';
+    require 'app/handlers/CustomerHandler.php';
+
+    $username = null;
+    $isSessionExists = false;
+    if (isset($_SESSION["username"]))
+    {
+        $username = $_SESSION["username"];
+        $isSessionExists = true;
+
+        $handler = new CustomerHandler();
+        $handler = $handler->getCustomerObj($_SESSION["customerEmail"]);
+
+    }
+
+    print_r($_SESSION);
+
+    ?>
+
+    <title>Manage Booking</title>
+</head>
+<body>
+
+<header>
+    <div class="bg-dark collapse" id="navbarHeader" style="">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-8 col-md-7 py-4">
+                    <h4 class="text-white">About</h4>
+                    <p class="text-muted">Add some information about hotel booking.</p>
+                </div>
+                <div class="col-sm-4 offset-md-1 py-4 text-right">
+                    <!-- User full name or email if logged in -->
+                    <?php if ($isSessionExists) { ?>
+                    <h4 class="text-white"><?php echo $username; ?></h4>
+                    <ul class="list-unstyled">
+                        <li><a href="#" id="sign-out-link" class="text-white">Sign out<i class="fas fa-sign-out-alt ml-2"></i></a></li>
+                    </ul>
+                    <?php } else { ?>
+                    <h4>
+                        <a class="text-white" href="sign-in.html">Sign in</a> <span class="text-white">or</span>
+                        <a href="register.html" class="text-white">Register </a>
+                    </h4>
+                    <p class="text-muted">Log in so you can take advantage with our hotel room prices.</p>
+                    <?php } ?>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="navbar navbar-dark bg-dark box-shadow">
+        <div class="container d-flex justify-content-between">
+            <a href="#" class="navbar-brand d-flex align-items-center">
+                <i class="fas fa-h-square mr-2"></i>
+                <strong>Hotel Booking</strong>
+            </a>
+            <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarHeader" aria-controls="navbarHeader" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+        </div>
+    </div>
+</header>
+
+<main role="main">
+
+    <div class="container my-3">
+        <div class="row">
+            <div class="col-xl-3 col-sm-6 mb-3">
+                <div class="card text-white bg-primary o-hidden h-100">
+                    <div class="card-body">
+                        <div class="card-body-icon">
+                            <i class="fas fa-address-book"></i>
+                        </div>
+                        <div class="mr-5">26 Reservations</div>
+                    </div>
+                    <a class="card-footer text-white clearfix small z-1" href="#reservation">
+                        <span class="float-left">View Details</span>
+                        <span class="float-right"><i class="fa fa-angle-right"></i></span>
+                    </a>
+                </div>
+            </div>
+            <div class="col-xl-3 col-sm-6 mb-3">
+                <div class="card text-white bg-warning o-hidden h-100">
+                    <div class="card-body">
+                        <div class="card-body-icon">
+                            <i class="fas fa-users ml-2"></i>
+                        </div>
+                        <div class="mr-5">11 Customers</div>
+                    </div>
+                    <a class="card-footer text-white clearfix small z-1" href="#customers">
+                        <span class="float-left">View Details</span>
+                        <span class="float-right"><i class="fa fa-angle-right"></i></span>
+                    </a>
+                </div>
+            </div>
+            <div class="col-xl-3 col-sm-6 mb-3">
+                <div class="card text-white bg-success o-hidden h-100">
+                    <div class="card-body">
+                        <div class="card-body-icon">
+                            <i class="fas fa-check"></i>
+                        </div>
+                        <div class="mr-4">5 Confirmed Reservations</div>
+                    </div>
+                    <a class="card-footer text-white clearfix small z-1" href="#">
+                        <span class="float-left">View Details</span>
+                        <span class="float-right"><i class="fa fa-angle-right"></i></span>
+                    </a>
+                </div>
+            </div>
+            <div class="col-xl-3 col-sm-6 mb-3">
+                <div class="card text-white bg-danger o-hidden h-100">
+                    <div class="card-body">
+                        <div class="card-body-icon">
+                            <i class="fa fa-fw fa-support"></i>
+                        </div>
+                        <div class="mr-5">6 Pending Reservations</div>
+                    </div>
+                    <a class="card-footer text-white clearfix small z-1" href="#">
+                        <span class="float-left">View Details</span>
+                        <span class="float-right"><i class="fa fa-angle-right"></i></span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <ul class="nav nav-tabs" id="adminTab" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link active" id="reservation-tab" data-toggle="tab" href="#reservation" role="tab"
+                   aria-controls="reservation" aria-selected="true">Reservation</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="customers-tab" data-toggle="tab" href="#customers" role="tab"
+                   aria-controls="customers" aria-selected="false">Customers</a>
+            </li>
+        </ul>
+        <div class="tab-content" id="adminTabContent">
+            <div class="tab-pane fade show active" id="reservation" role="tabpanel" aria-labelledby="reservation-tab">
+                <table class="table table-bordered">
+                    <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">First</th>
+                        <th scope="col">Last</th>
+                        <th scope="col">Handle</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <th scope="row">1</th>
+                        <td>Mark</td>
+                        <td>Otto</td>
+                        <td>@mdo</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">2</th>
+                        <td>Jacob</td>
+                        <td>Thornton</td>
+                        <td>@fat</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">3</th>
+                        <td colspan="2">Larry the Bird</td>
+                        <td>@twitter</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="tab-pane fade" id="customers" role="tabpanel" aria-labelledby="customers-tab">
+                <table class="table table-bordered">
+                    <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">First</th>
+                        <th scope="col">Last</th>
+                        <th scope="col">Handle</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <th scope="row">1</th>
+                        <td>Mark</td>
+                        <td>Otto</td>
+                        <td>@mdo</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">2</th>
+                        <td>Jacob</td>
+                        <td>Thornton</td>
+                        <td>@fat</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">3</th>
+                        <td colspan="2">Larry the Bird</td>
+                        <td>@twitter</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+
+
+
+</main>
+
+<footer class="container">
+    <p>&copy; Company 2017-2018</p>
+</footer>
+
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+<script defer src="https://use.fontawesome.com/releases/v5.0.10/js/all.js"
+        integrity="sha384-slN8GvtUJGnv6ca26v8EzVaR9DC58QEwsIk9q1QXdCU8Yu8ck/tL/5szYlBbqmS+"
+        crossorigin="anonymous"></script>
+<script src="bootstrap-4.0.0/dist/js/bootstrap.js"></script>
+<script src="js/util.js"></script>
+<script src="js/templates.js"></script>
+<script src="js/form-submission.js"></script>
+<script>
+    $(document).ready(function () {
+        $('.card-footer').on('click', function (e) {
+            e.preventDefault();
+            let aHref = $(this).attr('href');
+            $('#adminTab a[href="'+aHref+'"]').tab('show')
+        })
+    });
+</script>
+</body>
+</html>
