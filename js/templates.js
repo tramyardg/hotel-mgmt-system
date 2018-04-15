@@ -7,8 +7,17 @@ const registerSuccess = function () {
             </div>`;
 };
 
-const alertFailed = function (error) {
-    return `<div class="alert alert-warning" role="alert">
+const alertV1 = function (error, type) {
+    return `<div class="alert alert-${type}" role="alert">
                 <span>${error}</span>
+            </div>`;
+};
+
+const alertV2 = function (message, type) {
+    return `<div class="alert alert-${type}" role="alert">
+              <h4 class="alert-heading">${message.title}</h4>
+              <p>${message.body}</p>
+              <hr>
+              <p class="mb-0">${message.footer}</p>
             </div>`;
 };

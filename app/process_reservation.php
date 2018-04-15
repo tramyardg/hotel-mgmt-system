@@ -1,9 +1,13 @@
 <?php
 
 require 'DB.php';
+require 'Util.php';
 require 'dao/ReservationDAO.php';
+require 'dao/BookingDetailDAO.php';
 require 'models/Reservation.php';
+require 'models/BookingDetail.php';
 require 'handlers/ReservationHandler.php';
+require 'handlers/BookingDetailHandler.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submitBtn"])) {
 
@@ -33,7 +37,32 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submitBtn"])) {
         $data["errors"] = $errors;
         echo json_encode($data["errors"]);
     } else {
-        echo "1";
+
+        try {
+            $r = new Reservation();
+            $r->setCid($_POST["cid"]);
+            $r->setStart($_POST["start"]);
+            $r->setEnd($_POST["end"]);
+            $r->setRoomType($_POST["type"]);
+            $r->setRequirement($_POST["requirement"]);
+            $r->setAdults($_POST["adults"]);
+            $r->setChildren($_POST["children"]);
+            $r->setRequests($_POST["requests"]);
+            $unique = uniqid();
+            $r->setHash($unique);
+
+            $rHandler = new ReservationHandler();
+            $rHandler->create($r);
+
+            $rNewWithId = $rHandler->getReservationObjByHash($unique);
+            $bdHandler = new BookingDetailHandler();
+            $bdHandler->create($rNewWithId);
+
+            echo $rHandler->getExecutionFeedback();
+        } catch (Exception $e) {
+            $data["errors"] = $e->getMessage();
+            echo json_encode($data["errors"]);
+        }
 
     }
 

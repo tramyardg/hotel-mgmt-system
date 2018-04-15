@@ -12,7 +12,7 @@ const registrationSubmit = function () {
                 let errorsArr = JSON.parse(data);
                 $(".alert-warning").remove();
                 for (let i = 0; i < errorsArr.length; i++) {
-                    $(".card-body").prepend(alertFailed(errorsArr[i]));
+                    $(".card-body").prepend(alertV1(errorsArr[i], "warning"));
                 }
             }
         }
@@ -35,7 +35,7 @@ const loginSubmit = function () {
                 let errorsArr = JSON.parse(data);
                 $(".alert-warning").remove();
                 for (let i = 0; i < errorsArr.length; i++) {
-                    $(".card-body").prepend(alertFailed(errorsArr[i]));
+                    $(".card-body").prepend(alertV1(errorsArr[i], "warning"));
                 }
             }
         }
@@ -60,19 +60,27 @@ const clickSignOut = function () {
 
 const reservationSubmit = function () {
     let reservation = util.reservationData();
+    let rModal = $(util.modalSel().reservation.body);
     $.ajax({
         url: "app/process_reservation.php",
         type: "post",
         data: reservation,
         success: function (data) {
             if (data === "1") {
-                console.log(data);
+                //console.log(data);
                 $(".alert-warning").remove();
+                rModal.empty();
+                let m = {
+                    title: "Well done!",
+                    body: "You have reserved a room. You can view the status of your booking anytime.",
+                    footer: "Your booking will be mark confirmed once approved."
+                };
+                rModal.append(alertV2(m, "success"));
             } else {
                 let errorsArr = JSON.parse(data);
                 $(".alert-warning").remove();
                 for (let i = 0; i < errorsArr.length; i++) {
-                    $(util.modalSel().reservation.body).prepend(alertFailed(errorsArr[i]));
+                    rModal.prepend(alertV1(errorsArr[i], "warning"));
                 }
             }
         }

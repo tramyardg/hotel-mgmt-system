@@ -7,20 +7,21 @@ class ReservationDAO
     {
     }
 
-    public function insert(Reservation $reservation)
+    public function insert(Reservation $r)
     {
-        $sql = 'INSERT INTO `reservation`(`cid`, `start`,`end`,`type`,`requirement`,`adults`,`children`,`requests`)';
-        $sql .= ' VALUES(?, ?, ?, ?, ?, ?, ?, ?)';
+        $sql = 'INSERT INTO `reservation`(`cid`, `start`,`end`,`type`,`requirement`,`adults`,`children`,`requests`, `hash`)';
+        $sql .= ' VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)';
         $stmt = DB::getInstance()->prepare($sql);
         $exec = $stmt->execute(array(
-            $reservation->getCid(),
-            $reservation->getStart(),
-            $reservation->getEnd(),
-            $reservation->getRoomType(),
-            $reservation->getRequirement(),
-            $reservation->getAdults(),
-            $reservation->getChildren(),
-            $reservation->getRequests()
+            $r->getCid(),
+            $r->getStart(),
+            $r->getEnd(),
+            $r->getRoomType(),
+            $r->getRequirement(),
+            $r->getAdults(),
+            $r->getChildren(),
+            $r->getRequests(),
+            $r->getHash()
         ));
         return $exec;
     }
@@ -34,7 +35,8 @@ class ReservationDAO
         $sql .= '`requirement`="' . $r->getRequirement() . '",';
         $sql .= '`adults`=' . $r->getAdults() . ',';
         $sql .= '`children`=' . $r->getChildren() . ',';
-        $sql .= '`requests`="' . $r->getRequests() . '"';
+        $sql .= '`requests`="' . $r->getRequests() . ',';
+        $sql .= '`hash`="' . $r->getHash() . '"';
         $sql .= ' WHERE `id`=' . $r->getBookingId();
         $stmt = DB::getInstance()->prepare($sql);
         $exec = $stmt->execute();
@@ -53,6 +55,14 @@ class ReservationDAO
     public function getAll()
     {
         $sql = 'SELECT * FROM `reservation`';
+        $stmt = DB::getInstance()->prepare($sql);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_CLASS, "Reservation");
+    }
+
+    public function getByHash($hash)
+    {
+        $sql = 'SELECT * FROM `reservation` WHERE `hash` = "' . $hash . '"';
         $stmt = DB::getInstance()->prepare($sql);
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_CLASS, "Reservation");

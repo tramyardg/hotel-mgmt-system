@@ -14,6 +14,7 @@ class Reservation
     private $children;
     private $requests;
     private $timestamp;
+    private $hash;
 
     public function getBookingId()
     {
@@ -108,6 +109,16 @@ class Reservation
     public function getTimestamp()
     {
         return $this->timestamp;
+    }
+
+    public function setHash($unique)
+    {
+        $this->hash = $unique;
+    }
+
+    public function getHash()
+    {
+        return $this->hash;
     }
 
 }
