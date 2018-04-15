@@ -67,6 +67,14 @@ class ReservationDAO
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_CLASS, "Reservation");
     }
+
+    public function getByCid($cid)
+    {
+        $sql = 'SELECT * FROM `reservation` WHERE `cid` = ' . $cid;
+        $stmt = DB::getInstance()->prepare($sql);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_CLASS, "Reservation");
+    }
 }
 
 /**

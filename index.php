@@ -14,8 +14,12 @@
     require 'app/DB.php';
     require 'app/Util.php';
     require 'app/dao/CustomerDAO.php';
+    require 'app/dao/ReservationDAO.php';
     require 'app/models/Customer.php';
+    require 'app/models/Reservation.php';
     require 'app/handlers/CustomerHandler.php';
+    require 'app/handlers/ReservationHandler.php';
+    require 'app/handlers/BookingDetailHandler.php';
 
     $username = null;
     $isSessionExists = false;
@@ -24,8 +28,11 @@
         $username = $_SESSION["username"];
         $isSessionExists = true;
 
-        $handler = new CustomerHandler();
-        $handler = $handler->getCustomerObj($_SESSION["customerEmail"]);
+        $cHandler = new CustomerHandler();
+        $cHandler = $cHandler->getCustomerObj($_SESSION["customerEmail"]);
+
+        $bdHandler = new BookingDetailHandler();
+        $bdHandler->getCustomerBookingDetailObj($cHandler);
 
     }
 
@@ -50,7 +57,7 @@
                     <?php if ($isSessionExists) { ?>
                     <h4 class="text-white"><?php echo $username; ?></h4>
                     <ul class="list-unstyled">
-                        <li><a href="#" class="text-white">View my bookings<i class="far fa-address-book ml-2"></i></a></li>
+                        <li><a href="#" class="text-white my-reservations">View my bookings<i class="far fa-address-book ml-2"></i></a></li>
                         <li><a href="#" class="text-white">View my profile<i class="fas fa-user ml-2"></i></a></li>
                         <li><a href="#" id="sign-out-link" class="text-white">Sign out<i class="fas fa-sign-out-alt ml-2"></i></a></li>
                     </ul>
@@ -75,6 +82,40 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
         </div>
+    </div>
+    <div class="container" id="my-reservations-div">
+        <table class="table table-striped" cellspacing="0" width="100%">
+            <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th class="text-hide p-0">12</th>
+                <th scope="col">Start Date</th>
+                <th scope="col">End Date</th>
+                <th scope="col">Room Type</th>
+                <th scope="col">Requirements</th>
+                <th scope="col">Adults</th>
+                <th scope="col">Children</th>
+                <th scope="col">Special requirements</th>
+            </tr>
+            </thead>
+            <tbody>
+            <?php //if (!empty($rArray)) { ?>
+                <?php  // foreach ($rArray as $k => $v) { ?>
+                    <tr>
+                        <th scope="row"><?php //echo ($k + 1); ?></th>
+                        <td class="text-hide p-0"><?php //echo $v->getCid(); ?></td>
+                        <td><?php //echo $v->getStart(); ?></td>
+                        <td><?php //echo $v->getEnd(); ?></td>
+                        <td><?php //echo $v->getRoomType(); ?></td>
+                        <td><?php //echo $v->getRequirement(); ?></td>
+                        <td><?php //echo $v->getAdults(); ?></td>
+                        <td><?php //echo $v->getChildren(); ?></td>
+                        <td><?php //echo $v->getRequests(); ?></td>
+                    </tr>
+                <?php //} ?>
+            <?php //} ?>
+            </tbody>
+        </table>
     </div>
 </header>
 
@@ -191,7 +232,7 @@
                 <div class="modal-body" id="reservationModalBody">
                     <form role="form" autocomplete="off" id="reservation-form" method="post">
                         <?php if ($isSessionExists) { ?>
-                        <input type="number" id="cid" name="cid" value="<?php echo $handler->getId() ?>" hidden>
+                        <input type="number" id="cid" name="cid" value="<?php echo $cHandler->getId() ?>" hidden>
                         <?php } ?>
                         <div class="form-group row">
                             <label for="startDate" class="col-sm-3 col-form-label">From
@@ -321,8 +362,18 @@
         integrity="sha384-slN8GvtUJGnv6ca26v8EzVaR9DC58QEwsIk9q1QXdCU8Yu8ck/tL/5szYlBbqmS+"
         crossorigin="anonymous"></script>
 <script src="bootstrap-4.0.0/dist/js/bootstrap.js"></script>
+<script src="https://rawgit.com/gyrocode/jquery-datatables-checkboxes/master/js/dataTables.checkboxes.min.js"></script>
 <script src="js/util.js"></script>
 <script src="js/templates.js"></script>
 <script src="js/form-submission.js"></script>
+<script>
+    $(document).ready(function () {
+        let reservationDiv = $("#my-reservations-div");
+        reservationDiv.hide();
+        $(".my-reservations").click(function() {
+            reservationDiv.toggle( "slow");
+        });
+    });
+</script>
 </body>
 </html>

@@ -23,7 +23,6 @@ class ReservationHandler {
         $this->executionSuccessful = $executionSuccessful;
     }
 
-
     public function create(Reservation $r)
     {
         try {
@@ -74,6 +73,10 @@ class ReservationHandler {
         }
     }
 
+    /**
+     * @param $hash
+     * @return Reservation
+     */
     public function getReservationObjByHash($hash) {
         $r = new Reservation();
         $dao = new ReservationDAO();
@@ -90,6 +93,16 @@ class ReservationHandler {
             $r->setHash($v->getHash());
         }
         return $r;
+    }
+
+    /**
+     * @param Customer $c
+     * @return array
+     */
+    public function getReservationObj(Customer $c)
+    {
+        $dao = new ReservationDAO();
+        return $dao->getByCid($c->getId());
     }
 
 }

@@ -28,4 +28,13 @@ class BookingDetailHandler
             print $e->getMessage();
         }
     }
+
+    /**
+     * Maps both reservation object and BookingDetail object
+     * @param Customer $c
+     */
+    public function getCustomerBookingDetailObj(Customer $c)
+    {
+
+    }
 }
