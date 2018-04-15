@@ -15,8 +15,10 @@
     require 'app/Util.php';
     require 'app/dao/CustomerDAO.php';
     require 'app/dao/ReservationDAO.php';
+    require 'app/dao/BookingDetailDAO.php';
     require 'app/models/Customer.php';
     require 'app/models/Reservation.php';
+    require 'app/models/BookingDetail.php';
     require 'app/handlers/CustomerHandler.php';
     require 'app/handlers/ReservationHandler.php';
     require 'app/handlers/BookingDetailHandler.php';
@@ -32,8 +34,8 @@
         $cHandler = $cHandler->getCustomerObj($_SESSION["customerEmail"]);
 
         $bdHandler = new BookingDetailHandler();
-        $bdHandler->getCustomerBookingDetailObj($cHandler);
-
+        $cBookings = null;
+        $cBookings = $bdHandler->getCustomerBookings($cHandler);
     }
 
     print_r($_SESSION);
@@ -83,37 +85,42 @@
             </button>
         </div>
     </div>
-    <div class="container" id="my-reservations-div">
-        <table class="table table-striped" cellspacing="0" width="100%">
+    <div class="container mt-3" id="my-reservations-div">
+        <h4>Reservations</h4>
+        <table class="table table-striped table-bordered" cellspacing="0" width="100%">
             <thead>
             <tr>
                 <th scope="col">#</th>
-                <th class="text-hide p-0">12</th>
-                <th scope="col">Start Date</th>
-                <th scope="col">End Date</th>
-                <th scope="col">Room Type</th>
+                <th class="text-hide p-0" data-bookId="12">12</th>
+                <th scope="col">Start date</th>
+                <th scope="col">End date</th>
+                <th scope="col">Room type</th>
                 <th scope="col">Requirements</th>
                 <th scope="col">Adults</th>
                 <th scope="col">Children</th>
-                <th scope="col">Special requirements</th>
+                <th scope="col">Requests</th>
+                <th scope="col">Timestamp</th>
+                <th scope="col">Status</th>
             </tr>
             </thead>
             <tbody>
-            <?php //if (!empty($rArray)) { ?>
-                <?php  // foreach ($rArray as $k => $v) { ?>
+            <?php if (!empty($cBookings)) { ?>
+                <?php   foreach ($cBookings as $k => $v) { ?>
                     <tr>
-                        <th scope="row"><?php //echo ($k + 1); ?></th>
-                        <td class="text-hide p-0"><?php //echo $v->getCid(); ?></td>
-                        <td><?php //echo $v->getStart(); ?></td>
-                        <td><?php //echo $v->getEnd(); ?></td>
-                        <td><?php //echo $v->getRoomType(); ?></td>
-                        <td><?php //echo $v->getRequirement(); ?></td>
-                        <td><?php //echo $v->getAdults(); ?></td>
-                        <td><?php //echo $v->getChildren(); ?></td>
-                        <td><?php //echo $v->getRequests(); ?></td>
+                        <th scope="row"><?php echo ($k + 1); ?></th>
+                        <td class="text-hide p-0"><?php echo $v->getBid(); ?></td>
+                        <td><?php echo $v->getStart(); ?></td>
+                        <td><?php echo $v->getEnd(); ?></td>
+                        <td><?php echo $v->getType(); ?></td>
+                        <td><?php echo $v->getRequirement(); ?></td>
+                        <td><?php echo $v->getAdults(); ?></td>
+                        <td><?php echo $v->getChildren(); ?></td>
+                        <td><?php echo $v->getRequests(); ?></td>
+                        <td><?php echo $v->getTimestamp(); ?></td>
+                        <td><?php echo $v->getStatus(); ?></td>
                     </tr>
-                <?php //} ?>
-            <?php //} ?>
+                <?php } ?>
+            <?php } ?>
             </tbody>
         </table>
     </div>

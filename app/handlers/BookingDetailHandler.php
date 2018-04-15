@@ -30,11 +30,34 @@ class BookingDetailHandler
     }
 
     /**
-     * Maps both reservation object and BookingDetail object
-     * @param Customer $c
+     * Generic method that maps both reservation
+     * object and booking object
      */
-    public function getCustomerBookingDetailObj(Customer $c)
+    public function getAllBookings()
     {
+        try {
+            $dao = new BookingDetailDAO();
+            return $dao->fetchBooking();
+        } catch (Exception $e) {
+            return $e;
+        }
+    }
+
+    /**
+     * Customer specific method that maps both
+     * reservation data object and booking object
+     * @param Customer $c
+     * @return array|Exception
+     */
+    public function getCustomerBookings(Customer $c)
+    {
+        try {
+            $dao = new BookingDetailDAO();
+            return $dao->fetchBookingByCid($c);
+        } catch (Exception $e) {
+            return $e;
+        }
 
     }
+
 }
