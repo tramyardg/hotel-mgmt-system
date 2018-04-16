@@ -39,7 +39,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submitBtn"])) {
                 $_SESSION["authenticated"] = 1;
 
                 // set the session phone number too
-                if (!empty($handler->getCustomerObj($_POST["email"])->getPhone())) {
+                if ($handler->getCustomerObj($_POST["email"])->getPhone()) {
                     $_SESSION["phoneNumber"] = $handler->getCustomerObj($_POST["email"])->getPhone();
                 }
 
