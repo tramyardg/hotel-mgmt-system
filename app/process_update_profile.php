@@ -1,5 +1,8 @@
 <?php
 
+ob_start();
+session_start();
+
 require 'DB.php';
 require 'dao/CustomerDAO.php';
 require 'models/Customer.php';
@@ -12,7 +15,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submitBtn"])) {
 
     if (!empty($_POST["password"])) {
         if (strlen($_POST["password"]) < 6)
-            array_push($errors, "Password not match.");
+            array_push($errors, "At least 6 characters is required.");
     }
 
     if (!empty($errors)) {
@@ -23,12 +26,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submitBtn"])) {
         $c = new Customer();
         $c->setId($_POST["cid"]);
         $c->setFullName($_POST["fullName"]);
+        $c->setPhone($_POST["phone"]);
         $c->setEmail($_POST["email"]);
         $c->setPassword($_POST["password"]);
 
         $cHandler = new CustomerHandler();
         $cHandler->updateCustomer($c);
         $feedback = $cHandler->getExecutionFeedback();
+
+        if (isset($_SESSION["username"])) {
+            $_SESSION["username"] = $cHandler->getUsername($_POST["email"]);
+        }
+        if (isset($_SESSION["phoneNumber"])) {
+            $_SESSION["phoneNumber"] = $_POST["phone"];
+        }
+
         echo $feedback;
     }
 

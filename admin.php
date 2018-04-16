@@ -171,7 +171,7 @@
                    aria-controls="customers" aria-selected="false">Customers</a>
             </li>
         </ul>
-        <div class="tab-content" id="adminTabContent">
+        <div class="tab-content py-3" id="adminTabContent">
             <div class="tab-pane fade show active" id="reservation" role="tabpanel" aria-labelledby="reservation-tab">
                 <table id="reservationDataTable" class="table table-striped table-bordered" cellspacing="0" width="100%">
                     <thead>
