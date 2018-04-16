@@ -2,5 +2,9 @@
   "admin01": {
     "email": "admin@admin.com",
     "password": "admin123"
+  },
+  "admin02": {
+    "email": "admin@gmail.com",
+    "password": "admin123"
   }
 }
