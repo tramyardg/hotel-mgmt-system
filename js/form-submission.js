@@ -1,5 +1,56 @@
+const formIds = {
+    register: "#registration-form",
+    login: "#login-form",
+    logout: "#sign-out-link",
+    reservation: "#reservation-form",
+    updateProfile: "#update-profile-form"
+};
+
+const formData = {
+    registration: function () {
+        return {
+            fullName: $('input[name="registrationFullName"]').val(),
+            phoneNumber: $("input[name='registrationPhoneNumber']").val(),
+            email: $("input[name='registrationEmail']").val(),
+            password: $("input[name='registrationPassword']").val(),
+            password2: $("input[name='registrationPassword2']").val(),
+            submitBtn: $('input[name="registerSubmitBtn"]').val()
+        }
+    },
+    login: function () {
+        return {
+            email: $('input[name="loginEmail"]').val(),
+            password: $('input[name="loginPassword"]').val(),
+            submitBtn: $('input[name="loginSubmitBtn"]').val()
+        }
+    },
+    reservation: function () {
+        return {
+            cid: $('input[name="cid"]').val(),
+            start: $('input[name="startDate"]').val(),
+            end: $('input[name="endDate"]').val(),
+            type: $('#roomType').val(),
+            requirement: $('#roomRequirement').val(),
+            adults: $('#adults').val(),
+            children: $('#children').val(),
+            requests: $('#specialRequests').val(),
+            submitBtn: $('input[name="reservationSubmitBtn"]').val()
+        }
+    },
+    updateProfile: function () {
+        return {
+            cid: $('input[name="customerId"]').val(),
+            fullName: $('input[name="updateFullName"]').val(),
+            phone: $("input[name='updatePhoneNumber']").val(),
+            email: $("input[name='updateEmail']").val(),
+            password: $("input[name='updatePassword']").val(),
+            submitBtn: $('input[name="updateProfileSubmitBtn"]').val()
+        }
+    }
+};
+
 const registrationSubmit = function () {
-    let registrationData = util.registrationFormData();
+    let registrationData = formData.registration();
     $.ajax({
         url: "app/process_registration.php",
         type: "post",
@@ -10,18 +61,16 @@ const registrationSubmit = function () {
                 $(".card-holder").append(registerSuccess());
             } else {
                 let errorsArr = JSON.parse(data);
-                $(".alert-warning").remove();
                 for (let i = 0; i < errorsArr.length; i++) {
                     $(".card-body").prepend(alertV1(errorsArr[i], "warning"));
                 }
             }
         }
     });
-
 };
 
 const loginSubmit = function () {
-    let loginData = util.loginFormData();
+    let loginData = formData.login();
     $.ajax({
         url: "app/process_login.php",
         type: "post",
@@ -33,7 +82,6 @@ const loginSubmit = function () {
                 window.location.replace(homePageLink);
             } else {
                 let errorsArr = JSON.parse(data);
-                $(".alert-warning").remove();
                 for (let i = 0; i < errorsArr.length; i++) {
                     $(".card-body").prepend(alertV1(errorsArr[i], "warning"));
                 }
@@ -59,7 +107,7 @@ const clickSignOut = function () {
 };
 
 const reservationSubmit = function () {
-    let reservation = util.reservationData();
+    let reservation = formData.reservation();
     let rModal = $(util.modalSel().reservation.body);
     $.ajax({
         url: "app/process_reservation.php",
@@ -67,18 +115,14 @@ const reservationSubmit = function () {
         data: reservation,
         success: function (data) {
             if (data === "1") {
-                //console.log(data);
-                $(".alert-warning").remove();
                 rModal.empty();
-                let m = {
+                rModal.append(alertV2({
                     title: "Well done!",
                     body: "You have reserved a room. You can view the status of your booking anytime.",
                     footer: "Your booking will be mark confirmed once approved."
-                };
-                rModal.append(alertV2(m, "success"));
+                }, "success"));
             } else {
                 let errorsArr = JSON.parse(data);
-                $(".alert-warning").remove();
                 for (let i = 0; i < errorsArr.length; i++) {
                     rModal.prepend(alertV1(errorsArr[i], "warning"));
                 }
@@ -87,31 +131,59 @@ const reservationSubmit = function () {
     });
 };
 
+const updateProfileSubmit = function () {
+    let updateData = formData.updateProfile();
+    $.ajax({
+        url: "app/process_update_profile.php",
+        type: "post",
+        data: updateData,
+        success: function (data) {
+            if (data === "1") {
+                $(formIds.updateProfile).prepend(alertV1(
+                    "Your profile has been successfully updated.",
+                    "success")
+                );
+            } else if (data === "0") {
+                $(formIds.updateProfile).prepend(alertV1(
+                    "Error occurred processing your request. Please try again later.",
+                    "warning")
+                );
+            } else {
+                for (let i = 0; i < JSON.parse(data).length; i++) {
+                    $(formIds.updateProfile).prepend(alertV1(errorsArr[i], "warning"));
+                }
+            }
+        }
+    });
+};
+
 $(document).ready(function () {
-    // executed when registration form is submitted
-    $(util.formAndButtonIds().register).submit(function (event) {
+    $(formIds.register).submit(function (event) {
         registrationSubmit();
         event.preventDefault();
         return false;
     });
 
-    // executed when login form is submitted
-    $(util.formAndButtonIds().login).submit(function (event) {
+    $(formIds.login).submit(function (event) {
         loginSubmit();
         event.preventDefault();
         return false;
     });
 
-    // executed when sign out link
-    $(util.formAndButtonIds().logout).on("click", function (event) {
+    $(formIds.logout).on("click", function (event) {
         clickSignOut();
         event.preventDefault();
         return false;
     });
 
-    // executed when login form is submitted
-    $(util.formAndButtonIds().reservation).submit(function (event) {
+    $(formIds.reservation).submit(function (event) {
         reservationSubmit();
+        event.preventDefault();
+        return false;
+    });
+
+    $(formIds.updateProfile).submit(function (event) {
+        updateProfileSubmit();
         event.preventDefault();
         return false;
     });

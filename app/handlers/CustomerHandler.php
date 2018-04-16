@@ -2,6 +2,23 @@
 
 class CustomerHandler
 {
+    public function __construct () {}
+
+    private $executionSuccessful;
+
+    public function getExecutionFeedback()
+    {
+        if ($this->executionSuccessful)
+            return "1";
+        else
+            return "0";
+    }
+
+    public function setExecutionSuccessful($executionSuccessful)
+    {
+        $this->executionSuccessful = $executionSuccessful;
+    }
+
     public function getAllCustomer()
     {
         try {
@@ -89,10 +106,10 @@ class CustomerHandler
         try {
             if ($this->isEmailExists($customer->getEmail())) {
                 $dao = new CustomerDAO();
-                $dao->update($customer);
+                $this->setExecutionSuccessful($dao->update($customer));
             }
         } catch (Exception $e) {
-            print $e->getMessage();
+            print $this->getExecutionFeedback();
         }
     }
 

@@ -4,7 +4,6 @@ class ReservationHandler {
 
     public function __construct () {}
 
-
     private $executionSuccessful;
 
     // verifies if execution of DAO methods works

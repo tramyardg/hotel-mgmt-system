@@ -99,7 +99,7 @@
             </button>
         </div>
     </div>
-    <div class="container mt-3" id="my-reservations-div">
+    <div class="container my-3" id="my-reservations-div">
         <h4>Reservations</h4>
         <table id="myReservationsTbl" class="table table-striped table-bordered" cellspacing="0" width="100%">
             <thead>
@@ -383,9 +383,11 @@
                 </div>
                 <div class="modal-body">
                     <div class="card border-0">
-                        <div class="card-body">
+                        <div class="card-body p-0">
                             <?php if ($isSessionExists) { ?>
                             <form class="form" role="form" autocomplete="off" id="update-profile-form" method="post">
+                                <input type="number" id="customerId" hidden
+                                       name="customerId" value="<?php echo $cHandler->getId(); ?>" >
                                 <div class="form-group">
                                     <label for="updateFullName">Full name</label>
                                     <input type="text" class="form-control" id="updateFullName"
@@ -404,7 +406,7 @@
                                 <div class="form-group">
                                     <label for="updatePassword">New password</label>
                                     <input type="password" class="form-control" id="updatePassword"
-                                           name="updatePassword" placeholder="password"
+                                           name="updatePassword"
                                            title="At least 6 characters with letters and numbers">
                                 </div>
                                 <div class="form-group">
@@ -445,7 +447,7 @@
         let reservationDiv = $("#my-reservations-div");
         reservationDiv.hide();
         $(".my-reservations").click(function() {
-            reservationDiv.toggle( "slow");
+            reservationDiv.slideToggle( "slow");
         });
         $('#myReservationsTbl').DataTable();
     });

@@ -50,9 +50,10 @@ class CustomerDAO extends DB
         $sql .= 'SET fullname = "' . $customer->getFullName() . '", ';
         $sql .= 'password = "' . $customer->getPassword() . '", ';
         $sql .= 'phone = "' . $customer->getPhone() . '"';
-        $sql .= ' WHERE ' . $this->table_name . '.cid= ' . $customer->getId();
+        $sql .= ' WHERE `customer`.`cid`= ' . $customer->getId();
         $stmt = DB::getInstance()->prepare($sql);
-        $stmt->execute();
+        $exec = $stmt->execute();
+        return $exec;
     }
 
     public function delete(Customer $customer)

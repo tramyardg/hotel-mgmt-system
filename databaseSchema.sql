@@ -19,7 +19,9 @@ USE `hotel`;
 --
 
 -- --------------------------------------------------------
-
+DROP TABLE IF EXISTS `booking`;
+DROP TABLE IF EXISTS `customer`;
+DROP TABLE IF EXISTS `reservation`;
 --
 -- Table structure for table `booking`
 --
@@ -33,7 +35,6 @@ CREATE TABLE `booking` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
-
 --
 -- Table structure for table `customer`
 --
@@ -109,8 +110,3 @@ ALTER TABLE `customer`
 --
 ALTER TABLE `reservation`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-COMMIT;
-
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
