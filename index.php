@@ -15,6 +15,7 @@ session_start();
 
     <?php
 
+    require 'lib/phpPasswordHashing/passwordLib.php';
     require 'app/DB.php';
     require 'app/Util.php';
     require 'app/dao/CustomerDAO.php';

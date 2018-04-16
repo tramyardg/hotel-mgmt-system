@@ -13,7 +13,8 @@ session_start();
     <link rel="stylesheet" href="https://cdn.datatables.net/select/1.2.5/css/select.dataTables.min.css">
     <link rel="stylesheet" href="css/main.css">
     <?php
-
+    
+    require 'lib/phpPasswordHashing/passwordLib.php';
     require 'app/DB.php';
     require 'app/Util.php';
     require 'app/dao/CustomerDAO.php';

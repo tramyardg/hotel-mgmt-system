@@ -3,6 +3,7 @@
 ob_start();
 session_start();
 
+// include this for every Customer model existence
 require '../lib/phpPasswordHashing/passwordLib.php';
 
 require 'DB.php';
