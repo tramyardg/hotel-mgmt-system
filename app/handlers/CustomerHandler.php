@@ -16,18 +16,38 @@ class CustomerHandler
     {
         try {
             $dao = new CustomerDAO();
-            return $dao->getCustomerByEmail($email);
+            return $dao->getByEmail($email);
         } catch (Exception $e) {
             return "Error. " . $e;
         }
     }
 
-    // return full customer info based on email
-    // usually you use getByEmail but this requires looping again
+    /**
+     * @param $email
+     * @return Customer
+     */
     public function getCustomerObj($email) {
         $c = new Customer();
         $dao = new CustomerDAO();
-        $k = $dao->getCustomerByEmail($email);
+        $k = $dao->getByEmail($email);
+        foreach ($k as $v) {
+            $c->setId($v->getId());
+            $c->setEmail($v->getEmail());
+            $c->setPassword($v->getPassword());
+            $c->setPhone($v->getPhone());
+            $c->setFullName($v->getFullName());
+        }
+        return $c;
+    }
+
+    /**
+     * @param $id
+     * @return Customer
+     */
+    public function getCustomerObjByCid($id) {
+        $c = new Customer();
+        $dao = new CustomerDAO();
+        $k = $dao->getByCid($id);
         foreach ($k as $v) {
             $c->setId($v->getId());
             $c->setEmail($v->getEmail());

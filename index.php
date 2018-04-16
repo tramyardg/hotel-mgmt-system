@@ -369,7 +369,6 @@
         integrity="sha384-slN8GvtUJGnv6ca26v8EzVaR9DC58QEwsIk9q1QXdCU8Yu8ck/tL/5szYlBbqmS+"
         crossorigin="anonymous"></script>
 <script src="bootstrap-4.0.0/dist/js/bootstrap.js"></script>
-<script src="https://rawgit.com/gyrocode/jquery-datatables-checkboxes/master/js/dataTables.checkboxes.min.js"></script>
 <script src="js/util.js"></script>
 <script src="js/templates.js"></script>
 <script src="js/form-submission.js"></script>

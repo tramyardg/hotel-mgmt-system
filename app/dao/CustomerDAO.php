@@ -2,25 +2,30 @@
 
 class CustomerDAO extends DB
 {
-    public $table_name = "customer";
-    public $id = "cid";
 
     public function __construct()
     {
     }
 
-    public function getCustomerByEmail($email)
+    public function getByEmail($email)
     {
-        $sql = 'SELECT * FROM ' . $this->table_name . ' WHERE email=?';
+        $sql = 'SELECT * FROM `customer` WHERE email=?';
         $stmt = DB::getInstance()->prepare($sql);
         $stmt->execute([$email]);
-        // returns a customer object
+        return $stmt->fetchAll(PDO::FETCH_CLASS, "Customer");
+    }
+
+    public function getByCid($cid)
+    {
+        $sql = 'SELECT * FROM `customer` WHERE `customer`.`cid`=?';
+        $stmt = DB::getInstance()->prepare($sql);
+        $stmt->execute([$cid]);
         return $stmt->fetchAll(PDO::FETCH_CLASS, "Customer");
     }
 
     public function getAll()
     {
-        $sql = 'SELECT * FROM ' . $this->table_name;
+        $sql = 'SELECT * FROM `customer`';
         $stmt = DB::getInstance()->prepare($sql);
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_CLASS, "Customer");
@@ -29,7 +34,7 @@ class CustomerDAO extends DB
     public function insert(Customer $customer)
     {
         // cannot insert cid since it's already auto incremented
-        $sql = 'INSERT INTO ' . $this->table_name . ' (`fullname`, `email`, `password`, `phone`) VALUES (?, ?, ?, ?)';
+        $sql = 'INSERT INTO `customer` (`fullname`, `email`, `password`, `phone`) VALUES (?, ?, ?, ?)';
         $stmt = DB::getInstance()->prepare($sql);
         $stmt->execute(array(
             $customer->getFullName(),
@@ -41,8 +46,7 @@ class CustomerDAO extends DB
 
     public function update(Customer $customer)
     {
-        // email and cid cannot be updated since they are unique
-        $sql = 'UPDATE ' . $this->table_name . ' ';
+        $sql = 'UPDATE `customer` ';
         $sql .= 'SET fullname = "' . $customer->getFullName() . '", ';
         $sql .= 'password = "' . $customer->getPassword() . '", ';
         $sql .= 'phone = "' . $customer->getPhone() . '"';
@@ -53,7 +57,7 @@ class CustomerDAO extends DB
 
     public function delete(Customer $customer)
     {
-        $sql = 'DELETE FROM ' . $this->table_name . ' WHERE `customer`.`cid` = ?';
+        $sql = 'DELETE FROM `customer` WHERE `customer`.`cid` = ?';
         $stmt = DB::getInstance()->prepare($sql);
         $stmt->execute([$customer->getId()]);
     }

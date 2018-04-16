@@ -14,19 +14,34 @@
     require 'app/DB.php';
     require 'app/Util.php';
     require 'app/dao/CustomerDAO.php';
+    require 'app/dao/ReservationDAO.php';
+    require 'app/dao/BookingDetailDAO.php';
     require 'app/models/Customer.php';
+    require 'app/models/Reservation.php';
+    require 'app/models/BookingDetail.php';
     require 'app/handlers/CustomerHandler.php';
+    require 'app/handlers/ReservationHandler.php';
+    require 'app/handlers/BookingDetailHandler.php';
 
     $username = null;
     $isSessionExists = false;
+    $isAdmin = false;
     if (isset($_SESSION["username"]))
     {
         $username = $_SESSION["username"];
         $isSessionExists = true;
 
-        $handler = new CustomerHandler();
-        $handler = $handler->getCustomerObj($_SESSION["customerEmail"]);
+        $cHandler = new CustomerHandler();
+        $cHandler = $cHandler->getCustomerObj($_SESSION["customerEmail"]);
 
+        $cAdmin = new Customer();
+        $cAdmin->setEmail($cHandler->getEmail());
+        $isAdmin = $cAdmin->isAdminSignedIn();
+
+        $bdHandler = new BookingDetailHandler();
+        $allBookings = null;
+        $allBookings = $bdHandler->getAllBookings();
+        $cGetEmail = new CustomerHandler();
     }
 
     print_r($_SESSION);
@@ -78,7 +93,7 @@
 
 <main role="main">
 
-    <?php if ($isSessionExists) { ?>
+    <?php if ($isSessionExists && $isAdmin) { ?>
     <div class="container my-3">
         <div class="row">
             <div class="col-xl-3 col-sm-6 mb-3">
@@ -153,33 +168,44 @@
         </ul>
         <div class="tab-content" id="adminTabContent">
             <div class="tab-pane fade show active" id="reservation" role="tabpanel" aria-labelledby="reservation-tab">
-                <table class="table table-bordered">
+                <table class="table table-striped table-bordered" cellspacing="0" width="100%">
                     <thead>
                     <tr>
                         <th scope="col">#</th>
-                        <th scope="col">First</th>
-                        <th scope="col">Last</th>
-                        <th scope="col">Handle</th>
+                        <th class="text-hide p-0" data-bookId="12">12</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Start</th>
+                        <th scope="col">End</th>
+                        <th scope="col">Room type</th>
+                        <th scope="col">Requirements</th>
+                        <th scope="col">Adults</th>
+                        <th scope="col">Children</th>
+                        <th scope="col">Requests</th>
+                        <th scope="col">Timestamp</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">Notes</th>
                     </tr>
                     </thead>
                     <tbody>
-                    <tr>
-                        <th scope="row">1</th>
-                        <td>Mark</td>
-                        <td>Otto</td>
-                        <td>@mdo</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">2</th>
-                        <td>Jacob</td>
-                        <td>Thornton</td>
-                        <td>@fat</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">3</th>
-                        <td colspan="2">Larry the Bird</td>
-                        <td>@twitter</td>
-                    </tr>
+                    <?php if (!empty($allBookings)) { ?>
+                        <?php   foreach ($allBookings as $k => $v) { ?>
+                            <tr>
+                                <th scope="row"><?php echo ($k + 1); ?></th>
+                                <td class="text-hide p-0"><?php echo $v->getBid(); ?></td>
+                                <td><?php echo $cGetEmail->getCustomerObjByCid($v->getCid())->getEmail(); ?></td>
+                                <td><?php echo $v->getStart(); ?></td>
+                                <td><?php echo $v->getEnd(); ?></td>
+                                <td><?php echo $v->getType(); ?></td>
+                                <td><?php echo $v->getRequirement(); ?></td>
+                                <td><?php echo $v->getAdults(); ?></td>
+                                <td><?php echo $v->getChildren(); ?></td>
+                                <td><?php echo $v->getRequests(); ?></td>
+                                <td><?php echo $v->getTimestamp(); ?></td>
+                                <td><?php echo $v->getStatus(); ?></td>
+                                <td><?php echo $v->getNotes(); ?></td>
+                            </tr>
+                        <?php } ?>
+                    <?php } ?>
                     </tbody>
                 </table>
             </div>
