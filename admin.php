@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <link rel="stylesheet" href="bootstrap-4.0.0/dist/css/bootstrap.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/select/1.2.5/css/select.dataTables.min.css">
+
     <link rel="stylesheet" href="css/main.css">
     <?php
 
@@ -24,8 +27,8 @@
     require 'app/handlers/BookingDetailHandler.php';
 
     $username = null;
-    $isSessionExists = false;
-    $isAdmin = false;
+    $isSessionExists = $isAdmin = false;
+    $pendingReservation = $confirmedReservation = $totalCustomers = $totalReservations = null;
     if (isset($_SESSION["username"]))
     {
         $username = $_SESSION["username"];
@@ -38,10 +41,18 @@
         $cAdmin->setEmail($cHandler->getEmail());
         $isAdmin = $cAdmin->isAdminSignedIn();
 
+        // display all reservations
         $bdHandler = new BookingDetailHandler();
-        $allBookings = null;
+        $allBookings = $cCommon = null;
         $allBookings = $bdHandler->getAllBookings();
-        $cGetEmail = new CustomerHandler();
+        $cCommon = new CustomerHandler();
+
+        // reservation stats
+        $pendingReservation = $bdHandler->getPending();
+        $confirmedReservation = $bdHandler->getConfirmed();
+        $totalCustomers = $cCommon->totalCustomersCount();
+        $rHandler = new ReservationHandler();
+        $totalReservations = $rHandler->totalReservationsCount();
     }
 
     print_r($_SESSION);
@@ -102,7 +113,7 @@
                         <div class="card-body-icon">
                             <i class="fas fa-address-book"></i>
                         </div>
-                        <div class="mr-5">26 Reservations</div>
+                        <div class="mr-5"><?php echo $totalReservations; ?> Reservations</div>
                     </div>
                     <a class="card-footer text-white clearfix small z-1" href="#reservation">
                         <span class="float-left">View Details</span>
@@ -116,7 +127,7 @@
                         <div class="card-body-icon">
                             <i class="fas fa-users ml-2"></i>
                         </div>
-                        <div class="mr-5">11 Customers</div>
+                        <div class="mr-5"><?php echo $totalCustomers; ?> Customers</div>
                     </div>
                     <a class="card-footer text-white clearfix small z-1" href="#customers">
                         <span class="float-left">View Details</span>
@@ -130,12 +141,9 @@
                         <div class="card-body-icon">
                             <i class="fas fa-check"></i>
                         </div>
-                        <div class="mr-4">5 Confirmed Reservations</div>
+                        <div class="mr-4"><?php echo $confirmedReservation; ?> Confirmed Reservations</div>
                     </div>
-                    <a class="card-footer text-white clearfix small z-1" href="#">
-                        <span class="float-left">View Details</span>
-                        <span class="float-right"><i class="fa fa-angle-right"></i></span>
-                    </a>
+                    <div class="card-footer text-white clearfix small z-1"></div>
                 </div>
             </div>
             <div class="col-xl-3 col-sm-6 mb-3">
@@ -144,18 +152,15 @@
                         <div class="card-body-icon">
                             <i class="fa fa-fw fa-support"></i>
                         </div>
-                        <div class="mr-5">6 Pending Reservations</div>
+                        <div class="mr-5"><?php echo $pendingReservation; ?> Pending Reservations</div>
                     </div>
-                    <a class="card-footer text-white clearfix small z-1" href="#">
-                        <span class="float-left">View Details</span>
-                        <span class="float-right"><i class="fa fa-angle-right"></i></span>
-                    </a>
+                    <div class="card-footer text-white clearfix small z-1"></div>
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="container">
+    <div class="container" id="tableContainer">
         <ul class="nav nav-tabs" id="adminTab" role="tablist">
             <li class="nav-item">
                 <a class="nav-link active" id="reservation-tab" data-toggle="tab" href="#reservation" role="tab"
@@ -168,7 +173,7 @@
         </ul>
         <div class="tab-content" id="adminTabContent">
             <div class="tab-pane fade show active" id="reservation" role="tabpanel" aria-labelledby="reservation-tab">
-                <table class="table table-striped table-bordered" cellspacing="0" width="100%">
+                <table id="reservationDataTable" class="table table-striped table-bordered" cellspacing="0" width="100%">
                     <thead>
                     <tr>
                         <th scope="col">#</th>
@@ -177,10 +182,6 @@
                         <th scope="col">Start</th>
                         <th scope="col">End</th>
                         <th scope="col">Room type</th>
-                        <th scope="col">Requirements</th>
-                        <th scope="col">Adults</th>
-                        <th scope="col">Children</th>
-                        <th scope="col">Requests</th>
                         <th scope="col">Timestamp</th>
                         <th scope="col">Status</th>
                         <th scope="col">Notes</th>
@@ -191,15 +192,13 @@
                         <?php   foreach ($allBookings as $k => $v) { ?>
                             <tr>
                                 <th scope="row"><?php echo ($k + 1); ?></th>
-                                <td class="text-hide p-0"><?php echo $v->getBid(); ?></td>
-                                <td><?php echo $cGetEmail->getCustomerObjByCid($v->getCid())->getEmail(); ?></td>
+                                <td class="text-hide p-0" data-id="<?php echo $v->getBid(); ?>">
+                                    <?php echo $v->getBid(); ?>
+                                </td>
+                                <td><?php echo $cCommon->getCustomerObjByCid($v->getCid())->getEmail(); ?></td>
                                 <td><?php echo $v->getStart(); ?></td>
                                 <td><?php echo $v->getEnd(); ?></td>
                                 <td><?php echo $v->getType(); ?></td>
-                                <td><?php echo $v->getRequirement(); ?></td>
-                                <td><?php echo $v->getAdults(); ?></td>
-                                <td><?php echo $v->getChildren(); ?></td>
-                                <td><?php echo $v->getRequests(); ?></td>
                                 <td><?php echo $v->getTimestamp(); ?></td>
                                 <td><?php echo $v->getStatus(); ?></td>
                                 <td><?php echo $v->getNotes(); ?></td>
@@ -208,6 +207,11 @@
                     <?php } ?>
                     </tbody>
                 </table>
+                <div class="my-3">
+                    <label class="text-secondary font-weight-bold">With selected:</label>
+                    <button type="button" id="confirm-booking" class="btn btn-outline-success btn-sm">Confirm</button>
+                    <button type="button" id="cancel-booking" class="btn btn-outline-danger btn-sm">Cancel</button>
+                </div>
             </div>
             <div class="tab-pane fade" id="customers" role="tabpanel" aria-labelledby="customers-tab">
                 <table class="table table-bordered">
@@ -243,6 +247,47 @@
         </div>
 
     </div>
+
+    <div class="modal fade" id="confirmModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Confirm selected reservation(s)</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>Are you sure you want to proceed with this action?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" id="confirmTrue">Yes</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="cancelModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Cancel selected reservation(s)</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>Are you sure you want to proceed with this action?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" id="cancelTrue">Yes</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <?php } ?>
 
 </main>
@@ -260,17 +305,11 @@
         integrity="sha384-slN8GvtUJGnv6ca26v8EzVaR9DC58QEwsIk9q1QXdCU8Yu8ck/tL/5szYlBbqmS+"
         crossorigin="anonymous"></script>
 <script src="bootstrap-4.0.0/dist/js/bootstrap.js"></script>
+<script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/select/1.2.5/js/dataTables.select.min.js"></script>
 <script src="js/util.js"></script>
 <script src="js/templates.js"></script>
 <script src="js/form-submission.js"></script>
-<script>
-    $(document).ready(function () {
-        $('.card-footer').on('click', function (e) {
-            e.preventDefault();
-            let aHref = $(this).attr('href');
-            $('#adminTab a[href="'+aHref+'"]').tab('show')
-        })
-    });
-</script>
+<script src="js/admin.js"></script>
 </body>
 </html>

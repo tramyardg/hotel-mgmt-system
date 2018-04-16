@@ -57,7 +57,36 @@ class BookingDetailHandler
         } catch (Exception $e) {
             return $e;
         }
+    }
 
+    public function getPending()
+    {
+        $count = 0;
+        foreach ($this->getAllBookings() as $v) {
+            if ($v->getStatus() == "pending") {
+                $count++;
+            }
+        }
+        return $count;
+    }
+
+    public function getConfirmed()
+    {
+        $count = 0;
+        foreach ($this->getAllBookings() as $v) {
+            if ($v->getStatus() == "confirmed") {
+                $count++;
+            }
+        }
+        return $count;
+    }
+
+    public function confirmSelection($item)
+    {
+        for ($i = 0; $i < count($item); $i++) {
+            $dao = new BookingDetailDAO();
+            $this->setExecutionSuccessful($dao->update($item[$i]));
+        }
     }
 
 }

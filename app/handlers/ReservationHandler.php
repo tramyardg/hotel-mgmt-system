@@ -105,4 +105,9 @@ class ReservationHandler {
         return $dao->getByCid($c->getId());
     }
 
+    public function totalReservationsCount()
+    {
+        return count($this->getAllReservations());
+    }
+
 }

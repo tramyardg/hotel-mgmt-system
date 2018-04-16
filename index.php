@@ -33,9 +33,14 @@
         $cHandler = new CustomerHandler();
         $cHandler = $cHandler->getCustomerObj($_SESSION["customerEmail"]);
 
+        $cAdmin = new Customer();
+        $cAdmin->setEmail($cHandler->getEmail());
+        $isAdmin = $cAdmin->isAdminSignedIn();
+
         $bdHandler = new BookingDetailHandler();
         $cBookings = null;
         $cBookings = $bdHandler->getCustomerBookings($cHandler);
+
     }
 
     print_r($_SESSION);
@@ -55,12 +60,15 @@
                     <p class="text-muted">Add some information about hotel booking.</p>
                 </div>
                 <div class="col-sm-4 offset-md-1 py-4 text-right">
-                    <!-- User full name or email if logged in -->
                     <?php if ($isSessionExists) { ?>
                     <h4 class="text-white"><?php echo $username; ?></h4>
                     <ul class="list-unstyled">
+                        <?php if ($isAdmin) { ?>
+                        <li><a href="admin.php" class="text-white">Manage reservation<i class="far fa-address-book ml-2"></i></a></li>
+                        <?php } else { ?>
                         <li><a href="#" class="text-white my-reservations">View my bookings<i class="far fa-address-book ml-2"></i></a></li>
                         <li><a href="#" class="text-white">View my profile<i class="fas fa-user ml-2"></i></a></li>
+                        <?php } ?>
                         <li><a href="#" id="sign-out-link" class="text-white">Sign out<i class="fas fa-sign-out-alt ml-2"></i></a></li>
                     </ul>
                     <?php } else { ?>

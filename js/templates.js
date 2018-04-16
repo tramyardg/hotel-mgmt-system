@@ -7,9 +7,9 @@ const registerSuccess = function () {
             </div>`;
 };
 
-const alertV1 = function (error, type) {
+const alertV1 = function (message, type) {
     return `<div class="alert alert-${type}" role="alert">
-                <span>${error}</span>
+                <span>${message}</span>
             </div>`;
 };
 

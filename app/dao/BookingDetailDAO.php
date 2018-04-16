@@ -52,6 +52,14 @@ class BookingDetailDAO
         return $stmt->fetchAll(PDO::FETCH_CLASS, "BookingDetail");
     }
 
+    public function update($i)
+    {
+        $sql = 'UPDATE `booking` SET `status` = "confirmed" WHERE `booking`.`id` = ' . $i . ';';
+        $stmt = DB::getInstance()->prepare($sql);
+        $exec = $stmt->execute();
+        return $exec;
+    }
+
 }
 
 /**

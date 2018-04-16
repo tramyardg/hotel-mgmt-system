@@ -121,4 +121,9 @@ class CustomerHandler
         return (password_verify($password, $hash));
     }
 
+    public function totalCustomersCount()
+    {
+        return count($this->getAllCustomer());
+    }
+
 }
