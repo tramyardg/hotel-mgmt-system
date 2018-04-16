@@ -3,6 +3,8 @@
 ob_start();
 session_start();
 
+require '../lib/phpPasswordHashing/passwordLib.php';
+
 require 'DB.php';
 require 'dao/CustomerDAO.php';
 require 'models/Customer.php';

@@ -1,5 +1,7 @@
 <?php
 
+require '../lib/phpPasswordHashing/passwordLib.php';
+
 require 'DB.php';
 require 'dao/CustomerDAO.php';
 require 'models/Customer.php';
