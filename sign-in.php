@@ -42,7 +42,7 @@
                                            required>
                                 </div>
                                 <div class="form-group">
-                                    <p>Not registered? <a href="register.html">Register here.</a></p>
+                                    <p>Not registered? <a href="register.php">Register here.</a></p>
                                 </div>
                                 <div class="form-group">
                                     <input type="submit" class="btn btn-primary btn-md float-right"

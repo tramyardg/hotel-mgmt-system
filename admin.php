@@ -55,8 +55,6 @@
         $totalReservations = $rHandler->totalReservationsCount();
     }
 
-    print_r($_SESSION);
-
     ?>
 
     <title>Manage Booking</title>
@@ -80,8 +78,8 @@
                     </ul>
                     <?php } else { ?>
                     <h4>
-                        <a class="text-white" href="sign-in.html">Sign in</a> <span class="text-white">or</span>
-                        <a href="register.html" class="text-white">Register </a>
+                        <a class="text-white" href="sign-in.php">Sign in</a> <span class="text-white">or</span>
+                        <a href="register.php" class="text-white">Register </a>
                     </h4>
                     <p class="text-muted">Log in so you can take advantage with our hotel room prices.</p>
                     <?php } ?>

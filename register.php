@@ -64,7 +64,7 @@
                                            placeholder="password (again)" required="">
                                 </div>
                                 <div class="form-group">
-                                    <p>Already registered? <a href="sign-in.html">Sign in here.</a></p>
+                                    <p>Already registered? <a href="sign-in.php">Sign in here.</a></p>
                                 </div>
                                 <div class="form-group">
                                     <input type="submit" class="btn btn-primary btn-md float-right"

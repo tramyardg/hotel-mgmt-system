@@ -81,12 +81,12 @@ const cancelReservation = function () {
                         getCancelModal().modal("hide");
                         let msg = "The task has completed. This page will reload to reflect changes.";
                         getTblContainer().prepend(alertV1(msg, "info"));
-                        setTimeout(location.reload.bind(location), 5000);
+                        setTimeout(location.reload.bind(location), 3000);
                     } else {
                         getCancelModal().modal("hide");
                         let msg = "There must be an error processing your request. Please try again later.";
                         getTblContainer().prepend(alertV1(msg, "warning"));
-                        setTimeout(location.reload.bind(location), 5000);
+                        setTimeout(location.reload.bind(location), 3000);
                     }
                 }
             });
@@ -106,7 +106,7 @@ $(document).ready(function () {
         select: {
             style: 'multi'
         },
-        "pageLength": 3
+        "pageLength": 6
     });
 
     $('#customerTable').DataTable();
