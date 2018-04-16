@@ -3,7 +3,7 @@ const registerSuccess = function () {
                 <h4 class="alert-heading">Well done!</h4>
                 <p>You have been successfully registered!</p>
                 <hr>
-                <p class="mb-0">You can <a href="sign-in.html">login</a> now.</p>
+                <p class="mb-0">You can <a href="sign-in.php">login</a> now.</p>
             </div>`;
 };
 
