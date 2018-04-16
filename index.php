@@ -1,3 +1,7 @@
+<?php
+ob_start();
+session_start();
+?>
 <!doctype html>
 <html lang="en">
 <head>
@@ -10,9 +14,6 @@
     <link rel="stylesheet" href="css/main.css">
 
     <?php
-
-    ob_start();
-    session_start();
 
     require 'app/DB.php';
     require 'app/Util.php';
