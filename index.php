@@ -366,7 +366,7 @@ session_start();
                     </button>
                 </div>
                 <div class="modal-body">
-                    <h4>You have to login in to book a rom.</h4>
+                    <h4>You have to login in order to reserve a room.</h4>
                 </div>
             </div>
         </div>
