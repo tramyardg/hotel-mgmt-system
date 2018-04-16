@@ -7,7 +7,6 @@
     <link rel="stylesheet" href="bootstrap-4.0.0/dist/css/bootstrap.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/select/1.2.5/css/select.dataTables.min.css">
-
     <link rel="stylesheet" href="css/main.css">
     <?php
 
@@ -29,6 +28,7 @@
     $username = null;
     $isSessionExists = $isAdmin = false;
     $pendingReservation = $confirmedReservation = $totalCustomers = $totalReservations = null;
+    $allBookings = $cCommon = $allCustomer = null;
     if (isset($_SESSION["username"]))
     {
         $username = $_SESSION["username"];
@@ -43,9 +43,9 @@
 
         // display all reservations
         $bdHandler = new BookingDetailHandler();
-        $allBookings = $cCommon = null;
         $allBookings = $bdHandler->getAllBookings();
         $cCommon = new CustomerHandler();
+        $allCustomer = $cCommon->getAllCustomer();
 
         // reservation stats
         $pendingReservation = $bdHandler->getPending();
@@ -214,33 +214,26 @@
                 </div>
             </div>
             <div class="tab-pane fade" id="customers" role="tabpanel" aria-labelledby="customers-tab">
-                <table class="table table-bordered">
-                    <thead>
+                <table id="customerTable" class="table table-bordered">
+                    <thead class="thead-dark">
                     <tr>
                         <th scope="col">#</th>
-                        <th scope="col">First</th>
-                        <th scope="col">Last</th>
-                        <th scope="col">Handle</th>
+                        <th scope="col">Full name</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Phone</th>
                     </tr>
                     </thead>
                     <tbody>
-                    <tr>
-                        <th scope="row">1</th>
-                        <td>Mark</td>
-                        <td>Otto</td>
-                        <td>@mdo</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">2</th>
-                        <td>Jacob</td>
-                        <td>Thornton</td>
-                        <td>@fat</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">3</th>
-                        <td colspan="2">Larry the Bird</td>
-                        <td>@twitter</td>
-                    </tr>
+                    <?php if (!empty($allCustomer)) { ?>
+                        <?php foreach ($cCommon->getAllCustomer() as $key => $value) { ?>
+                        <tr>
+                            <td scope="row"><?php echo ($key + 1); ?></td>
+                            <td><?php echo $value->getFullName(); ?></td>
+                            <td><?php echo $value->getEmail(); ?></td>
+                            <td><?php echo $value->getPhone(); ?></td>
+                        </tr>
+                        <?php } ?>
+                    <?php } ?>
                     </tbody>
                 </table>
             </div>

@@ -38,11 +38,10 @@ const confirmReservation = function () {
         }
         getConfirmModal().modal("show");
         getConfirmModal().find("#confirmTrue").click(function (e) {
-            console.log(getBookIdFromSelected());
             e.preventDefault();
             let item = getBookIdFromSelected();
             $.ajax({
-                url: "app/admin/confirm_reservation.php",
+                url: "app/admin/manage_reservation.php",
                 type: "post",
                 data: {item: item, confirm: true},
                 success: function (data) {
@@ -70,8 +69,27 @@ const cancelReservation = function () {
             return false;
         }
         getCancelModal().modal("show");
-        getCancelModal().find("#cancelTrue").click(function () {
-            // cancelled
+        getCancelModal().find("#cancelTrue").click(function (e) {
+            e.preventDefault();
+            let item = getBookIdFromSelected();
+            $.ajax({
+                url: "app/admin/manage_reservation.php",
+                type: "post",
+                data: {item: item, cancel: true},
+                success: function (data) {
+                    if (data === "1") {
+                        getCancelModal().modal("hide");
+                        let msg = "The task has completed. This page will reload to reflect changes.";
+                        getTblContainer().prepend(alertV1(msg, "info"));
+                        setTimeout(location.reload.bind(location), 5000);
+                    } else {
+                        getCancelModal().modal("hide");
+                        let msg = "There must be an error processing your request. Please try again later.";
+                        getTblContainer().prepend(alertV1(msg, "warning"));
+                        setTimeout(location.reload.bind(location), 5000);
+                    }
+                }
+            });
         });
     });
 };
@@ -90,6 +108,8 @@ $(document).ready(function () {
         },
         "pageLength": 3
     });
+
+    $('#customerTable').DataTable();
 
     confirmReservation();
     cancelReservation();

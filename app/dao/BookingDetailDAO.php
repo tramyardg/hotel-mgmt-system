@@ -52,9 +52,17 @@ class BookingDetailDAO
         return $stmt->fetchAll(PDO::FETCH_CLASS, "BookingDetail");
     }
 
-    public function update($i)
+    public function updateConfirmed($i)
     {
         $sql = 'UPDATE `booking` SET `status` = "confirmed" WHERE `booking`.`id` = ' . $i . ';';
+        $stmt = DB::getInstance()->prepare($sql);
+        $exec = $stmt->execute();
+        return $exec;
+    }
+
+    public function updateCancelled($i)
+    {
+        $sql = 'UPDATE `booking` SET `status` = "cancelled" WHERE `booking`.`id` = ' . $i . ';';
         $stmt = DB::getInstance()->prepare($sql);
         $exec = $stmt->execute();
         return $exec;
@@ -65,7 +73,7 @@ class BookingDetailDAO
 /**
  * CRUD functions
  * [x] insert
- * [-] update
+ * [x] update
  * [-] delete
  * [x] read
  */

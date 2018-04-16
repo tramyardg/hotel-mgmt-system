@@ -85,7 +85,15 @@ class BookingDetailHandler
     {
         for ($i = 0; $i < count($item); $i++) {
             $dao = new BookingDetailDAO();
-            $this->setExecutionSuccessful($dao->update($item[$i]));
+            $this->setExecutionSuccessful($dao->updateConfirmed($item[$i]));
+        }
+    }
+
+    public function cancelSelection($item)
+    {
+        for ($i = 0; $i < count($item); $i++) {
+            $dao = new BookingDetailDAO();
+            $this->setExecutionSuccessful($dao->updateCancelled($item[$i]));
         }
     }
 
