@@ -147,12 +147,10 @@
             <h1 class="display-3">A brand new hotel beyond ordinary</h1>
             <p class="lead text-muted">Book your summer holidays with us now.</p>
             <p>
-                <?php if ($isSessionExists && !$isAdmin) { ?>
-                    <?php if ($isSessionExists) { ?>
-                    <a href="#" class="btn btn-success my-2" data-toggle="modal" data-target=".book-now-modal-lg">Book now</a>
-                    <?php } else { ?>
-                    <a href="#" class="btn btn-success my-2" data-toggle="modal" data-target=".sign-in-to-book-modal">Book now</a>
-                    <?php } ?>
+                <?php if ($isSessionExists) { ?>
+                <a href="#" class="btn btn-success my-2" data-toggle="modal" data-target=".book-now-modal-lg">Book now</a>
+                <?php } else { ?>
+                <a href="#" class="btn btn-success my-2" data-toggle="modal" data-target=".sign-in-to-book-modal">Book now</a>
                 <?php } ?>
             </p>
         </div>
@@ -178,16 +176,14 @@
                             <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
                             <div class="d-flex justify-content-between align-items-center">
                                 <div class="btn-group">
-                                    <?php if ($isSessionExists && !$isAdmin) { ?>
-                                        <?php if ($isSessionExists) { ?>
-                                        <button type="button" class="btn btn-sm btn-outline-success" data-toggle="modal" data-target=".book-now-modal-lg">
-                                            Book
-                                        </button>
-                                        <?php } else { ?>
-                                        <button type="button" class="btn btn-sm btn-outline-success" data-toggle="modal" data-target=".sign-in-to-book-modal">
-                                            Book
-                                        </button>
-                                        <?php } ?>
+                                    <?php if ($isSessionExists) { ?>
+                                    <button type="button" class="btn btn-sm btn-outline-success" data-toggle="modal" data-target=".book-now-modal-lg">
+                                        Book
+                                    </button>
+                                    <?php } else { ?>
+                                    <button type="button" class="btn btn-sm btn-outline-success" data-toggle="modal" data-target=".sign-in-to-book-modal">
+                                        Book
+                                    </button>
                                     <?php } ?>
                                 </div>
                                 <small class="text-muted">250 / night</small>
@@ -204,16 +200,14 @@
                         <div class="card-body">
                             <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
                             <div class="d-flex justify-content-between align-items-center">
-                                <?php if ($isSessionExists && !$isAdmin) { ?>
-                                    <?php if ($isSessionExists) { ?>
-                                    <button type="button" class="btn btn-sm btn-outline-success" data-toggle="modal" data-target=".book-now-modal-lg">
-                                        Book
-                                    </button>
-                                    <?php } else { ?>
-                                    <button type="button" class="btn btn-sm btn-outline-success" data-toggle="modal" data-target=".sign-in-to-book-modal">
-                                        Book
-                                    </button>
-                                    <?php } ?>
+                                <?php if ($isSessionExists) { ?>
+                                <button type="button" class="btn btn-sm btn-outline-success" data-toggle="modal" data-target=".book-now-modal-lg">
+                                    Book
+                                </button>
+                                <?php } else { ?>
+                                <button type="button" class="btn btn-sm btn-outline-success" data-toggle="modal" data-target=".sign-in-to-book-modal">
+                                    Book
+                                </button>
                                 <?php } ?>
                                 <small class="text-muted">180 / night</small>
                             </div>
@@ -229,16 +223,14 @@
                         <div class="card-body">
                             <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
                             <div class="d-flex justify-content-between align-items-center">
-                                <?php if ($isSessionExists && !$isAdmin) { ?>
-                                    <?php if ($isSessionExists) { ?>
-                                    <button type="button" class="btn btn-sm btn-outline-success" data-toggle="modal" data-target=".book-now-modal-lg">
-                                        Book
-                                    </button>
-                                    <?php } else { ?>
-                                    <button type="button" class="btn btn-sm btn-outline-success" data-toggle="modal" data-target=".sign-in-to-book-modal">
-                                        Book
-                                    </button>
-                                    <?php } ?>
+                                <?php if ($isSessionExists) { ?>
+                                <button type="button" class="btn btn-sm btn-outline-success" data-toggle="modal" data-target=".book-now-modal-lg">
+                                    Book
+                                </button>
+                                <?php } else { ?>
+                                <button type="button" class="btn btn-sm btn-outline-success" data-toggle="modal" data-target=".sign-in-to-book-modal">
+                                    Book
+                                </button>
                                 <?php } ?>
                                 <small class="text-muted">130 / night</small>
                             </div>
@@ -259,6 +251,7 @@
                     </button>
                 </div>
                 <div class="modal-body" id="reservationModalBody">
+                    <?php if ($isSessionExists && !$isAdmin) { ?>
                     <form role="form" autocomplete="off" id="reservation-form" method="post">
                         <?php if ($isSessionExists) { ?>
                         <input type="number" id="cid" name="cid" value="<?php echo $cHandler->getId() ?>" hidden>
@@ -355,6 +348,9 @@
                             </div>
                         </div>
                     </form>
+                    <?php } else { ?>
+                        <p>Booking is reserved for customers.</p>
+                    <?php } ?>
                 </div>
             </div>
         </div>
@@ -388,6 +384,7 @@
                 <div class="modal-body">
                     <div class="card border-0">
                         <div class="card-body">
+                            <?php if ($isSessionExists) { ?>
                             <form class="form" role="form" autocomplete="off" id="update-profile-form" method="post">
                                 <div class="form-group">
                                     <label for="updateFullName">Full name</label>
@@ -415,6 +412,7 @@
                                            name="updateProfileSubmitBtn" value="Update">
                                 </div>
                             </form>
+                            <?php } ?>
                         </div>
                     </div>
                 </div>
