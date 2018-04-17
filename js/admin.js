@@ -1,25 +1,26 @@
 const getTblContainer = function () {
-  return $("#tableContainer");
-};
-
-const confirmBtn = function () {
-    return $("#confirm-booking");
-};
-
-const cancelBtn = function () {
-    return $("#cancel-booking");
-};
-
-const getConfirmModal = function () {
-    return $("#confirmModal");
-};
-
-const getCancelModal = function () {
-    return $("#cancelModal");
+    return $("#tableContainer");
 };
 
 const getSelectedItems = function () {
     return $("#reservationDataTable tr.selected");
+};
+
+const actions = {
+    confirm: function () {
+        return {
+            mainBtn: $("#confirm-booking"),
+            modalId: $("#confirmModal"),
+            modalYesBtn: $("#confirmTrue")
+        }
+    },
+    cancel: function () {
+        return {
+            mainBtn: $("#cancel-booking"),
+            modalId: $("#cancelModal"),
+            modalYesBtn: $("#cancelTrue")
+        }
+    }
 };
 
 const getBookIdFromSelected = function () {
@@ -31,66 +32,70 @@ const getBookIdFromSelected = function () {
 };
 
 const confirmReservation = function () {
-    confirmBtn().click(function () {
+    actions.confirm().mainBtn.click(function () {
         if (getSelectedItems().length === 0) {
             alert("nothing selected");
             return false;
         }
-        getConfirmModal().modal("show");
-        getConfirmModal().find("#confirmTrue").click(function (e) {
+        actions.confirm().modalId.modal("show");
+        actions.confirm().modalYesBtn.click(function (e) {
             e.preventDefault();
-            let item = getBookIdFromSelected();
-            $.ajax({
-                url: "app/admin/manage_reservation.php",
-                type: "post",
-                data: {item: item, confirm: true},
-                success: function (data) {
-                    if (data === "1") {
-                        getConfirmModal().modal("hide");
-                        let msg = "You have successfully confirmed your selection(s). This page will reload to reflect changes.";
-                        getTblContainer().prepend(alertV1(msg, "info"));
-                        setTimeout(location.reload.bind(location), 5000);
-                    } else {
-                        getConfirmModal().modal("hide");
-                        let msg = "There must be an error processing your request. Please try again later.";
-                        getTblContainer().prepend(alertV1(msg, "warning"));
-                        setTimeout(location.reload.bind(location), 5000);
-                    }
-                }
-            });
+            confirmAjaxRequest(getBookIdFromSelected());
         });
     });
 };
 
+const confirmAjaxRequest = function (selectedItems) {
+    $.ajax({
+        url: "app/admin/manage_reservation.php",
+        type: "post",
+        data: {item: selectedItems, confirm: true}
+    }).done(function (response) {
+        if (response === "1") {
+            actions.confirm().modalId.modal("hide");
+            let msg = "You have successfully confirmed your selection(s). This page will reload to reflect changes.";
+            getTblContainer().prepend(alertV1(msg, "info"));
+            setTimeout(location.reload.bind(location), 2000);
+        } else {
+            actions.confirm().modalId.modal("hide");
+            let msg = "There must be an error processing your request. Please try again later.";
+            getTblContainer().prepend(alertV1(msg, "warning"));
+            setTimeout(location.reload.bind(location), 2000);
+        }
+    });
+};
+
 const cancelReservation = function () {
-    cancelBtn().click(function () {
+    actions.cancel().mainBtn.click(function () {
         if (getSelectedItems().length === 0) {
             alert("nothing selected");
             return false;
         }
-        getCancelModal().modal("show");
-        getCancelModal().find("#cancelTrue").click(function (e) {
+        actions.cancel().modalId.modal("show");
+        actions.cancel().modalYesBtn.click(function (e) {
             e.preventDefault();
-            let item = getBookIdFromSelected();
-            $.ajax({
-                url: "app/admin/manage_reservation.php",
-                type: "post",
-                data: {item: item, cancel: true},
-                success: function (data) {
-                    if (data === "1") {
-                        getCancelModal().modal("hide");
-                        let msg = "The task has completed. This page will reload to reflect changes.";
-                        getTblContainer().prepend(alertV1(msg, "info"));
-                        setTimeout(location.reload.bind(location), 3000);
-                    } else {
-                        getCancelModal().modal("hide");
-                        let msg = "There must be an error processing your request. Please try again later.";
-                        getTblContainer().prepend(alertV1(msg, "warning"));
-                        setTimeout(location.reload.bind(location), 3000);
-                    }
-                }
-            });
+            cancelAjaxRequest(getBookIdFromSelected());
         });
+    });
+};
+
+const cancelAjaxRequest = function (selectedItems) {
+    $.ajax({
+        url: "app/admin/manage_reservation.php",
+        type: "post",
+        data: {item: selectedItems, cancel: true}
+    }).done(function (response) {
+        if (response === "1") {
+            actions.cancel().modalId.modal("hide");
+            let msg = "The task has completed. This page will reload to reflect changes.";
+            getTblContainer().prepend(alertV1(msg, "info"));
+            setTimeout(location.reload.bind(location), 3000);
+        } else {
+            actions.cancel().modalId.modal("hide");
+            let msg = "There must be an error processing your request. Please try again later.";
+            getTblContainer().prepend(alertV1(msg, "warning"));
+            setTimeout(location.reload.bind(location), 3000);
+        }
     });
 };
 
