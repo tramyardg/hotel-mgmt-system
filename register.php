@@ -52,7 +52,7 @@
                                            id="registrationPassword"
                                            name="registrationPassword"
                                            placeholder="password"
-                                           title="At least 6 characters with letters and numbers"
+                                           title="At least 4 characters with letters and numbers"
                                            required="">
                                 </div>
                                 <div class="form-group">

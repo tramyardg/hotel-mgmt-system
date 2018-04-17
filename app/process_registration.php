@@ -13,8 +13,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submitBtn"])) {
 
     if (!filter_var($_POST["email"], FILTER_VALIDATE_EMAIL))
         $errors_ .= displayAlert("Please enter a valid email address.", "warning");
-    if (strlen($_POST["password"]) < 6 || strlen($_POST["password2"]) < 6)
-        $errors_ .= displayAlert("A password of at least 6 characters is required", "warning");
+    if (strlen($_POST["password"]) < 4 || strlen($_POST["password2"]) < 4)
+        $errors_ .= displayAlert("A password of at least 4 characters is required", "warning");
     if (!empty($_POST["password"]) && !empty($_POST["password2"])) {
         if ($_POST["password"] != $_POST["password2"])
             $errors_ .= displayAlert("Password not match.", "warning");

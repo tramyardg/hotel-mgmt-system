@@ -43,7 +43,7 @@ const formData = {
             fullName: $('input[name="updateFullName"]').val(),
             phone: $("input[name='updatePhoneNumber']").val(),
             email: $("input[name='updateEmail']").val(),
-            password: $("input[name='updatePassword']").val(),
+            newPassword: $("input[name='updatePassword']").val(),
             submitBtn: $('input[name="updateProfileSubmitBtn"]').val()
         }
     }
@@ -122,6 +122,7 @@ const reservationSubmit = function () {
 
 const updateProfileSubmit = function () {
     let updateData = formData.updateProfile();
+    console.log(updateData);
     $.ajax({
         url: "app/process_update_profile.php",
         type: "post",

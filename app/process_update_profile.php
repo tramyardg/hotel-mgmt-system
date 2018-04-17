@@ -13,9 +13,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submitBtn"])) {
 
     $errors_ = null;
 
-    if (!empty($_POST["password"])) {
-        if (strlen($_POST["password"]) < 6)
-            $errors_ .= displayAlert("At least 6 characters is required.", "info");
+    if (!empty($_POST["newPassword"])) {
+        if (strlen($_POST["newPassword"]) < 4)
+            $errors_ .= displayAlert("At least 4 characters is required.", "info");
     }
 
     if (!empty($errors_)) {
@@ -26,7 +26,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submitBtn"])) {
         $c->setFullName($_POST["fullName"]);
         $c->setPhone($_POST["phone"]);
         $c->setEmail($_POST["email"]);
-        $c->setPassword($_POST["password"]);
+        $c->setPassword($_POST["newPassword"]);
 
         $cHandler = new CustomerHandler();
         $cHandler->updateCustomer($c);

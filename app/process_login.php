@@ -34,6 +34,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submitBtn"])) {
                 $_SESSION["username"] = $handler->getUsername($_POST["email"]);
                 $_SESSION["customerEmail"] = $customer->getEmail();
                 $_SESSION["authenticated"] = 1;
+                $_SESSION["password"] = $_POST["password"];
 
                 // set the session phone number too
                 if ($handler->getCustomerObj($_POST["email"])->getPhone()) {

@@ -407,7 +407,10 @@ session_start();
                                     <label for="updatePassword">New password</label>
                                     <input type="password" class="form-control" id="updatePassword"
                                            name="updatePassword"
-                                           title="At least 6 characters with letters and numbers">
+                                           <?php if (isset($_SESSION["password"])) ?>
+                                           value="<?php echo $_SESSION["password"]; ?>"
+                                           <?php ?>
+                                           title="At least 4 characters with letters and numbers">
                                 </div>
                                 <div class="form-group">
                                     <input type="submit" class="btn btn-primary btn-md float-right"
