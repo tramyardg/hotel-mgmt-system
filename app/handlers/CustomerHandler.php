@@ -92,7 +92,6 @@ class CustomerHandler
     {
         if (!$this->isEmailExists($customer->getEmail())) {
             $dao = new CustomerDAO();
-            $this->setExecutionFeedback($dao->insert($customer));
             if ($dao->insert($customer)) {
                 $this->setExecutionFeedback("You have successfully registered! You can now login.");
             } else {
