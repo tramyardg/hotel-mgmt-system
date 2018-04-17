@@ -4,6 +4,8 @@ class CustomerHandler
 {
     public function __construct () {}
 
+    private $serverErrorMsg = "Server error occurred. Please try again later.";
+
     private $executionFeedback;
 
     public function getExecutionFeedback()
@@ -94,7 +96,7 @@ class CustomerHandler
             if ($dao->insert($customer)) {
                 $this->setExecutionFeedback("You have successfully registered! You can now login.");
             } else {
-                $this->setExecutionFeedback("Server error occurred.");
+                $this->setExecutionFeedback($this->serverErrorMsg);
             }
         } else {
             $this->setExecutionFeedback("Email already registered.");
@@ -103,15 +105,17 @@ class CustomerHandler
 
     public function updateCustomer(Customer $customer)
     {
-        try {
-            if ($this->isEmailExists($customer->getEmail())) {
-                $dao = new CustomerDAO();
-                $this->setExecutionFeedback($dao->update($customer));
+        if ($this->isEmailExists($customer->getEmail())) {
+            $dao = new CustomerDAO();
+            if ($dao->update($customer)) {
+                $this->setExecutionFeedback("You have successfully updated your profile!");
+            } else {
+                $this->setExecutionFeedback($this->serverErrorMsg);
             }
-        } catch (Exception $e) {
-            print $this->getExecutionFeedback();
+        } else {
+            $this->setExecutionFeedback("This email is not registered.");
         }
-    }
+     }
 
     public function isEmailExists($email) {
         return count($this->getSingleRow($email)) > 0;

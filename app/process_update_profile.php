@@ -11,19 +11,16 @@ require 'handlers/CustomerHandler.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submitBtn"])) {
 
-    $errors = [];
-    $data = [];
+    $errors_ = null;
 
     if (!empty($_POST["password"])) {
         if (strlen($_POST["password"]) < 6)
-            array_push($errors, "At least 6 characters is required.");
+            $errors_ .= displayAlert("At least 6 characters is required.", "info");
     }
 
-    if (!empty($errors)) {
-        $data["errors"] = $errors;
-        echo json_encode($data["errors"]);
+    if (!empty($errors_)) {
+        echo $errors_;
     } else {
-
         $c = new Customer();
         $c->setId($_POST["cid"]);
         $c->setFullName($_POST["fullName"]);
@@ -33,7 +30,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submitBtn"])) {
 
         $cHandler = new CustomerHandler();
         $cHandler->updateCustomer($c);
-        $feedback = $cHandler->getExecutionFeedback();
+        echo displayAlert($cHandler->getExecutionFeedback(), "success");
 
         if (isset($_SESSION["username"])) {
             $_SESSION["username"] = $cHandler->getUsername($_POST["email"]);
@@ -41,11 +38,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submitBtn"])) {
         if (isset($_SESSION["phoneNumber"])) {
             $_SESSION["phoneNumber"] = $_POST["phone"];
         }
-
-        echo $feedback;
     }
 
 }
+
+function displayAlert($msg, $type)
+{
+    return '<div class="alert alert-' . $type . '" role="alert">' . $msg . '</div>';
+}
+
 /**
  * if password field is not empty
  * then validate it

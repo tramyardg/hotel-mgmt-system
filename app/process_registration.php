@@ -12,18 +12,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submitBtn"])) {
     $errors_ = null;
 
     if (!filter_var($_POST["email"], FILTER_VALIDATE_EMAIL))
-        $errors_ .= "- Please enter a valid email address. <br>";
+        $errors_ .= displayAlert("Please enter a valid email address.", "warning");
     if (strlen($_POST["password"]) < 6 || strlen($_POST["password2"]) < 6)
-        $errors_ .= "- A password of at least 6 characters is required. <br>";
+        $errors_ .= displayAlert("A password of at least 6 characters is required", "warning");
     if (!empty($_POST["password"]) && !empty($_POST["password2"])) {
         if ($_POST["password"] != $_POST["password2"])
-            $errors_ .= "- Password not match. <br>";
+            $errors_ .= displayAlert("Password not match.", "warning");
     }
 
     if (!empty($errors_)) {
         echo $errors_;
     } else {
-
         $customer = new Customer();
         $customer->setFullName($_POST["fullName"]);
         $customer->setEmail($_POST["email"]);
@@ -32,9 +31,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submitBtn"])) {
 
         $handler = new CustomerHandler();
         $handler->insertCustomer($customer);
-        echo $handler->getExecutionFeedback();
+        echo displayAlert($handler->getExecutionFeedback(), "success");
     }
 }
+
+function displayAlert($msg, $type)
+{
+    return '<div class="alert alert-' . $type . '" role="alert">' . $msg . '</div>';
+}
+
 /**
  * [x] validate the fields first
  * [x] if no error create a Customer object

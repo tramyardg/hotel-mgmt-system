@@ -54,10 +54,10 @@ const registrationSubmit = function () {
     $.ajax({
         url: "app/process_registration.php",
         type: "post",
-        data: registrationData,
-        success: function (data) {
-            $(formIds.register).prepend(alertV1(data, "info"));
-        }
+        data: registrationData
+    }).done(function (response) {
+        $(formIds.register).find('.alert').remove();
+        $(formIds.register).prepend(response);
     });
 };
 
@@ -66,16 +66,15 @@ const loginSubmit = function () {
     $.ajax({
         url: "app/process_login.php",
         type: "post",
-        data: loginData,
-        success: function (data) {
-            if (data === "1") {
-                let locHref = location.href;
-                let homePageLink = locHref.substring(0, locHref.lastIndexOf("/")) + "/index.php";
-                window.location.replace(homePageLink);
-            } else {
-                $(formIds.login).find('.alert').remove();
-                $(formIds.login).prepend(data);
-            }
+        data: loginData
+    }).done(function (response) {
+        if (response === "1") {
+            let locHref = location.href;
+            let homePageLink = locHref.substring(0, locHref.lastIndexOf("/")) + "/index.php";
+            window.location.replace(homePageLink);
+        } else {
+            $(formIds.login).find('.alert').remove();
+            $(formIds.login).prepend(response);
         }
     });
 };
@@ -126,24 +125,10 @@ const updateProfileSubmit = function () {
     $.ajax({
         url: "app/process_update_profile.php",
         type: "post",
-        data: updateData,
-        success: function (data) {
-            if (data === "1") {
-                $(formIds.updateProfile).prepend(alertV1(
-                    "Your profile has been successfully updated.",
-                    "success")
-                );
-            } else if (data === "0") {
-                $(formIds.updateProfile).prepend(alertV1(
-                    "Error occurred processing your request. Please try again later.",
-                    "warning")
-                );
-            } else {
-                for (let i = 0; i < JSON.parse(data).length; i++) {
-                    $(formIds.updateProfile).prepend(alertV1(errorsArr[i], "warning"));
-                }
-            }
-        }
+        data: updateData
+    }).done(function (response) {
+        $(formIds.updateProfile).find(".alert").remove();
+        $(formIds.updateProfile).prepend(response);
     });
 };
 
@@ -180,3 +165,5 @@ $(document).ready(function () {
 
 });
 
+// success: set success action before making the request
+// done: set success action just after starting the request
