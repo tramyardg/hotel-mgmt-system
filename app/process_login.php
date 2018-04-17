@@ -7,6 +7,7 @@ session_start();
 require '../lib/phpPasswordHashing/passwordLib.php';
 
 require 'DB.php';
+require 'Util.php';
 require 'dao/CustomerDAO.php';
 require 'models/Customer.php';
 require 'handlers/CustomerHandler.php';
@@ -15,21 +16,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submitBtn"])) {
     $errors_ = null;
 
     if (!filter_var($_POST["email"], FILTER_VALIDATE_EMAIL))
-        $errors_ .=  displayAlert("Please enter a valid email address");
+        $errors_ .=  Util::displayAlertV1("Please enter a valid email address", "warning");
     if (empty($_POST["password"]))
-        $errors_ .= displayAlert("Password is required.");
+        $errors_ .= Util::displayAlertV1("Password is required.", "warning");
     if (!empty($errors_)) {
         echo $errors_;
     } else {
         $handler = new CustomerHandler();
         if (!$handler->isEmailExists($_POST["email"])) {
-            echo displayAlert("Email is not registered with us.");
+            echo Util::displayAlertV1("Email is not registered with us.", "warning");
         } else {
             $customer = new Customer();
             $customer->setEmail($_POST["email"]);
             $newCustomer = new Customer();
             if (!$handler->isPasswordMatchWithEmail($_POST['password'], $customer)) {
-                echo displayAlert("Incorrect password.");
+                echo Util::displayAlertV1("Incorrect password.", "warning");
             } else {
                 $_SESSION["username"] = $handler->getUsername($_POST["email"]);
                 $_SESSION["customerEmail"] = $customer->getEmail();
@@ -45,11 +46,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submitBtn"])) {
             }
         }
     }
-}
-
-function displayAlert($msg)
-{
-    return '<div class="alert alert-warning" role="alert">' . $msg . '</div>';
 }
 
 /**

@@ -82,41 +82,27 @@ const loginSubmit = function () {
 const clickSignOut = function () {
     $.ajax({
         url: "app/process_logout.php",
-        type: "get",
-        success: function (data) {
-            if (data === "1") {
-                let locHref = location.href;
-                let homePageLink = locHref.substring(0, locHref.lastIndexOf("/")) + "/index.php";
-                window.location.replace(homePageLink);
-            } else {
-                alert("error signing out");
-            }
+        type: "get"
+    }).done(function (response) {
+        if (response === "1") {
+            let locHref = location.href;
+            let homePageLink = locHref.substring(0, locHref.lastIndexOf("/")) + "/index.php";
+            window.location.replace(homePageLink);
+        } else {
+            alert("error signing out");
         }
     });
 };
 
 const reservationSubmit = function () {
     let reservation = formData.reservation();
-    let rModal = $(util.modalSel().reservation.body);
     $.ajax({
         url: "app/process_reservation.php",
         type: "post",
-        data: reservation,
-        success: function (data) {
-            if (data === "1") {
-                rModal.empty();
-                rModal.append(alertV2({
-                    title: "Well done!",
-                    body: "You have reserved a room. You can view the status of your booking anytime.",
-                    footer: "Your booking will be mark confirmed once approved."
-                }, "success"));
-            } else {
-                let errorsArr = JSON.parse(data);
-                for (let i = 0; i < errorsArr.length; i++) {
-                    rModal.prepend(alertV1(errorsArr[i], "warning"));
-                }
-            }
-        }
+        data: reservation
+    }).done(function (response) {
+        $(formIds.reservation).find('.alert').remove();
+        $(formIds.reservation).prepend(response);
     });
 };
 

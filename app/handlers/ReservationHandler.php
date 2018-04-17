@@ -4,31 +4,30 @@ class ReservationHandler {
 
     public function __construct () {}
 
-    private $executionSuccessful;
+    private $executionFeedback;
 
-    // verifies if execution of DAO methods works
-    // and does not return error
-    // use for create, delete, update
     public function getExecutionFeedback()
     {
-        if ($this->executionSuccessful)
-            return "1";
-        else
-            return "0";
+        return $this->executionFeedback;
     }
 
-    public function setExecutionSuccessful($executionSuccessful)
+    public function setExecutionFeedback($executionFeedback)
     {
-        $this->executionSuccessful = $executionSuccessful;
+        $this->executionFeedback = $executionFeedback;
     }
 
     public function create(Reservation $r)
     {
-        try {
-            $dao = new ReservationDAO();
-            $this->setExecutionSuccessful($dao->insert($r));
-        } catch (Exception $e) {
-            print $e->getMessage();
+        $dao = new ReservationDAO();
+        if ($dao->insert($r)) {
+            $message = array(
+                "heading" => "Well done!",
+                "content" => "You have reserved a room. You can view the status of your booking anytime.",
+                "footer"  => "Your booking will be mark confirmed once approved."
+            );
+            $this->setExecutionFeedback($message);
+        } else {
+            $this->setExecutionFeedback("Server error! Please try again later.");
         }
     }
 
@@ -36,7 +35,7 @@ class ReservationHandler {
     {
         try {
             $dao = new ReservationDAO();
-            $this->setExecutionSuccessful($dao->update($r));
+            $this->setExecutionFeedback($dao->update($r));
         } catch (Exception $e) {
             print $e->getMessage();
         }
@@ -46,7 +45,7 @@ class ReservationHandler {
     {
         try {
             $dao = new ReservationDAO();
-            $this->setExecutionSuccessful($dao->delete($r));
+            $this->setExecutionFeedback($dao->delete($r));
         } catch (Exception $e) {
             print $e->getMessage();
         }
