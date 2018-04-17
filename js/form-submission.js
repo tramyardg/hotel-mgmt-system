@@ -73,10 +73,8 @@ const loginSubmit = function () {
                 let homePageLink = locHref.substring(0, locHref.lastIndexOf("/")) + "/index.php";
                 window.location.replace(homePageLink);
             } else {
-                let errorsArr = JSON.parse(data);
-                for (let i = 0; i < errorsArr.length; i++) {
-                    $(".card-body").prepend(alertV1(errorsArr[i], "warning"));
-                }
+                $(formIds.login).find('.alert').remove();
+                $(formIds.login).prepend(data);
             }
         }
     });

@@ -12,30 +12,24 @@ require 'models/Customer.php';
 require 'handlers/CustomerHandler.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submitBtn"])) {
-    $errors = array();
-    $data = array();
+    $errors_ = null;
 
     if (!filter_var($_POST["email"], FILTER_VALIDATE_EMAIL))
-        array_push($errors, "Please enter a valid email address.");
+        $errors_ .=  displayAlert("Please enter a valid email address");
     if (empty($_POST["password"]))
-        array_push($errors, "Password is required.");
-    if (!empty($errors)) {
-        $data["errors"] = $errors;
-        echo json_encode($data["errors"]);
+        $errors_ .= displayAlert("Password is required.");
+    if (!empty($errors_)) {
+        echo $errors_;
     } else {
         $handler = new CustomerHandler();
         if (!$handler->isEmailExists($_POST["email"])) {
-            array_push($errors, "Email is not registered with us.");
-            $data["errors"] = $errors;
-            echo json_encode($data["errors"]);
+            echo displayAlert("Email is not registered with us.");
         } else {
             $customer = new Customer();
             $customer->setEmail($_POST["email"]);
             $newCustomer = new Customer();
             if (!$handler->isPasswordMatchWithEmail($_POST['password'], $customer)) {
-                array_push($errors, "Incorrect password.");
-                $data["errors"] = $errors;
-                echo json_encode($data["errors"]);
+                echo displayAlert("Incorrect password.");
             } else {
                 $_SESSION["username"] = $handler->getUsername($_POST["email"]);
                 $_SESSION["customerEmail"] = $customer->getEmail();
@@ -51,6 +45,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submitBtn"])) {
         }
     }
 }
+
+function displayAlert($msg)
+{
+    return '<div class="alert alert-warning" role="alert">' . $msg . '</div>';
+}
+
 /**
  * [x] validate the fields first
  * [x] if no errors check if email is registered
