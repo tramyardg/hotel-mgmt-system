@@ -32,7 +32,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submitBtn"])) {
 
         $handler = new CustomerHandler();
         $handler->insertCustomer($customer);
-        echo Util::displayAlertV1($handler->getExecutionFeedback(), "success");
+        echo Util::displayAlertV1($handler->getExecutionFeedback(), "info");
     }
 }
 

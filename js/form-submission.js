@@ -102,7 +102,15 @@ const reservationSubmit = function () {
         data: reservation
     }).done(function (response) {
         $(formIds.reservation).find('.alert').remove();
-        $(formIds.reservation).prepend(response);
+        try {
+            let out = JSON.parse(response);
+            if (out.success === "true") {
+                $(formIds.reservation).prepend(out.response);
+                $(formIds.reservation).find("input[type=submit]").prop("disabled", true);
+            }
+        } catch (string) {
+            $(formIds.reservation).prepend(response);
+        }
     });
 };
 

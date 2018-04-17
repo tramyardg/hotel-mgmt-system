@@ -49,7 +49,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submitBtn"])) {
 
         $rHandler = new ReservationHandler();
         $rHandler->create($r);
-        echo Util::displayAlertV2($rHandler->getExecutionFeedback(), "success");
+        $out = array(
+            "success" => "true",
+            "response" => Util::displayAlertV2($rHandler->getExecutionFeedback(), "success")
+        );
+        echo json_encode($out, JSON_PRETTY_PRINT);
 
         $rNewWithId = $rHandler->getReservationObjByHash($unique);
         $bdHandler = new BookingDetailHandler();
