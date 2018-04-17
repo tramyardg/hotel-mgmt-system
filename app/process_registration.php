@@ -3,6 +3,7 @@
 require '../lib/phpPasswordHashing/passwordLib.php';
 
 require 'DB.php';
+require 'Util.php';
 require 'dao/CustomerDAO.php';
 require 'models/Customer.php';
 require 'handlers/CustomerHandler.php';
@@ -12,12 +13,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submitBtn"])) {
     $errors_ = null;
 
     if (!filter_var($_POST["email"], FILTER_VALIDATE_EMAIL))
-        $errors_ .= displayAlert("Please enter a valid email address.", "warning");
+        $errors_ .= Util::displayAlertV1("Please enter a valid email address.", "warning");
     if (strlen($_POST["password"]) < 4 || strlen($_POST["password2"]) < 4)
-        $errors_ .= displayAlert("A password of at least 4 characters is required", "warning");
+        $errors_ .= Util::displayAlertV1("A password of at least 4 characters is required", "warning");
     if (!empty($_POST["password"]) && !empty($_POST["password2"])) {
         if ($_POST["password"] != $_POST["password2"])
-            $errors_ .= displayAlert("Password not match.", "warning");
+            $errors_ .= Util::displayAlertV1("Password not match.", "warning");
     }
 
     if (!empty($errors_)) {
@@ -31,13 +32,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submitBtn"])) {
 
         $handler = new CustomerHandler();
         $handler->insertCustomer($customer);
-        echo displayAlert($handler->getExecutionFeedback(), "success");
+        echo Util::displayAlertV1($handler->getExecutionFeedback(), "success");
     }
-}
-
-function displayAlert($msg, $type)
-{
-    return '<div class="alert alert-' . $type . '" role="alert">' . $msg . '</div>';
 }
 
 /**

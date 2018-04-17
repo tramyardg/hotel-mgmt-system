@@ -442,7 +442,6 @@ session_start();
 <script src="bootstrap-4.0.0/dist/js/bootstrap.js"></script>
 <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/select/1.2.5/js/dataTables.select.min.js"></script>
-<script src="js/util.js"></script>
 <script src="js/templates.js"></script>
 <script src="js/form-submission.js"></script>
 <script>

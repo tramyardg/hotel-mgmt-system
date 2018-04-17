@@ -5,6 +5,7 @@ session_start();
 
 require '../lib/phpPasswordHashing/passwordLib.php';
 require 'DB.php';
+require 'Util.php';
 require 'dao/CustomerDAO.php';
 require 'models/Customer.php';
 require 'handlers/CustomerHandler.php';
@@ -15,7 +16,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submitBtn"])) {
 
     if (!empty($_POST["newPassword"])) {
         if (strlen($_POST["newPassword"]) < 4)
-            $errors_ .= displayAlert("At least 4 characters is required.", "info");
+            $errors_ .= Util::displayAlertV1("At least 4 characters is required.", "info");
     }
 
     if (!empty($errors_)) {
@@ -30,7 +31,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submitBtn"])) {
 
         $cHandler = new CustomerHandler();
         $cHandler->updateCustomer($c);
-        echo displayAlert($cHandler->getExecutionFeedback(), "success");
+        echo Util::displayAlertV1($cHandler->getExecutionFeedback(), "success");
 
         if (isset($_SESSION["username"])) {
             $_SESSION["username"] = $cHandler->getUsername($_POST["email"]);
@@ -40,11 +41,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submitBtn"])) {
         }
     }
 
-}
-
-function displayAlert($msg, $type)
-{
-    return '<div class="alert alert-' . $type . '" role="alert">' . $msg . '</div>';
 }
 
 /**

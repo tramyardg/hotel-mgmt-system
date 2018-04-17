@@ -86,7 +86,6 @@
         crossorigin="anonymous"></script>
 <script src="bootstrap-4.0.0/dist/js/bootstrap.js"></script>
 <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
-<script src="js/util.js"></script>
 <script src="js/templates.js"></script>
 <script src="js/form-submission.js"></script>
 </body>
