@@ -9,22 +9,19 @@ require 'handlers/CustomerHandler.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submitBtn"])) {
 
-    // backup validation if JavaScript is turned off
-    $errors = array();
-    $data = array();
+    $errors_ = null;
 
     if (!filter_var($_POST["email"], FILTER_VALIDATE_EMAIL))
-        array_push($errors, "Please enter a valid email address.");
+        $errors_ .= "- Please enter a valid email address. <br>";
     if (strlen($_POST["password"]) < 6 || strlen($_POST["password2"]) < 6)
-        array_push($errors, "A password of at least 6 characters is required.");
+        $errors_ .= "- A password of at least 6 characters is required. <br>";
     if (!empty($_POST["password"]) && !empty($_POST["password2"])) {
         if ($_POST["password"] != $_POST["password2"])
-            array_push($errors, "Password not match.");
+            $errors_ .= "- Password not match. <br>";
     }
 
-    if (!empty($errors)) {
-        $data["errors"] = $errors;
-        echo json_encode($data["errors"]);
+    if (!empty($errors_)) {
+        echo $errors_;
     } else {
 
         $customer = new Customer();
@@ -34,13 +31,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submitBtn"])) {
         $customer->setPassword($_POST["password"]);
 
         $handler = new CustomerHandler();
-        if (!$handler->isEmailExists($_POST["email"])) {
-            $handler->insertCustomer($customer);
-        } else {
-            array_push($errors, "Email already exists.");
-            $data["errors"] = $errors;
-            echo json_encode($data["errors"]);
-        }
+        $handler->insertCustomer($customer);
+        echo $handler->getExecutionFeedback();
     }
 }
 /**

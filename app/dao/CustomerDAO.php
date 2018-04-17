@@ -33,15 +33,15 @@ class CustomerDAO extends DB
 
     public function insert(Customer $customer)
     {
-        // cannot insert cid since it's already auto incremented
         $sql = 'INSERT INTO `customer` (`fullname`, `email`, `password`, `phone`) VALUES (?, ?, ?, ?)';
         $stmt = DB::getInstance()->prepare($sql);
-        $stmt->execute(array(
+        $exec = $stmt->execute(array(
             $customer->getFullName(),
             $customer->getEmail(),
             $customer->getPassword(),
             $customer->getPhone()
         ));
+        return $exec;
     }
 
     public function update(Customer $customer)

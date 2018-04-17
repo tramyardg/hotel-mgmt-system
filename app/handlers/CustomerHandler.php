@@ -4,19 +4,16 @@ class CustomerHandler
 {
     public function __construct () {}
 
-    private $executionSuccessful;
+    private $executionFeedback;
 
     public function getExecutionFeedback()
     {
-        if ($this->executionSuccessful)
-            return "1";
-        else
-            return "0";
+        return $this->executionFeedback;
     }
 
-    public function setExecutionSuccessful($executionSuccessful)
+    public function setExecutionFeedback($executionFeedback)
     {
-        $this->executionSuccessful = $executionSuccessful;
+        $this->executionFeedback = $executionFeedback;
     }
 
     public function getAllCustomer()
@@ -91,13 +88,16 @@ class CustomerHandler
 
     public function insertCustomer(Customer $customer)
     {
-        try {
-            if (!$this->isEmailExists($customer->getEmail())) {
-                $dao = new CustomerDAO();
-                $dao->insert($customer);
+        if (!$this->isEmailExists($customer->getEmail())) {
+            $dao = new CustomerDAO();
+            $this->setExecutionFeedback($dao->insert($customer));
+            if ($dao->insert($customer)) {
+                $this->setExecutionFeedback("You have successfully registered! You can now login.");
+            } else {
+                $this->setExecutionFeedback("Server error occurred.");
             }
-        } catch (Exception $e) {
-            print $e->getMessage();
+        } else {
+            $this->setExecutionFeedback("Email already registered.");
         }
     }
 
@@ -106,7 +106,7 @@ class CustomerHandler
         try {
             if ($this->isEmailExists($customer->getEmail())) {
                 $dao = new CustomerDAO();
-                $this->setExecutionSuccessful($dao->update($customer));
+                $this->setExecutionFeedback($dao->update($customer));
             }
         } catch (Exception $e) {
             print $this->getExecutionFeedback();

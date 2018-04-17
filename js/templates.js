@@ -8,14 +8,14 @@ const registerSuccess = function () {
 };
 
 const alertV1 = function (message, type) {
-    $(".alert-warning").remove();
+    $(".alert").remove();
     return `<div class="alert alert-${type}" role="alert">
                 <span>${message}</span>
             </div>`;
 };
 
 const alertV2 = function (message, type) {
-    $(".alert-warning").remove();
+    $(".alert").remove();
     return `<div class="alert alert-${type}" role="alert">
               <h4 class="alert-heading">${message.title}</h4>
               <p>${message.body}</p>

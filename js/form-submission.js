@@ -56,15 +56,7 @@ const registrationSubmit = function () {
         type: "post",
         data: registrationData,
         success: function (data) {
-            if (util.isEmpty(data)) {
-                $(".card").remove();
-                $(".card-holder").append(registerSuccess());
-            } else {
-                let errorsArr = JSON.parse(data);
-                for (let i = 0; i < errorsArr.length; i++) {
-                    $(".card-body").prepend(alertV1(errorsArr[i], "warning"));
-                }
-            }
+            $(formIds.register).prepend(alertV1(data, "info"));
         }
     });
 };
