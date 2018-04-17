@@ -51,17 +51,9 @@ const confirmAjaxRequest = function (selectedItems) {
         type: "post",
         data: {item: selectedItems, confirm: true}
     }).done(function (response) {
-        if (response === "1") {
-            actions.confirm().modalId.modal("hide");
-            let msg = "You have successfully confirmed your selection(s). This page will reload to reflect changes.";
-            getTblContainer().prepend(alertV1(msg, "info"));
-            setTimeout(location.reload.bind(location), 2000);
-        } else {
-            actions.confirm().modalId.modal("hide");
-            let msg = "There must be an error processing your request. Please try again later.";
-            getTblContainer().prepend(alertV1(msg, "warning"));
-            setTimeout(location.reload.bind(location), 2000);
-        }
+        actions.confirm().modalId.modal("hide");
+        getTblContainer().prepend(response);
+        setTimeout(location.reload.bind(location), 3000);
     });
 };
 
@@ -85,17 +77,9 @@ const cancelAjaxRequest = function (selectedItems) {
         type: "post",
         data: {item: selectedItems, cancel: true}
     }).done(function (response) {
-        if (response === "1") {
-            actions.cancel().modalId.modal("hide");
-            let msg = "The task has completed. This page will reload to reflect changes.";
-            getTblContainer().prepend(alertV1(msg, "info"));
-            setTimeout(location.reload.bind(location), 3000);
-        } else {
-            actions.cancel().modalId.modal("hide");
-            let msg = "There must be an error processing your request. Please try again later.";
-            getTblContainer().prepend(alertV1(msg, "warning"));
-            setTimeout(location.reload.bind(location), 3000);
-        }
+        actions.cancel().modalId.modal("hide");
+        getTblContainer().prepend(response);
+        setTimeout(location.reload.bind(location), 3000);
     });
 };
 

@@ -124,6 +124,7 @@ const updateProfileSubmit = function () {
     }).done(function (response) {
         $(formIds.updateProfile).find(".alert").remove();
         $(formIds.updateProfile).prepend(response);
+        $(formIds.updateProfile).find("input").prop("disabled", true);
     });
 };
 

@@ -4,26 +4,23 @@ class BookingDetailHandler
 {
     public function __construct () {}
 
-    private $executionSuccessful;
+    private $executionFeedback;
 
     public function getExecutionFeedback()
     {
-        if ($this->executionSuccessful)
-            return "1";
-        else
-            return "0";
+        return $this->executionFeedback;
     }
 
-    public function setExecutionSuccessful($executionSuccessful)
+    public function setExecutionFeedback($executionFeedback)
     {
-        $this->executionSuccessful = $executionSuccessful;
+        $this->executionFeedback = $executionFeedback;
     }
 
     public function create(Reservation $r)
     {
         try {
             $dao = new BookingDetailDAO();
-            $this->setExecutionSuccessful($dao->insert($r));
+            $this->setExecutionFeedback($dao->insert($r));
         } catch (Exception $e) {
             print $e->getMessage();
         }
@@ -85,7 +82,13 @@ class BookingDetailHandler
     {
         for ($i = 0; $i < count($item); $i++) {
             $dao = new BookingDetailDAO();
-            $this->setExecutionSuccessful($dao->updateConfirmed($item[$i]));
+            if ($dao->updateConfirmed($item[$i])) {
+                $out = "These reservations have been successfully <b>confirmed</b>.";
+                $out .= " This page will reload to reflect changes.";
+                $this->setExecutionFeedback($out);
+            } else {
+                $this->setExecutionFeedback("There must be an error processing your request. Please try again later.");
+            }
         }
     }
 
@@ -93,7 +96,13 @@ class BookingDetailHandler
     {
         for ($i = 0; $i < count($item); $i++) {
             $dao = new BookingDetailDAO();
-            $this->setExecutionSuccessful($dao->updateCancelled($item[$i]));
+            if ($dao->updateCancelled($item[$i])) {
+                $out = "These reservations have been successfully <b>cancelled</b>.";
+                $out .= " This page will reload to reflect changes.";
+                $this->setExecutionFeedback($out);
+            } else {
+                $this->setExecutionFeedback("There must be an error processing your request. Please try again later.");
+            }
         }
     }
 
