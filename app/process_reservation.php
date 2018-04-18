@@ -39,7 +39,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submitBtn"])) {
         $r->setCid($_POST["cid"]);
         $r->setStart($_POST["start"]);
         $r->setEnd($_POST["end"]);
-        $r->setRoomType($_POST["type"]);
+        $r->setType($_POST["type"]);
         $r->setRequirement($_POST["requirement"]);
         $r->setAdults($_POST["adults"]);
         $r->setChildren($_POST["children"]);

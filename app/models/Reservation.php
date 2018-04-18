@@ -1,11 +1,7 @@
 <?php
 
-class Reservation
+class Reservation extends Booking
 {
-    public function __construct () {}
-
-    private $id;
-    private $cid;
     private $start;
     private $end;
     private $type;
@@ -16,24 +12,9 @@ class Reservation
     private $timestamp;
     private $hash;
 
-    public function getBookingId()
+    public function __construct()
     {
-        return $this->id;
-    }
-
-    public function setBookingId($bookingId)
-    {
-        $this->id = $bookingId;
-    }
-
-    public function getCid()
-    {
-        return $this->cid;
-    }
-
-    public function setCid($cid)
-    {
-        $this->cid = $cid;
+        parent::__construct();
     }
 
     public function getStart()
@@ -56,14 +37,14 @@ class Reservation
         $this->end = $end;
     }
 
-    public function getRoomType()
+    public function getType()
     {
         return $this->type;
     }
 
-    public function setRoomType($roomType)
+    public function setType($type)
     {
-        $this->type = $roomType;
+        $this->type = $type;
     }
 
     public function getRequirement()
@@ -111,14 +92,19 @@ class Reservation
         return $this->timestamp;
     }
 
-    public function setHash($unique)
+    public function setTimestamp($timestamp)
     {
-        $this->hash = $unique;
+        $this->timestamp = $timestamp;
     }
 
     public function getHash()
     {
         return $this->hash;
+    }
+
+    public function setHash($hash)
+    {
+        $this->hash = $hash;
     }
 
 }

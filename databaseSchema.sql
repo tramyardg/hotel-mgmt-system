@@ -29,7 +29,6 @@ DROP TABLE IF EXISTS `reservation`;
 CREATE TABLE `booking` (
   `id` int(11) NOT NULL,
   `cid` int(11) NOT NULL,
-  `rid` int(11) NOT NULL,
   `status` varchar(100) DEFAULT 'pending',
   `notes` varchar(500) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -53,8 +52,7 @@ CREATE TABLE `customer` (
 --
 
 CREATE TABLE `reservation` (
-  `id` int(11) NOT NULL,
-  `cid` int(11) NOT NULL,
+  `booking_id` int(11) NOT NULL,
   `start` varchar(30) NOT NULL,
   `end` varchar(30) NOT NULL,
   `type` varchar(100) NOT NULL,

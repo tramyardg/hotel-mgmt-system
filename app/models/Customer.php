@@ -2,17 +2,16 @@
 
 class Customer
 {
-
-    public function __construct () {}
-
-    // private variables have to be
-    // the same as the column names
-    // in the database
     private $cid;
     private $fullname;
     private $email;
     private $password;
     private $phone;
+
+    public function __construct ()
+    {
+
+    }
 
     public function getId()
     {
