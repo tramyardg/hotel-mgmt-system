@@ -1,6 +1,5 @@
 <?php
 
-// super class
 class Booking
 {
     private $id;

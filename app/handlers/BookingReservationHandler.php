@@ -2,23 +2,11 @@
 
 class BookingReservationHandler extends BookingReservationDAO
 {
-    private $booking;
     private $reservation;
 
-    public function __construct(Booking $booking, Reservation $reservation)
+    public function __construct(Reservation $reservation)
     {
-        $this->booking = $booking;
         $this->reservation = $reservation;
-    }
-
-    public function getBooking()
-    {
-        return $this->booking;
-    }
-
-    public function setBooking($booking)
-    {
-        $this->booking = $booking;
     }
 
     public function getReservation()
@@ -34,7 +22,10 @@ class BookingReservationHandler extends BookingReservationDAO
     public function create()
     {
         $dao = new BookingReservationDAO();
-        $dao->insert($this->booking, $this->reservation);
-
+        if ($dao->insert($this->reservation)) {
+            echo "good";
+        } else {
+            echo "no good";
+        }
     }
 }
