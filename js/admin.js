@@ -2,6 +2,11 @@ const getTblContainer = function () {
     return $("#tableContainer");
 };
 
+const appendResponse = function (response) {
+    getTblContainer().find(".alert").remove();
+    getTblContainer().prepend(response);
+};
+
 const getSelectedItems = function () {
     return $("#reservationDataTable tr.selected");
 };
@@ -52,7 +57,7 @@ const confirmAjaxRequest = function (selectedItems) {
         data: {item: selectedItems, confirm: true}
     }).done(function (response) {
         actions.confirm().modalId.modal("hide");
-        getTblContainer().prepend(response);
+        appendResponse(response);
         setTimeout(location.reload.bind(location), 3000);
     });
 };
@@ -78,7 +83,7 @@ const cancelAjaxRequest = function (selectedItems) {
         data: {item: selectedItems, cancel: true}
     }).done(function (response) {
         actions.cancel().modalId.modal("hide");
-        getTblContainer().prepend(response);
+        appendResponse(response);
         setTimeout(location.reload.bind(location), 3000);
     });
 };
