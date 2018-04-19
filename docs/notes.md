@@ -13,7 +13,7 @@ reservation must extends booking when designing the models. <br>
 `class Reservation extends Booking { }`<br>
 
 **Entity Relationship Diagram** <br>
-Reservation shares primary key with booking so when you a delete booking, 
+Reservation shares primary key with booking so when you delete a booking, 
 reservation is also deleted.
 ![diagram](https://user-images.githubusercontent.com/5623994/39007054-e4ccad82-43d2-11e8-8842-6249b3e25905.png)
 <br> See `hotel.sql` for more details.
