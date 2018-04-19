@@ -16,16 +16,6 @@ class BookingDetailHandler
         $this->executionFeedback = $executionFeedback;
     }
 
-    public function create(Reservation $r)
-    {
-        try {
-            $dao = new BookingDetailDAO();
-            $this->setExecutionFeedback($dao->insert($r));
-        } catch (Exception $e) {
-            print $e->getMessage();
-        }
-    }
-
     /**
      * Generic method that maps both reservation
      * object and booking object
@@ -50,7 +40,7 @@ class BookingDetailHandler
     {
         try {
             $dao = new BookingDetailDAO();
-            return $dao->fetchBookingByCid($c);
+            return $dao->fetchBookingByCid($c->getId());
         } catch (Exception $e) {
             return $e;
         }

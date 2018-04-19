@@ -16,21 +16,6 @@ class ReservationHandler {
         $this->executionFeedback = $executionFeedback;
     }
 
-    public function create(Reservation $r)
-    {
-        $dao = new ReservationDAO();
-        if ($dao->insert($r)) {
-            $message = array(
-                "heading" => "Well done!",
-                "content" => "You have reserved a room. You can view the status of your booking anytime.",
-                "footer"  => "Your booking will be mark confirmed once approved."
-            );
-            $this->setExecutionFeedback($message);
-        } else {
-            $this->setExecutionFeedback("Server error! Please try again later.");
-        }
-    }
-
     public function updateReservation(Reservation $r)
     {
         try {

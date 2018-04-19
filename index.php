@@ -22,8 +22,8 @@ session_start();
     require 'app/dao/ReservationDAO.php';
     require 'app/dao/BookingDetailDAO.php';
     require 'app/models/Customer.php';
+    require 'app/models/Booking.php';
     require 'app/models/Reservation.php';
-    require 'app/models/BookingDetail.php';
     require 'app/handlers/CustomerHandler.php';
     require 'app/handlers/ReservationHandler.php';
     require 'app/handlers/BookingDetailHandler.php';
@@ -122,16 +122,16 @@ session_start();
                 <?php   foreach ($cBookings as $k => $v) { ?>
                     <tr>
                         <th scope="row"><?php echo ($k + 1); ?></th>
-                        <td class="text-hide p-0"><?php echo $v->getBid(); ?></td>
-                        <td><?php echo $v->getStart(); ?></td>
-                        <td><?php echo $v->getEnd(); ?></td>
-                        <td><?php echo $v->getType(); ?></td>
-                        <td><?php echo $v->getRequirement(); ?></td>
-                        <td><?php echo $v->getAdults(); ?></td>
-                        <td><?php echo $v->getChildren(); ?></td>
-                        <td><?php echo $v->getRequests(); ?></td>
-                        <td><?php echo $v->getTimestamp(); ?></td>
-                        <td><?php echo $v->getStatus(); ?></td>
+                        <td class="text-hide p-0"><?php echo $v["id"]; ?></td>
+                        <td><?php echo $v["start"]; ?></td>
+                        <td><?php echo $v["end"]; ?></td>
+                        <td><?php echo $v["type"]; ?></td>
+                        <td><?php echo $v["requirement"]; ?></td>
+                        <td><?php echo $v["adults"]; ?></td>
+                        <td><?php echo $v["children"]; ?></td>
+                        <td><?php echo $v["requests"]; ?></td>
+                        <td><?php echo $v["timestamp"]; ?></td>
+                        <td><?php echo $v["status"]; ?></td>
                     </tr>
                 <?php } ?>
             <?php } ?>
