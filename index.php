@@ -19,13 +19,11 @@ session_start();
     require 'app/DB.php';
     require 'app/Util.php';
     require 'app/dao/CustomerDAO.php';
-    require 'app/dao/ReservationDAO.php';
     require 'app/dao/BookingDetailDAO.php';
     require 'app/models/Customer.php';
     require 'app/models/Booking.php';
     require 'app/models/Reservation.php';
     require 'app/handlers/CustomerHandler.php';
-    require 'app/handlers/ReservationHandler.php';
     require 'app/handlers/BookingDetailHandler.php';
 
     $username = null;

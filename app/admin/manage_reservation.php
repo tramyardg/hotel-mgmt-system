@@ -3,7 +3,6 @@
 require '../DB.php';
 require '../Util.php';
 require '../dao/BookingDetailDAO.php';
-require '../models/BookingDetail.php';
 require '../handlers/BookingDetailHandler.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["confirm"])) {

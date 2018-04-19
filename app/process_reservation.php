@@ -2,11 +2,9 @@
 
 require 'DB.php';
 require 'Util.php';
-require 'dao/ReservationDAO.php';
 require 'dao/BookingReservationDAO.php';
 require 'models/Booking.php';
 require 'models/Reservation.php';
-require 'handlers/ReservationHandler.php';
 require 'handlers/BookingReservationHandler.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submitBtn"])) {
