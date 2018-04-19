@@ -2,12 +2,10 @@
 
 require 'DB.php';
 require 'Util.php';
-require 'dao/ReservationDAO.php';
-require 'dao/BookingDetailDAO.php';
+require 'dao/BookingReservationDAO.php';
+require 'models/Booking.php';
 require 'models/Reservation.php';
-require 'models/BookingDetail.php';
-require 'handlers/ReservationHandler.php';
-require 'handlers/BookingDetailHandler.php';
+require 'handlers/BookingReservationHandler.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submitBtn"])) {
 
@@ -37,9 +35,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submitBtn"])) {
     } else {
         $r = new Reservation();
         $r->setCid($_POST["cid"]);
+        $r->setStatus("pending");
+        $r->setNotes(null);
         $r->setStart($_POST["start"]);
         $r->setEnd($_POST["end"]);
-        $r->setRoomType($_POST["type"]);
+        $r->setType($_POST["type"]);
         $r->setRequirement($_POST["requirement"]);
         $r->setAdults($_POST["adults"]);
         $r->setChildren($_POST["children"]);
@@ -47,17 +47,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submitBtn"])) {
         $unique = uniqid();
         $r->setHash($unique);
 
-        $rHandler = new ReservationHandler();
-        $rHandler->create($r);
+        $brh = new BookingReservationHandler($r);
+        $brh->create();
         $out = array(
             "success" => "true",
-            "response" => Util::displayAlertV2($rHandler->getExecutionFeedback(), "success")
+            "response" => Util::displayAlertV2($brh->getExecutionFeedback(), "success")
         );
         echo json_encode($out, JSON_PRETTY_PRINT);
 
-        $rNewWithId = $rHandler->getReservationObjByHash($unique);
-        $bdHandler = new BookingDetailHandler();
-        $bdHandler->create($rNewWithId);
     }
 
 }

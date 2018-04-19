@@ -13,18 +13,16 @@ session_start();
     <link rel="stylesheet" href="https://cdn.datatables.net/select/1.2.5/css/select.dataTables.min.css">
     <link rel="stylesheet" href="css/main.css">
     <?php
-    
+
     require 'lib/phpPasswordHashing/passwordLib.php';
     require 'app/DB.php';
     require 'app/Util.php';
     require 'app/dao/CustomerDAO.php';
-    require 'app/dao/ReservationDAO.php';
     require 'app/dao/BookingDetailDAO.php';
     require 'app/models/Customer.php';
+    require 'app/models/Booking.php';
     require 'app/models/Reservation.php';
-    require 'app/models/BookingDetail.php';
     require 'app/handlers/CustomerHandler.php';
-    require 'app/handlers/ReservationHandler.php';
     require 'app/handlers/BookingDetailHandler.php';
 
     $username = null;
@@ -53,8 +51,7 @@ session_start();
         $pendingReservation = $bdHandler->getPending();
         $confirmedReservation = $bdHandler->getConfirmed();
         $totalCustomers = $cCommon->totalCustomersCount();
-        $rHandler = new ReservationHandler();
-        $totalReservations = $rHandler->totalReservationsCount();
+        $totalReservations = count($bdHandler->getAllBookings());
     }
 
     ?>
@@ -192,16 +189,17 @@ session_start();
                         <?php   foreach ($allBookings as $k => $v) { ?>
                             <tr>
                                 <th scope="row"><?php echo ($k + 1); ?></th>
-                                <td class="text-hide p-0" data-id="<?php echo $v->getBid(); ?>">
-                                    <?php echo $v->getBid(); ?>
+                                <td class="text-hide p-0" data-id="<?php echo $v["id"]; ?>">
+                                    <?php echo $v["id"]; ?>
                                 </td>
-                                <td><?php echo $cCommon->getCustomerObjByCid($v->getCid())->getEmail(); ?></td>
-                                <td><?php echo $v->getStart(); ?></td>
-                                <td><?php echo $v->getEnd(); ?></td>
-                                <td><?php echo $v->getType(); ?></td>
-                                <td><?php echo $v->getTimestamp(); ?></td>
-                                <td><?php echo $v->getStatus(); ?></td>
-                                <td><?php echo $v->getNotes(); ?></td>
+                                <?php $cid = $v["cid"]; ?>
+                                <td><?php echo $cCommon->getCustomerObjByCid($cid)->getEmail(); ?></td>
+                                <td><?php echo $v["start"]; ?></td>
+                                <td><?php echo $v["end"]; ?></td>
+                                <td><?php echo $v["type"]; ?></td>
+                                <td><?php echo $v["timestamp"]; ?></td>
+                                <td><?php echo $v["status"]; ?></td>
+                                <td><?php echo $v["notes"]; ?></td>
                             </tr>
                         <?php } ?>
                     <?php } ?>

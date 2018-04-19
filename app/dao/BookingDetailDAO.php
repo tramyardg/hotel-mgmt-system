@@ -7,64 +7,63 @@ class BookingDetailDAO
     {
     }
 
-    public function insert(Reservation $r)
+    // use this in admin.php
+    public function fetchBooking()
     {
-        $sql = 'INSERT INTO `booking` (`cid`, `rid`) VALUES (?, ?)';
-        $stmt = DB::getInstance()->prepare($sql);
-        $exec = $stmt->execute(array($r->getCid(), $r->getBookingId()));
-        return $exec;
-    }
-
-    /**
-     * Use for displaying complete booking details.
-     * It has reservation + booking data sets.
-     */
-    public function fetchBooking() {
-        $sql = 'SELECT t1.id as `rid`, t1.cid, t1.start, t1.end, t1.type, t1.requirement, ';
-        $sql .= 't1.adults, t1.children, ';
-        $sql .= 't1.requests, t1.timestamp, t2.id AS `bid`, t2.status, t2.notes ';
-        $sql .= 'FROM reservation AS t1 ';
-        $sql .= 'LEFT JOIN booking AS t2 ';
-        $sql .= 'ON t1.id = t2.rid ';
+        $sql = 'SELECT
+          t1.id,
+          t1.cid,
+          t1.status,
+          t1.notes,
+          t2.start,
+          t2.end,
+          t2.type,
+          t2.requirement,
+          t2.adults,
+          t2.children,
+          t2.requests,
+          t2.timestamp
+        FROM booking AS t1 LEFT JOIN reservation AS t2 ON t1.id = t2.id;';
         $stmt = DB::getInstance()->prepare($sql);
         $stmt->execute();
-        return $stmt->fetchAll(PDO::FETCH_CLASS, "BookingDetail");
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    /**
-     * Use for displaying complete booking details
-     * of customer
-     * @param Customer $c
-     * @return array
-     */
-    public function fetchBookingByCid(Customer $c)
+    // use in index.php
+    public function fetchBookingByCid($cid)
     {
-        $sql = 'SELECT t1.id as `rid`, t1.cid, t1.start, t1.end, t1.type, t1.requirement, ';
-        $sql .= 't1.adults, t1.children, ';
-        $sql .= 't1.requests, t1.timestamp, t2.id AS `bid`, t2.status, t2.notes ';
-        $sql .= 'FROM reservation AS t1 ';
-        $sql .= 'LEFT JOIN booking AS t2 ';
-        $sql .= 'ON t1.id = t2.rid ';
-        $sql .= 'WHERE t1.cid = ? ';
+        $sql = 'SELECT
+          t1.id,
+          t1.status,
+          t2.start,
+          t2.end,
+          t2.type,
+          t2.requirement,
+          t2.adults,
+          t2.children,
+          t2.requests,
+          t2.timestamp
+        FROM booking AS t1 LEFT JOIN reservation AS t2 ON t1.id = t2.id
+        WHERE t1.cid = ?;';
         $stmt = DB::getInstance()->prepare($sql);
-        $stmt->execute([$c->getId()]);
-        // maps data into BookingDetail model
-        return $stmt->fetchAll(PDO::FETCH_CLASS, "BookingDetail");
+        $stmt->execute([$cid]);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    // $i is a booking id from booking table
     public function updateConfirmed($i)
     {
-        $sql = 'UPDATE `booking` SET `status` = "confirmed" WHERE `booking`.`id` = ' . $i . ';';
+        $sql = 'UPDATE `booking` SET `status` = ? WHERE `booking`.`id` = ' . $i . ';';
         $stmt = DB::getInstance()->prepare($sql);
-        $exec = $stmt->execute();
+        $exec = $stmt->execute(["confirmed"]);
         return $exec;
     }
 
     public function updateCancelled($i)
     {
-        $sql = 'UPDATE `booking` SET `status` = "cancelled" WHERE `booking`.`id` = ' . $i . ';';
+        $sql = 'UPDATE `booking` SET `status` = ? WHERE `booking`.`id` = ' . $i . ';';
         $stmt = DB::getInstance()->prepare($sql);
-        $exec = $stmt->execute();
+        $exec = $stmt->execute(["cancelled"]);
         return $exec;
     }
 

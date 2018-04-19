@@ -16,20 +16,6 @@ class BookingDetailHandler
         $this->executionFeedback = $executionFeedback;
     }
 
-    public function create(Reservation $r)
-    {
-        try {
-            $dao = new BookingDetailDAO();
-            $this->setExecutionFeedback($dao->insert($r));
-        } catch (Exception $e) {
-            print $e->getMessage();
-        }
-    }
-
-    /**
-     * Generic method that maps both reservation
-     * object and booking object
-     */
     public function getAllBookings()
     {
         try {
@@ -40,17 +26,11 @@ class BookingDetailHandler
         }
     }
 
-    /**
-     * Customer specific method that maps both
-     * reservation data object and booking object
-     * @param Customer $c
-     * @return array|Exception
-     */
     public function getCustomerBookings(Customer $c)
     {
         try {
             $dao = new BookingDetailDAO();
-            return $dao->fetchBookingByCid($c);
+            return $dao->fetchBookingByCid($c->getId());
         } catch (Exception $e) {
             return $e;
         }
@@ -60,7 +40,7 @@ class BookingDetailHandler
     {
         $count = 0;
         foreach ($this->getAllBookings() as $v) {
-            if ($v->getStatus() == "pending") {
+            if ($v["status"] == Util::pending) {
                 $count++;
             }
         }
@@ -71,7 +51,7 @@ class BookingDetailHandler
     {
         $count = 0;
         foreach ($this->getAllBookings() as $v) {
-            if ($v->getStatus() == "confirmed") {
+            if ($v["status"] == Util::confirmed) {
                 $count++;
             }
         }
