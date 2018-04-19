@@ -38,10 +38,6 @@ class CustomerHandler
         }
     }
 
-    /**
-     * @param $email
-     * @return Customer
-     */
     public function getCustomerObj($email) {
         $c = new Customer();
         $dao = new CustomerDAO();
@@ -56,10 +52,6 @@ class CustomerHandler
         return $c;
     }
 
-    /**
-     * @param $id
-     * @return Customer
-     */
     public function getCustomerObjByCid($id) {
         $c = new Customer();
         $dao = new CustomerDAO();

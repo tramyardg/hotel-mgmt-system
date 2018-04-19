@@ -13,7 +13,7 @@ session_start();
     <link rel="stylesheet" href="https://cdn.datatables.net/select/1.2.5/css/select.dataTables.min.css">
     <link rel="stylesheet" href="css/main.css">
     <?php
-    
+
     require 'lib/phpPasswordHashing/passwordLib.php';
     require 'app/DB.php';
     require 'app/Util.php';
@@ -48,12 +48,10 @@ session_start();
         $allCustomer = $cCommon->getAllCustomer();
 
         // reservation stats
-        //  TODO
-        $pendingReservation = 0;
-        $confirmedReservation = 0;
-        $totalCustomers = 0;
-//        $rHandler = new ReservationHandler();
-//        $totalReservations = $rHandler->totalReservationsCount();
+        $pendingReservation = $bdHandler->getPending();
+        $confirmedReservation = $bdHandler->getConfirmed();
+        $totalCustomers = $cCommon->totalCustomersCount();
+        $totalReservations = count($bdHandler->getAllBookings());
     }
 
     ?>

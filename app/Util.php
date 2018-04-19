@@ -2,6 +2,9 @@
 
 class Util
 {
+    const pending = "pending";
+    const confirmed = "confirmed";
+
     public static function dateToday()
     {
         return date("Y-m-d");
