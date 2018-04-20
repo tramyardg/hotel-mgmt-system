@@ -14,9 +14,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submitBtn"])) {
 
     $errors_ = null;
 
+    $pwd = null;
     if (!empty($_POST["newPassword"])) {
-        if (strlen($_POST["newPassword"]) < 4)
+        if (strlen($_POST["newPassword"]) < 4) {
             $errors_ .= Util::displayAlertV1("At least 4 characters is required.", "info");
+        } else {
+            $pwd = $_POST["newPassword"];
+        }
+    } else {
+        if (isset($_SESSION["password"]))
+            $pwd = $_SESSION["password"];
     }
 
     if (!empty($errors_)) {
@@ -27,7 +34,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submitBtn"])) {
         $c->setFullName($_POST["fullName"]);
         $c->setPhone($_POST["phone"]);
         $c->setEmail($_POST["email"]);
-        $c->setPassword($_POST["newPassword"]);
+        $c->setPassword($pwd);
 
         $cHandler = new CustomerHandler();
         $cHandler->updateCustomer($c);
@@ -42,8 +49,3 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submitBtn"])) {
     }
 
 }
-
-/**
- * if password field is not empty
- * then validate it
- */
