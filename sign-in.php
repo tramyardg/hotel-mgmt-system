@@ -1,3 +1,15 @@
+<?php
+ob_start();
+session_start();
+
+if (isset($_SESSION["authenticated"]))
+{
+    if ($_SESSION["authenticated"] == "1")
+    {
+        header("Location: index.php");
+    }
+}
+?>
 <!doctype html>
 <html lang="en">
 <head>
@@ -63,7 +75,6 @@
         integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
         crossorigin="anonymous"></script>
 <script src="bootstrap-4.0.0/dist/js/bootstrap.js"></script>
-<script src="js/templates.js"></script>
 <script src="js/form-submission.js"></script>
 </body>
 </html>

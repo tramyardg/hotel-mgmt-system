@@ -405,9 +405,6 @@ session_start();
                                     <label for="updatePassword">New password</label>
                                     <input type="password" class="form-control" id="updatePassword"
                                            name="updatePassword"
-                                           <?php if (isset($_SESSION["password"])) ?>
-                                           value="<?php echo $_SESSION["password"]; ?>"
-                                           <?php ?>
                                            title="At least 4 characters with letters and numbers">
                                 </div>
                                 <div class="form-group">
@@ -440,7 +437,6 @@ session_start();
 <script src="bootstrap-4.0.0/dist/js/bootstrap.js"></script>
 <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/select/1.2.5/js/dataTables.select.min.js"></script>
-<script src="js/templates.js"></script>
 <script src="js/form-submission.js"></script>
 <script>
     $(document).ready(function () {
