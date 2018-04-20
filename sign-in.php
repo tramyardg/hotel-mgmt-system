@@ -1,3 +1,15 @@
+<?php
+ob_start();
+session_start();
+
+if (isset($_SESSION["authenticated"]))
+{
+    if ($_SESSION["authenticated"] == "1")
+    {
+        header("Location: index.php");
+    }
+}
+?>
 <!doctype html>
 <html lang="en">
 <head>
