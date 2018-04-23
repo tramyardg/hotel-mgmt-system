@@ -1,0 +1,12 @@
+{
+  "extends": "standard",
+  "rules": {
+    "semi": [
+      "error",
+      "always"
+    ]
+  },
+  "env": {
+    "jquery": true
+  }
+}
