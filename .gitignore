@@ -2,5 +2,4 @@ vendor/
 node_modules/
 package-lock.json
 composer.lock
-.eslintrc.json
 admin.json
