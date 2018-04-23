@@ -2,7 +2,9 @@
 
 class BookingDetailHandler
 {
-    public function __construct () {}
+    public function __construct()
+    {
+    }
 
     private $executionFeedback;
 
@@ -85,5 +87,4 @@ class BookingDetailHandler
             }
         }
     }
-
 }

@@ -8,27 +8,33 @@ require 'models/Reservation.php';
 require 'handlers/BookingReservationHandler.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submitBtn"])) {
-
     $startDate = $endDate = null;
     $errors_ = null;
 
-    if (empty($_POST["start"]))
+    if (empty($_POST["start"])) {
         $errors_ .= Util::displayAlertV1("Please select a start date.", "info");
-    if (empty($_POST["end"]))
+    }
+    if (empty($_POST["end"])) {
         $errors_ .= Util::displayAlertV1("Please select an end date.", "info");
-    if (!DateTime::createFromFormat('Y-m-d', $_POST["start"]))
+    }
+    if (!DateTime::createFromFormat('Y-m-d', $_POST["start"])) {
         $errors_ .= Util::displayAlertV1("Invalid start date.", "info");
-    if (!DateTime::createFromFormat('Y-m-d', $_POST["end"]))
+    }
+    if (!DateTime::createFromFormat('Y-m-d', $_POST["end"])) {
         $errors_ .= Util::displayAlertV1("Invalid end date.", "info");
-    if (empty($_POST["type"]))
+    }
+    if (empty($_POST["type"])) {
         $errors_ .= Util::displayAlertV1("Please select a room type.", "info");
-    if (empty($_POST["adults"]))
+    }
+    if (empty($_POST["adults"])) {
         $errors_ .= Util::displayAlertV1("Please enter a number of adults.", "info");
+    }
 
     $startDate = new DateTime($_POST["start"]);
     $endDate = new DateTime($_POST["end"]);
-    if ($endDate <= $startDate)
+    if ($endDate <= $startDate) {
         $errors_ .= Util::displayAlertV1("End date cannot be less or equal to start date.", "info");
+    }
 
     if (!empty($errors_)) {
         echo $errors_;
@@ -54,9 +60,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submitBtn"])) {
             "response" => Util::displayAlertV2($brh->getExecutionFeedback(), "success")
         );
         echo json_encode($out, JSON_PRETTY_PRINT);
-
     }
-
 }
 
 /*

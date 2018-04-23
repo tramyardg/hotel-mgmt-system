@@ -2,7 +2,9 @@
 
 class CustomerHandler
 {
-    public function __construct () {}
+    public function __construct()
+    {
+    }
 
     private $serverErrorMsg = "Server error occurred. Please try again later.";
 
@@ -38,7 +40,8 @@ class CustomerHandler
         }
     }
 
-    public function getCustomerObj($email) {
+    public function getCustomerObj($email)
+    {
         $c = new Customer();
         $dao = new CustomerDAO();
         $k = $dao->getByEmail($email);
@@ -52,7 +55,8 @@ class CustomerHandler
         return $c;
     }
 
-    public function getCustomerObjByCid($id) {
+    public function getCustomerObjByCid($id)
+    {
         $c = new Customer();
         $dao = new CustomerDAO();
         $k = $dao->getByCid($id);
@@ -106,9 +110,10 @@ class CustomerHandler
         } else {
             $this->setExecutionFeedback("This email is not registered.");
         }
-     }
+    }
 
-    public function isEmailExists($email) {
+    public function isEmailExists($email)
+    {
         return count($this->getSingleRow($email)) > 0;
     }
 
@@ -137,5 +142,4 @@ class CustomerHandler
     {
         return count($this->getAllCustomer());
     }
-
 }

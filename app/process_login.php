@@ -15,10 +15,12 @@ require 'handlers/CustomerHandler.php';
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submitBtn"])) {
     $errors_ = null;
 
-    if (!filter_var($_POST["email"], FILTER_VALIDATE_EMAIL))
+    if (!filter_var($_POST["email"], FILTER_VALIDATE_EMAIL)) {
         $errors_ .=  Util::displayAlertV1("Please enter a valid email address", "warning");
-    if (empty($_POST["password"]))
+    }
+    if (empty($_POST["password"])) {
         $errors_ .= Util::displayAlertV1("Password is required.", "warning");
+    }
     if (!empty($errors_)) {
         echo $errors_;
     } else {

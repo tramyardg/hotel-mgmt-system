@@ -62,5 +62,4 @@ class CustomerDAO extends DB
         $stmt = DB::getInstance()->prepare($sql);
         $stmt->execute([$customer->getId()]);
     }
-
 }

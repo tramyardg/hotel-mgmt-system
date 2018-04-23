@@ -106,6 +106,4 @@ class Reservation extends Booking
     {
         $this->hash = $hash;
     }
-
 }
-

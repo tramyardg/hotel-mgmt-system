@@ -9,7 +9,6 @@ class Booking
 
     public function __construct()
     {
-
     }
 
     public function getId()
@@ -51,6 +50,4 @@ class Booking
     {
         $this->notes = $notes;
     }
-
-
 }

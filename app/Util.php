@@ -33,5 +33,4 @@ class Util
           <p class="mb-0">' . $message["footer"] . '</p>
         </div>';
     }
-
 }

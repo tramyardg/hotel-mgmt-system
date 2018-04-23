@@ -43,6 +43,4 @@ class BookingReservationHandler extends BookingReservationDAO
             $this->setExecutionFeedback("Server error! Please try again later.");
         }
     }
-
-
 }

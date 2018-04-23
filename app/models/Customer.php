@@ -8,9 +8,8 @@ class Customer
     private $password;
     private $phone;
 
-    public function __construct ()
+    public function __construct()
     {
-
     }
 
     public function getId()
@@ -78,5 +77,4 @@ class Customer
         }
         return $isAdmin;
     }
-
 }

@@ -11,7 +11,6 @@ require 'models/Customer.php';
 require 'handlers/CustomerHandler.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submitBtn"])) {
-
     $errors_ = null;
 
     $pwd = null;
@@ -22,8 +21,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submitBtn"])) {
             $pwd = $_POST["newPassword"];
         }
     } else {
-        if (isset($_SESSION["password"]))
+        if (isset($_SESSION["password"])) {
             $pwd = $_SESSION["password"];
+        }
     }
 
     if (!empty($errors_)) {
@@ -47,5 +47,4 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submitBtn"])) {
             $_SESSION["phoneNumber"] = $_POST["phone"];
         }
     }
-
 }

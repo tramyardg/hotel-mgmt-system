@@ -66,7 +66,6 @@ class BookingDetailDAO
         $exec = $stmt->execute(["cancelled"]);
         return $exec;
     }
-
 }
 
 /**

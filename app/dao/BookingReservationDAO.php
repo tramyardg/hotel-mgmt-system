@@ -58,5 +58,4 @@ class BookingReservationDAO
         $exec = $stmt->rowCount();
         return $exec;
     }
-
 }

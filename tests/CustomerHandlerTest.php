@@ -9,7 +9,5 @@ class CustomerHandlerTest extends PHPUnit_Framework_TestCase
         $ch = new CustomerHandler();
         $this->assertNotEmpty($ch->getAllCustomer());
         $this->assertNotNull($ch->getAllCustomer());
-
     }
-
 }
