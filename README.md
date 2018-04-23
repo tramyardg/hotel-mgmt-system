@@ -5,10 +5,17 @@ $ ./vendor/bin/phpunit tests
 ```
 $ ./vendor/bin/phpunit tests/CustomerHandlerTest/php
 ```
-**PHP Code Beautifier and Fixer**
+**Run PHP code beautifier and fixer**
 ```
 $ ./vendor/bin/phpcbf app/process_login.php --standard=ruleset.xml
 ```
 ```
 $ ./vendor/bin/phpcbf app/*/*.php --standard=ruleset.xml
+```
+**Run ESLint to format/fix JavaScript code**
+```
+npm run eslint
+```
+```
+npm run eslint -- --fix
 ```

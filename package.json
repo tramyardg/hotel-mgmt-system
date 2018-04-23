@@ -1,11 +1,17 @@
 {
   "private": true,
   "scripts": {
-    "dev": "npm run development",
-    "watch-poll": "npm run watch -- --watch-poll",
-    "prod": "npm run production"
+    "eslint": "eslint js/*.js"
   },
   "dependencies": {
     "vue": "^2.1.10"
+  },
+  "devDependencies": {
+    "eslint": "^4.19.1",
+    "eslint-config-standard": "^11.0.0",
+    "eslint-plugin-import": "^2.11.0",
+    "eslint-plugin-node": "^6.0.1",
+    "eslint-plugin-promise": "^3.7.0",
+    "eslint-plugin-standard": "^3.0.1"
   }
 }
