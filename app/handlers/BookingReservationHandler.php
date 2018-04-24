@@ -34,11 +34,13 @@ class BookingReservationHandler extends BookingReservationDAO
     {
         $dao = new BookingReservationDAO();
         if ($dao->insert($this->reservation)) {
-            $this->setExecutionFeedback(array(
+            $this->setExecutionFeedback(
+                array(
                 "heading" => "Well done!",
                 "content" => "You have reserved a room. You can view the status of your booking anytime.",
                 "footer"  => "Your booking will be mark confirmed once approved."
-            ));
+                )
+            );
         } else {
             $this->setExecutionFeedback("Server error! Please try again later.");
         }
