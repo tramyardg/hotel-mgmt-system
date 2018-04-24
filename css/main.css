@@ -12,3 +12,6 @@ label.error {
 .container h2.text-center {
     color: #ffffff;
 }
+.svg-inline--fa {
+    padding-top: 2px !important;
+}
