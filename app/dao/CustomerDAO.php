@@ -1,6 +1,6 @@
 <?php
 
-class CustomerDAO extends DB
+class CustomerDAO
 {
 
     public function __construct()
@@ -31,7 +31,7 @@ class CustomerDAO extends DB
         return $stmt->fetchAll(PDO::FETCH_CLASS, "Customer");
     }
 
-    public function insert(Customer $customer)
+    protected function insert(Customer $customer)
     {
         $sql = 'INSERT INTO `customer` (`fullname`, `email`, `password`, `phone`) VALUES (?, ?, ?, ?)';
         $stmt = DB::getInstance()->prepare($sql);

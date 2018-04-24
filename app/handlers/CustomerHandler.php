@@ -1,6 +1,6 @@
 <?php
 
-class CustomerHandler
+class CustomerHandler extends CustomerDAO
 {
     public function __construct()
     {

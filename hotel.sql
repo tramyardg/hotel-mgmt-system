@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 18, 2018 at 11:37 PM
+-- Generation Time: Apr 24, 2018 at 08:49 PM
 -- Server version: 10.1.31-MariaDB
 -- PHP Version: 7.2.3
 
@@ -40,10 +40,9 @@ CREATE TABLE `booking` (
 --
 
 INSERT INTO `booking` (`id`, `cid`, `status`, `notes`) VALUES
-(1, 1, 'pending', 'Hello'),
-(2, 1, 'pending', 'asd'),
-(4, 1, 'pending', 'asd'),
-(5, 1, 'pending', 'asd');
+  (12, 10, 'confirmed', NULL),
+  (13, 10, 'confirmed', NULL),
+  (14, 10, 'confirmed', NULL);
 
 -- --------------------------------------------------------
 
@@ -56,7 +55,7 @@ CREATE TABLE `customer` (
   `fullname` varchar(100) NOT NULL,
   `email` varchar(50) NOT NULL,
   `password` varchar(150) NOT NULL,
-  `phone` varchar(11) NOT NULL
+  `phone` varchar(25) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -64,7 +63,9 @@ CREATE TABLE `customer` (
 --
 
 INSERT INTO `customer` (`cid`, `fullname`, `email`, `password`, `phone`) VALUES
-(1, 'Leo Sudarma', 'leo@gmail.com', 'leo', '5142223333');
+  (10, 'Martha Smith', 'martha@hotmail.com', '$2y$10$L8elMrSO59YGZdGjnQxURuWK7FZUJpL8QgZPT7pKIwCu42PvU8Mm2', '5149991111'),
+  (11, 'admin@gmail.com', 'admin@gmail.com', '$2y$10$nfud5jYwEnMmqv8YgUF3p.wh3EVGAONlRUUiu2TqFiNW.GsU6QKGm', ''),
+  (12, 'admin@admin.com', 'admin@admin.com', '$2y$10$4FJtbVGCIpFnNxcDvSSXUueMESuDDoZvtygT/O4J9UHB1vfdO3Vza', '');
 
 -- --------------------------------------------------------
 
@@ -90,10 +91,9 @@ CREATE TABLE `reservation` (
 --
 
 INSERT INTO `reservation` (`id`, `start`, `end`, `type`, `requirement`, `adults`, `children`, `requests`, `timestamp`, `hash`) VALUES
-(1, 'asd', 'ad', 'ad', 'no preference', 2, 2, 'asd', '2018-04-18 21:17:58', NULL),
-(2, '123', '123', 'asd', 'asd', 0, 0, 'adsdas', '2018-04-18 21:25:13', '5ad7b7b91cfa7'),
-(4, '123', '123', 'asd', 'asd', 0, 0, 'adsdas', '2018-04-19 03:29:08', '5ad7b8a461a7b'),
-(5, '123', '123', 'asd', 'asd', 0, 0, 'adsdas', '2018-04-18 21:36:36', '5ad7ba64d93d8');
+  (12, '2018-05-09', '2018-05-11', 'double', 'non smoking', 2, 0, '', '2018-04-19 22:04:42', '5ad9127abbdf6'),
+  (13, '2018-04-24', '2018-04-25', 'deluxe', 'no preference', 1, 0, '', '2018-04-23 15:45:33', '5addff9dafa97'),
+  (14, '2018-04-27', '2018-04-30', 'deluxe', 'no preference', 1, 0, '', '2018-04-24 05:27:13', '5adec03166177');
 
 --
 -- Indexes for dumped tables
@@ -128,13 +128,13 @@ ALTER TABLE `reservation`
 -- AUTO_INCREMENT for table `booking`
 --
 ALTER TABLE `booking`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `customer`
 --
 ALTER TABLE `customer`
-  MODIFY `cid` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `cid` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- Constraints for dumped tables

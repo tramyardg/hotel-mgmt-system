@@ -42,4 +42,19 @@ class CustomerHandlerTest extends PHPUnit_Framework_TestCase
         $username = $ch->getUsername($email);
         $this->assertEquals("test", $username);
     }
+
+    public function testInsertCustomer()
+    {
+        $ch = new CustomerHandler();
+        $c = new Customer();
+        $faker = Faker\Factory::create();
+        $fakeName = $faker->name;
+        $fakeEmail = $faker->email;
+        $c->setFullName($fakeName);
+        $c->setEmail($fakeEmail);
+        $c->setPassword($faker->password);
+        $c->setPhone($faker->phoneNumber);
+        $ch->insertCustomer($c);
+        $this->assertEquals($fakeName, $ch->getCustomerObj($fakeEmail)->getFullName());
+    }
 }

@@ -13,5 +13,8 @@
     "classmap": [
       "app/"
     ]
+  },
+  "require": {
+    "fzaninotto/faker": "^1.7"
   }
 }
