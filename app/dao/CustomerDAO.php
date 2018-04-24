@@ -46,7 +46,7 @@ class CustomerDAO
         return $exec;
     }
 
-    public function update(Customer $customer)
+    protected function update(Customer $customer)
     {
         $sql = 'UPDATE `customer` ';
         $sql .= 'SET fullname = "' . $customer->getFullName() . '", ';

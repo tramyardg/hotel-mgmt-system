@@ -3,7 +3,10 @@
 $ ./vendor/bin/phpunit tests
 ```
 ```
-$ ./vendor/bin/phpunit tests/CustomerHandlerTest/php
+$ ./vendor/bin/phpunit tests/CustomerHandlerTest.php
+```
+```
+$ ./vendor/bin/phpunit --filter testUpdateCustomer tests
 ```
 **Run PHP code beautifier and fixer**
 ```
