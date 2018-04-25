@@ -87,8 +87,7 @@ class CustomerHandler extends CustomerDAO
     public function insertCustomer(Customer $customer)
     {
         if (!$this->isEmailExists($customer->getEmail())) {
-            $dao = new CustomerDAO();
-            if ($dao->insert($customer)) {
+            if ($this->insert($customer)) {
                 $this->setExecutionFeedback("You have successfully registered! You can now login.");
             } else {
                 $this->setExecutionFeedback($this->serverErrorMsg);
@@ -101,8 +100,7 @@ class CustomerHandler extends CustomerDAO
     public function updateCustomer(Customer $customer)
     {
         if ($this->isEmailExists($customer->getEmail())) {
-            $dao = new CustomerDAO();
-            if ($dao->update($customer)) {
+            if ($this->update($customer)) {
                 $this->setExecutionFeedback("You have successfully updated your profile!");
             } else {
                 $this->setExecutionFeedback($this->serverErrorMsg);
@@ -121,8 +119,7 @@ class CustomerHandler extends CustomerDAO
     {
         try {
             if ($this->isEmailExists($customer->getEmail())) {
-                $dao = new CustomerDAO();
-                $dao->delete($customer);
+                $this->delete($customer);
             }
         } catch (Exception $e) {
             print $e->getMessage();

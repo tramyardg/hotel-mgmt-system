@@ -70,4 +70,22 @@ class CustomerHandlerTest extends PHPUnit_Framework_TestCase
         $ch->updateCustomer($c);
         $this->assertEquals($ch->getCustomerObj("admin@gmail.com")->getFullName(), $newName);
     }
+
+    public function testDeleteCustomer()
+    {
+        $ch = new CustomerHandler();
+        $email = "test@gmail.com";
+        $c = new Customer();
+        $faker = Faker\Factory::create();
+        $c->setFullName($faker->name);
+        $c->setEmail($email);
+        $c->setPassword($faker->password);
+        $c->setPhone($faker->phoneNumber);
+        $ch->insertCustomer($c);
+
+        if ($ch->isEmailExists($email)) {
+            $ch->deleteCustomer($ch->getCustomerObj($email));
+            $this->assertNotTrue($ch->isEmailExists($email));
+        }
+    }
 }

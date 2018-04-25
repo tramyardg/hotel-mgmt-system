@@ -58,7 +58,7 @@ class CustomerDAO
         return $exec;
     }
 
-    public function delete(Customer $customer)
+    protected function delete(Customer $customer)
     {
         $sql = 'DELETE FROM `customer` WHERE `customer`.`cid` = ?';
         $stmt = DB::getInstance()->prepare($sql);
