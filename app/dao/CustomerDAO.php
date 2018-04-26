@@ -7,7 +7,7 @@ class CustomerDAO
     {
     }
 
-    public function getByEmail($email)
+    protected function getByEmail($email)
     {
         $sql = 'SELECT * FROM `customer` WHERE email=?';
         $stmt = DB::getInstance()->prepare($sql);
@@ -15,7 +15,7 @@ class CustomerDAO
         return $stmt->fetchAll(PDO::FETCH_CLASS, "Customer");
     }
 
-    public function getByCid($cid)
+    protected function getByCid($cid)
     {
         $sql = 'SELECT * FROM `customer` WHERE `customer`.`cid`=?';
         $stmt = DB::getInstance()->prepare($sql);
@@ -23,7 +23,7 @@ class CustomerDAO
         return $stmt->fetchAll(PDO::FETCH_CLASS, "Customer");
     }
 
-    public function getAll()
+    protected function getAll()
     {
         $sql = 'SELECT * FROM `customer`';
         $stmt = DB::getInstance()->prepare($sql);
@@ -62,6 +62,7 @@ class CustomerDAO
     {
         $sql = 'DELETE FROM `customer` WHERE `customer`.`cid` = ?';
         $stmt = DB::getInstance()->prepare($sql);
-        $stmt->execute([$customer->getId()]);
+        $exec = $stmt->execute([$customer->getId()]);
+        return $exec;
     }
 }
