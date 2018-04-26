@@ -64,7 +64,6 @@ class CustomerHandlerTest extends PHPUnit_Framework_TestCase
         $c = new Customer();
         $c = $ch->getCustomerObj("admin@gmail.com");
         $newName = uniqid();
-        $this->assertNotEquals($c->getFullName(), $newName);
 
         $c->setFullName($newName);
         $ch->updateCustomer($c);
@@ -104,5 +103,11 @@ class CustomerHandlerTest extends PHPUnit_Framework_TestCase
         $this->assertTrue($ch->isPasswordMatchWithEmail($adminPassword, $admin));
         $faker = Faker\Factory::create();
         $this->assertFalse($ch->isPasswordMatchWithEmail($faker->password, $ch->getCustomerObj($faker->email)));
+    }
+
+    public function testTotalCustomersCount()
+    {
+        $this->assertNotEmpty((new CustomerHandler())->totalCustomersCount());
+        $this->assertNotNull((new CustomerHandler())->totalCustomersCount());
     }
 }
