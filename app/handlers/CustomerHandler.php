@@ -23,8 +23,7 @@ class CustomerHandler extends CustomerDAO
     public function getAllCustomer()
     {
         try {
-            $dao = new CustomerDAO();
-            return $dao->getAll();
+            return $this->getAll();
         } catch (Exception $e) {
             return $e;
         }
@@ -33,8 +32,7 @@ class CustomerHandler extends CustomerDAO
     public function getSingleRow($email)
     {
         try {
-            $dao = new CustomerDAO();
-            return $dao->getByEmail($email);
+            return $this->getByEmail($email);
         } catch (Exception $e) {
             return "Error. " . $e;
         }
@@ -43,8 +41,7 @@ class CustomerHandler extends CustomerDAO
     public function getCustomerObj($email)
     {
         $c = new Customer();
-        $dao = new CustomerDAO();
-        $k = $dao->getByEmail($email);
+        $k = $this->getByEmail($email);
         foreach ($k as $v) {
             $c->setId($v->getId());
             $c->setEmail($v->getEmail());
@@ -58,8 +55,7 @@ class CustomerHandler extends CustomerDAO
     public function getCustomerObjByCid($id)
     {
         $c = new Customer();
-        $dao = new CustomerDAO();
-        $k = $dao->getByCid($id);
+        $k = $this->getByCid($id);
         foreach ($k as $v) {
             $c->setId($v->getId());
             $c->setEmail($v->getEmail());
@@ -117,12 +113,14 @@ class CustomerHandler extends CustomerDAO
 
     public function deleteCustomer(Customer $customer)
     {
-        try {
-            if ($this->isEmailExists($customer->getEmail())) {
-                $this->delete($customer);
+        if ($this->isEmailExists($customer->getEmail())) {
+            if ($this->delete($customer)) {
+                $this->setExecutionFeedback("You have successfully deleted your profile!");
+            } else {
+                $this->setExecutionFeedback($this->serverErrorMsg);
             }
-        } catch (Exception $e) {
-            print $e->getMessage();
+        } else {
+            $this->setExecutionFeedback("This email is not registered.");
         }
     }
 
@@ -132,7 +130,7 @@ class CustomerHandler extends CustomerDAO
         foreach ($this->getSingleRow($customer->getEmail()) as $obj) {
             $hash = $obj->getPassword();
         }
-        return (password_verify($password, $hash));
+        return password_verify($password, $hash);
     }
 
     public function totalCustomersCount()
