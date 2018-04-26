@@ -88,4 +88,21 @@ class CustomerHandlerTest extends PHPUnit_Framework_TestCase
             $this->assertNotTrue($ch->isEmailExists($email));
         }
     }
+
+    public function testIsEmailExists()
+    {
+        $faker = Faker\Factory::create();
+        $this->assertFalse((new CustomerHandler())->isEmailExists($faker->email));
+        $this->assertTrue((new CustomerHandler())->isEmailExists("admin@admin.com"));
+    }
+
+    public function testsIsPasswordMatchWithEmail()
+    {
+        $ch = new CustomerHandler();
+        $adminPassword = "admin123";
+        $admin = $ch->getCustomerObj("admin@admin.com");
+        $this->assertTrue($ch->isPasswordMatchWithEmail($adminPassword, $admin));
+        $faker = Faker\Factory::create();
+        $this->assertFalse($ch->isPasswordMatchWithEmail($faker->password, $ch->getCustomerObj($faker->email)));
+    }
 }
