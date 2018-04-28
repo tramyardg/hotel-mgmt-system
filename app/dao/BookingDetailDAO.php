@@ -8,7 +8,7 @@ class BookingDetailDAO
     }
 
     // use this in admin.php
-    public function fetchBooking()
+    protected function fetchBooking()
     {
         $sql = 'SELECT
           t1.id,
@@ -30,7 +30,7 @@ class BookingDetailDAO
     }
 
     // use in index.php
-    public function fetchBookingByCid($cid)
+    protected function fetchBookingByCid($cid)
     {
         $sql = 'SELECT
           t1.id,
@@ -51,7 +51,7 @@ class BookingDetailDAO
     }
 
     // $i is a booking id from booking table
-    public function updateConfirmed($i)
+    protected function updateConfirmed($i)
     {
         $sql = 'UPDATE `booking` SET `status` = ? WHERE `booking`.`id` = ' . $i . ';';
         $stmt = DB::getInstance()->prepare($sql);
@@ -59,7 +59,7 @@ class BookingDetailDAO
         return $exec;
     }
 
-    public function updateCancelled($i)
+    protected function updateCancelled($i)
     {
         $sql = 'UPDATE `booking` SET `status` = ? WHERE `booking`.`id` = ' . $i . ';';
         $stmt = DB::getInstance()->prepare($sql);
@@ -68,10 +68,4 @@ class BookingDetailDAO
     }
 }
 
-/**
- * CRUD functions
- * [x] insert
- * [x] update
- * [-] delete
- * [x] read
- */
+

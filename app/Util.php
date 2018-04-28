@@ -2,8 +2,9 @@
 
 class Util
 {
-    const pending = "pending";
-    const confirmed = "confirmed";
+    const PENDING         = "pending";
+    const CONFIRMED       = "confirmed";
+    const DB_SERVER_ERROR = "Server error occurred. Please try again later.";
 
     public static function dateToday()
     {

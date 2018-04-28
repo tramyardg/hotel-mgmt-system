@@ -1,6 +1,6 @@
 <?php
 
-class BookingDetailHandler
+class BookingDetailHandler extends BookingDetailDAO
 {
     public function __construct()
     {
@@ -20,21 +20,19 @@ class BookingDetailHandler
 
     public function getAllBookings()
     {
-        try {
-            $dao = new BookingDetailDAO();
-            return $dao->fetchBooking();
-        } catch (Exception $e) {
-            return $e;
+        if ($this->fetchBooking()) {
+            return $this->fetchBooking();
+        } else {
+            return Util::DB_SERVER_ERROR;
         }
     }
 
     public function getCustomerBookings(Customer $c)
     {
-        try {
-            $dao = new BookingDetailDAO();
-            return $dao->fetchBookingByCid($c->getId());
-        } catch (Exception $e) {
-            return $e;
+        if ($this->fetchBookingByCid($c->getId())) {
+            return $this->fetchBookingByCid($c->getId());
+        } else {
+            return Util::DB_SERVER_ERROR;
         }
     }
 
@@ -42,7 +40,7 @@ class BookingDetailHandler
     {
         $count = 0;
         foreach ($this->getAllBookings() as $v) {
-            if ($v["status"] == Util::pending) {
+            if ($v["status"] == Util::PENDING) {
                 $count++;
             }
         }
@@ -53,7 +51,7 @@ class BookingDetailHandler
     {
         $count = 0;
         foreach ($this->getAllBookings() as $v) {
-            if ($v["status"] == Util::confirmed) {
+            if ($v["status"] == Util::CONFIRMED) {
                 $count++;
             }
         }
@@ -63,8 +61,7 @@ class BookingDetailHandler
     public function confirmSelection($item)
     {
         for ($i = 0; $i < count($item); $i++) {
-            $dao = new BookingDetailDAO();
-            if ($dao->updateConfirmed($item[$i])) {
+            if ($this->updateConfirmed($item[$i])) {
                 $out = "These reservations have been successfully <b>confirmed</b>.";
                 $out .= " This page will reload to reflect changes.";
                 $this->setExecutionFeedback($out);
@@ -77,8 +74,7 @@ class BookingDetailHandler
     public function cancelSelection($item)
     {
         for ($i = 0; $i < count($item); $i++) {
-            $dao = new BookingDetailDAO();
-            if ($dao->updateCancelled($item[$i])) {
+            if ($this->updateCancelled($item[$i])) {
                 $out = "These reservations have been successfully <b>cancelled</b>.";
                 $out .= " This page will reload to reflect changes.";
                 $this->setExecutionFeedback($out);

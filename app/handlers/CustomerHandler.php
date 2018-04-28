@@ -5,9 +5,7 @@ class CustomerHandler extends CustomerDAO
     public function __construct()
     {
     }
-
-    private $serverErrorMsg = "Server error occurred. Please try again later.";
-
+    
     private $executionFeedback;
 
     public function getExecutionFeedback()
@@ -22,19 +20,19 @@ class CustomerHandler extends CustomerDAO
 
     public function getAllCustomer()
     {
-        try {
+        if ($this->getAll()) {
             return $this->getAll();
-        } catch (Exception $e) {
-            return $e;
+        } else {
+            return Util::DB_SERVER_ERROR;
         }
     }
 
     public function getSingleRow($email)
     {
-        try {
+        if ($this->getByEmail($email)) {
             return $this->getByEmail($email);
-        } catch (Exception $e) {
-            return "Error. " . $e;
+        } else {
+            return Util::DB_SERVER_ERROR;
         }
     }
 
@@ -86,7 +84,7 @@ class CustomerHandler extends CustomerDAO
             if ($this->insert($customer)) {
                 $this->setExecutionFeedback("You have successfully registered! You can now login.");
             } else {
-                $this->setExecutionFeedback($this->serverErrorMsg);
+                $this->setExecutionFeedback(Util::DB_SERVER_ERROR);
             }
         } else {
             $this->setExecutionFeedback("Email already registered.");
@@ -99,7 +97,7 @@ class CustomerHandler extends CustomerDAO
             if ($this->update($customer)) {
                 $this->setExecutionFeedback("You have successfully updated your profile!");
             } else {
-                $this->setExecutionFeedback($this->serverErrorMsg);
+                $this->setExecutionFeedback(Util::DB_SERVER_ERROR);
             }
         } else {
             $this->setExecutionFeedback("This email is not registered.");
@@ -117,7 +115,7 @@ class CustomerHandler extends CustomerDAO
             if ($this->delete($customer)) {
                 $this->setExecutionFeedback("You have successfully deleted your profile!");
             } else {
-                $this->setExecutionFeedback($this->serverErrorMsg);
+                $this->setExecutionFeedback(Util::DB_SERVER_ERROR);
             }
         } else {
             $this->setExecutionFeedback("This email is not registered.");
