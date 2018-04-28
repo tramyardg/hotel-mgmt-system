@@ -40,7 +40,9 @@ class BookingDetailHandler extends BookingDetailDAO
     {
         $count = 0;
         foreach ($this->getAllBookings() as $v) {
-            if ($v["status"] == Util::PENDING) {
+            $b = new Booking();
+            $pending = \models\StatusEnum::PENDING;
+            if ($v["status"] == $b->status()[$pending]) {
                 $count++;
             }
         }
@@ -51,7 +53,9 @@ class BookingDetailHandler extends BookingDetailDAO
     {
         $count = 0;
         foreach ($this->getAllBookings() as $v) {
-            if ($v["status"] == Util::CONFIRMED) {
+            $b = new Booking();
+            $confirmed = \models\StatusEnum::CONFIRMED;
+            if ($v["status"] == $b->status()[$confirmed]) {
                 $count++;
             }
         }

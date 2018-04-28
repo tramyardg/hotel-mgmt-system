@@ -38,7 +38,7 @@ class Booking
 
     public function setStatus($status)
     {
-        $this->status = $status;
+        $this->status = strtoupper($status);
     }
 
     public function getNotes()
@@ -49,5 +49,10 @@ class Booking
     public function setNotes($notes)
     {
         $this->notes = $notes;
+    }
+
+    public function status()
+    {
+        return array("PENDING", "CONFIRMED", "CANCELLED");
     }
 }

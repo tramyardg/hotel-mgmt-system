@@ -106,4 +106,9 @@ class Reservation extends Booking
     {
         $this->hash = $hash;
     }
+
+    public function requirement()
+    {
+        return array("No preference", "Non-smoking", "Smoking");
+    }
 }

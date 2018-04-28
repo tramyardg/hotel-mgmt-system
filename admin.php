@@ -17,6 +17,8 @@ session_start();
     require 'lib/phpPasswordHashing/passwordLib.php';
     require 'app/DB.php';
     require 'app/Util.php';
+    require 'app/models/StatusEnum.php';
+    require 'app/models/RequirementEnum.php';
     require 'app/dao/CustomerDAO.php';
     require 'app/dao/BookingDetailDAO.php';
     require 'app/models/Customer.php';
