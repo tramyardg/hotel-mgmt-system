@@ -9,12 +9,18 @@ class BookingDetailHandlerTest extends PHPUnit_Framework_TestCase
     {
         $faker = Faker\Factory::create();
         $r = new Reservation();
+		$r->setCid(28);
+        $r->setStatus($r->status()[\models\StatusEnum::CONFIRMED]);
+        $r->setNotes(null);
+        $r->setStart($faker->date("2018-12-12"));
+        $r->setEnd($faker->date("2018-12-22"));
+        $r->setType("test");
+        $r->setRequirement($r->requirement()[\models\RequirementEnum::SMOKING]);
         $r->setChildren(1);
         $r->setAdults(1);
         $r->setRequests($faker->text(20));
         $r->setTimestamp($faker->unixTime);
-        $r->setRequirement($r->requirement()[\models\RequirementEnum::NON_SMOKING]);
-        $r->setStatus($r->getStatus()[\models\StatusEnum::PENDING]);
+
         $brh = new BookingReservationHandler($r);
         $brh->create();
 
