@@ -31,7 +31,11 @@ class BookingDetailHandlerTest extends PHPUnit_Framework_TestCase
 
     public function testGetCustomerBookings()
     {
-
+        $c = new Customer();
+        $c->setId(28);
+        $bdh = new BookingDetailHandler();
+        $this->assertNotEmpty($bdh->getCustomerBookings($c));
+        $this->assertNotEmpty($bdh->getCustomerBookings($c));
     }
 
     public function testGetPending()
