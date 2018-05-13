@@ -1,3 +1,12 @@
+**Install dependencies**
+- JavaScript
+```
+npm install
+```
+- PHP
+```
+composer install
+```
 **Run PHP unit tests**
 ```
 $ ./vendor/bin/phpunit tests
