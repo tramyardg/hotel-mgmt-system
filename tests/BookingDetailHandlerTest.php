@@ -35,17 +35,25 @@ class BookingDetailHandlerTest extends PHPUnit_Framework_TestCase
         $c->setId(28);
         $bdh = new BookingDetailHandler();
         $this->assertNotEmpty($bdh->getCustomerBookings($c));
-        $this->assertNotEmpty($bdh->getCustomerBookings($c));
+        $this->assertNotNull($bdh->getCustomerBookings($c));
     }
 
     public function testGetPending()
     {
-
+        $bdh = new BookingDetailHandler();
+        if (count($bdh->getAllBookings()) > 0) {
+            $this->assertNotNull($bdh->getPending());
+            $this->assertNotEmpty($bdh->getPending());
+        }
     }
 
     public function testGetConfirmed()
     {
-
+        $bdh = new BookingDetailHandler();
+        if (count($bdh->getAllBookings()) > 0) {
+            $this->assertNotNull($bdh->getConfirmed());
+            $this->assertNotEmpty($bdh->getConfirmed());
+        }
     }
 
     public function testConfirmSelection()

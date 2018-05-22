@@ -65,4 +65,15 @@ class CustomerDAO
         $exec = $stmt->execute([$customer->getId()]);
         return $exec;
     }
+
+    /**
+     * @param $email
+     * @return string 1 if exists, otherwise it returns 0
+     */
+    protected function isCustomerExists($email) {
+        $sql = 'SELECT COUNT(email) AS isEmailExist FROM customer WHERE email = ?';
+        $stmt = DB::getInstance()->prepare($sql);
+        $stmt->execute([$email]);
+        return  (int) $stmt->fetchColumn();
+    }
 }

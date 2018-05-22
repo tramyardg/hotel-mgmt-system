@@ -80,7 +80,8 @@ class CustomerHandler extends CustomerDAO
 
     public function insertCustomer(Customer $customer)
     {
-        if (!$this->isEmailExists($customer->getEmail())) {
+        // insert if value is 0, which means this Customer's email still not registered
+        if ($this->isCustomerExists($customer->getEmail()) == 0) {
             if ($this->insert($customer)) {
                 $this->setExecutionFeedback("You have successfully registered! You can now login.");
             } else {
@@ -93,7 +94,7 @@ class CustomerHandler extends CustomerDAO
 
     public function updateCustomer(Customer $customer)
     {
-        if ($this->isEmailExists($customer->getEmail())) {
+        if ($this->isCustomerExists($customer->getEmail()) == 1) {
             if ($this->update($customer)) {
                 $this->setExecutionFeedback("You have successfully updated your profile!");
             } else {
@@ -104,14 +105,9 @@ class CustomerHandler extends CustomerDAO
         }
     }
 
-    public function isEmailExists($email)
-    {
-        return count($this->getSingleRow($email)) > 0;
-    }
-
     public function deleteCustomer(Customer $customer)
     {
-        if ($this->isEmailExists($customer->getEmail())) {
+        if ($this->isCustomerExists($customer->getEmail()) == 1) {
             if ($this->delete($customer)) {
                 $this->setExecutionFeedback("You have successfully deleted your profile!");
             } else {
