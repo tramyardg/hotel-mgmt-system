@@ -131,4 +131,8 @@ class CustomerHandler extends CustomerDAO
     {
         return count($this->getAllCustomer());
     }
+
+    public function doesCustomerExists($email) {
+        return $this->isCustomerExists($email);
+    }
 }

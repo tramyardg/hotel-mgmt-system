@@ -25,7 +25,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submitBtn"])) {
         echo $errors_;
     } else {
         $handler = new CustomerHandler();
-        if (!$handler->isEmailExists($_POST["email"])) {
+        if (!$handler->doesCustomerExists($_POST["email"])) {
             echo Util::displayAlertV1("Email is not registered with us.", "warning");
         } else {
             $customer = new Customer();
