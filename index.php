@@ -29,6 +29,8 @@ session_start();
     $username = null;
     $isSessionExists = false;
     $cHandler = null;
+    $bdHandler = null;
+    $cBookings = null;
     if (isset($_SESSION["username"]))
     {
         $username = $_SESSION["username"];
@@ -42,9 +44,7 @@ session_start();
         $isAdmin = $cAdmin->isAdminSignedIn();
 
         $bdHandler = new BookingDetailHandler();
-        $cBookings = null;
         $cBookings = $bdHandler->getCustomerBookings($cHandler);
-
     }
 
     ?>
@@ -116,7 +116,7 @@ session_start();
             </tr>
             </thead>
             <tbody>
-            <?php if (!empty($cBookings)) { ?>
+            <?php if (!empty($cBookings) && $bdHandler->getExecutionFeedback() == 1) { ?>
                 <?php   foreach ($cBookings as $k => $v) { ?>
                     <tr>
                         <th scope="row"><?php echo ($k + 1); ?></th>

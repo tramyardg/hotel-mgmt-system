@@ -30,10 +30,10 @@ class BookingDetailHandler extends BookingDetailDAO
     public function getCustomerBookings(Customer $c)
     {
         if ($this->fetchBookingByCid($c->getId())) {
+            $this->setExecutionFeedback(1);
             return $this->fetchBookingByCid($c->getId());
-        } else {
-            return Util::DB_SERVER_ERROR;
         }
+        return $this->setExecutionFeedback(0);
     }
 
     public function getPending()
