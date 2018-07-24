@@ -1,5 +1,11 @@
 <?php
 
+// this script acts like a controller
+// to process a login a JS request from form-submission.js is sent to this script
+// view -> js -> process_login -> server
+// view <- js <- process_login <- server
+// other process scripts follow the same cycle
+
 ob_start();
 session_start();
 
