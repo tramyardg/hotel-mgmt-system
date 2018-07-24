@@ -1,3 +1,18 @@
+### Customer
+#### Room pricing
+![Room pricing](https://github.com/tramyardg/hotel-mgmt-system/blob/master/image/room_pricing.PNG)
+#### Reservation form
+![Reservation form](https://github.com/tramyardg/hotel-mgmt-system/blob/master/image/reservation_form.PNG)
+#### View reservation(s)
+![View booking form](https://github.com/tramyardg/hotel-mgmt-system/blob/master/image/view_booking.PNG)
+#### About user
+![About user](https://github.com/tramyardg/hotel-mgmt-system/blob/master/image/about_user.PNG)
+### Admin
+### Manage reservation
+![Manage booking](https://github.com/tramyardg/hotel-mgmt-system/blob/master/image/manage_booking.PNG)
+
+---
+
 **Install dependencies**
 - JavaScript
 ```
