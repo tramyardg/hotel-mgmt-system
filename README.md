@@ -9,7 +9,7 @@
 ![About user](https://github.com/tramyardg/hotel-mgmt-system/blob/master/image/screenshot/about_user.PNG)
 ### Admin
 ### Manage reservation
-![Manage booking](https://github.com/tramyardg/hotel-mgmt-system/blob/master/image/manage_booking.PNG)
+![Manage booking](https://github.com/tramyardg/hotel-mgmt-system/blob/master/image/screenshot/manage_booking.PNG)
 
 ---
 
