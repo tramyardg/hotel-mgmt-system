@@ -55,7 +55,7 @@ class BookingDetailDAO
     {
         $sql = 'UPDATE `booking` SET `status` = ? WHERE `booking`.`id` = ' . $i . ';';
         $stmt = DB::getInstance()->prepare($sql);
-        $exec = $stmt->execute(["confirmed"]);
+        $exec = $stmt->execute(["CONFIRMED"]);
         return $exec;
     }
 
@@ -63,7 +63,7 @@ class BookingDetailDAO
     {
         $sql = 'UPDATE `booking` SET `status` = ? WHERE `booking`.`id` = ' . $i . ';';
         $stmt = DB::getInstance()->prepare($sql);
-        $exec = $stmt->execute(["cancelled"]);
+        $exec = $stmt->execute(["CANCELLED"]);
         return $exec;
     }
 }

@@ -51,8 +51,4 @@ class Booking
         $this->notes = $notes;
     }
 
-    public function status()
-    {
-        return array("PENDING", "CONFIRMED", "CANCELLED");
-    }
 }

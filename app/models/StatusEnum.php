@@ -5,7 +5,7 @@ namespace models;
 
 abstract class StatusEnum
 {
-    const PENDING   = 0;
-    const CONFIRMED = 1;
-    const CANCELLED = 2;
+    const PENDING_STR = "PENDING";
+    const CONFIRMED_STR = "CONFIRMED";
+    const CANCELLED_STR = "CANCELLED";
 }

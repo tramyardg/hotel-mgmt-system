@@ -39,10 +39,9 @@ class BookingDetailHandler extends BookingDetailDAO
     public function getPending()
     {
         $count = 0;
+        $pending = \models\StatusEnum::PENDING_STR;
         foreach ($this->getAllBookings() as $v) {
-            $b = new Booking();
-            $pending = \models\StatusEnum::PENDING;
-            if ($v["status"] == $b->status()[$pending]) {
+            if (($v["status"] == $pending) || (strtoupper($v["status"]) == $pending)) {
                 $count++;
             }
         }
@@ -52,11 +51,9 @@ class BookingDetailHandler extends BookingDetailDAO
     public function getConfirmed()
     {
         $count = 0;
+        $confirmed = \models\StatusEnum::CONFIRMED_STR;
         foreach ($this->getAllBookings() as $v) {
-            $b = new Booking();
-            $confirmed = \models\StatusEnum::CONFIRMED;
-            $confirmedStatus = $b->status()[$confirmed]; // always return uppercase
-            if (($v["status"] == $confirmedStatus) || (strtoupper($v["status"]) == $confirmedStatus)) {
+            if (($v["status"] == $confirmed) || (strtoupper($v["status"]) == $confirmed)) {
                 $count++;
             }
         }
