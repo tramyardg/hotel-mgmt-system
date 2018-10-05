@@ -55,7 +55,8 @@ class BookingDetailHandler extends BookingDetailDAO
         foreach ($this->getAllBookings() as $v) {
             $b = new Booking();
             $confirmed = \models\StatusEnum::CONFIRMED;
-            if ($v["status"] == $b->status()[$confirmed]) {
+            $confirmedStatus = $b->status()[$confirmed]; // always return uppercase
+            if (($v["status"] == $confirmedStatus) || (strtoupper($v["status"]) == $confirmedStatus)) {
                 $count++;
             }
         }
