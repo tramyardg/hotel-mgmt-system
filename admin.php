@@ -208,9 +208,21 @@ session_start();
                     </tbody>
                 </table>
                 <div class="my-3">
-                    <label class="text-secondary font-weight-bold">With selected:</label>
-                    <button type="button" id="confirm-booking" class="btn btn-outline-success btn-sm">Confirm</button>
-                    <button type="button" id="cancel-booking" class="btn btn-outline-danger btn-sm">Cancel</button>
+                    <div class="row">
+                        <div class="col-6">
+                            <label class="text-secondary font-weight-bold">With selected:</label>
+                            <button type="button" id="confirm-booking" class="btn btn-outline-success btn-sm">Confirm
+                            </button>
+                            <button type="button" id="cancel-booking" class="btn btn-outline-danger btn-sm">Cancel
+                            </button>
+                        </div>
+                        <div class="col-6 text-right">
+                            View:
+                            <input type="radio" name="viewOption" value="confirmed">&nbsp;Confirmed&nbsp;
+                            <input type="radio" name="viewOption" value="pending">&nbsp;Pending
+                            <input type="radio" name="viewOption" value="all">&nbsp;All
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="tab-pane fade" id="customers" role="tabpanel" aria-labelledby="customers-tab">
