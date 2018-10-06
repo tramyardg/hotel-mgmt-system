@@ -1,5 +1,5 @@
 {
-  "name": "Simple hotel booking system",
+  "name": "hotel-mgmt-system",
   "version": "1.0.1",
   "description": "Hotel booking system for customer added with an admin feature to manage reservation.",
   "keywords": [
