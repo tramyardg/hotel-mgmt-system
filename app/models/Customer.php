@@ -7,7 +7,7 @@ class Customer
     private $email;
     private $password;
     private $phone;
-    private $isadmin;
+    private $isAdmin = 0; // default
 
     public function __construct()
     {
@@ -48,9 +48,9 @@ class Customer
         return $this->password;
     }
 
-    public function getIsadmin()
+    public function getIsAdmin()
     {
-        return $this->isadmin;
+        return $this->isAdmin;
     }
 
     public function setPassword($password)
@@ -70,18 +70,15 @@ class Customer
     }
 
 
-    public function setIsadmin($flag)
+    public function setIsAdmin($flag)
     {
-        $this->isadmin = $flag;
+        $this->isAdmin = $flag;
     }
 
 
+    // returns true if customer is admin
     public function isAdminSignedIn()
     {
-        if($this->isadmin)
-        {
-            return true;
-        }
-        return false;
+        return $this->isAdmin == 1;
     }
 }

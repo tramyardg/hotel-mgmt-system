@@ -135,4 +135,8 @@ class CustomerHandler extends CustomerDAO
     public function doesCustomerExists($email) {
         return $this->isCustomerExists($email);
     }
+
+    public function handleIsAdmin($email) {
+        return $this->isAdminCount($email);
+    }
 }
