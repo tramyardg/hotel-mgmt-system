@@ -7,6 +7,7 @@ class Customer
     private $email;
     private $password;
     private $phone;
+    private $isadmin;
 
     public function __construct()
     {
@@ -47,6 +48,11 @@ class Customer
         return $this->password;
     }
 
+    public function getIsadmin()
+    {
+        return $this->isadmin;
+    }
+
     public function setPassword($password)
     {
         $hashed_password = password_hash($password, PASSWORD_BCRYPT);
@@ -63,18 +69,19 @@ class Customer
         $this->phone = $phone;
     }
 
+
+    public function setIsadmin($flag)
+    {
+        $this->isadmin = $flag;
+    }
+
+
     public function isAdminSignedIn()
     {
-        $admins = file_get_contents("admin.json");
-        $content = json_decode($admins, true);
-
-        $isAdmin = false;
-        foreach ($content as $k => $v) {
-            if ($this->getEmail() == $v["email"]) {
-                $isAdmin = true;
-                break;
-            }
+        if($this->isadmin)
+        {
+            return true;
         }
-        return $isAdmin;
+        return false;
     }
 }
