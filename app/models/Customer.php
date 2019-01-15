@@ -72,7 +72,7 @@ class Customer
 
     public function setIsadmin($flag)
     {
-        $this->isadmin = $isadmin;
+        $this->isadmin = $flag;
     }
 
 
