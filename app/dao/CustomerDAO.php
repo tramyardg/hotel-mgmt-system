@@ -76,4 +76,15 @@ class CustomerDAO
         $stmt->execute([$email]);
         return  (int) $stmt->fetchColumn();
     }
+
+    /**
+     * @param $email
+     * @return int: 1 if admin email, otherwise 0 (regular customer)
+     */
+    protected function isAdminCount($email) {
+        $sql = 'SELECT COUNT(cid) FROM customer WHERE email = ? AND isadmin = 1';
+        $stmt = DB::getInstance()->prepare($sql);
+        $stmt->execute([$email]);
+        return  (int) $stmt->fetchColumn();
+    }
 }
