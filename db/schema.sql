@@ -18,8 +18,10 @@ CREATE TABLE `customer`
 CREATE TABLE administrator
 (
     adminId  INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+    fullname VARCHAR(100)    NOT NULL,
     password VARCHAR(100)    NOT NULL,
-    email    VARCHAR(30)     NOT NULL
+    email    VARCHAR(30)     NOT NULL,
+    phone    VARCHAR(25)     NOT NULL
 );
 
 CREATE TABLE `reservation`
