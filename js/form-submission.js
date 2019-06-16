@@ -14,7 +14,7 @@ const formData = {
       email: $("input[name='registrationEmail']").val(),
       password: $("input[name='registrationPassword']").val(),
       password2: $("input[name='registrationPassword2']").val(),
-      submitBtn: $('input[name="registerSubmitBtn"]').val()
+      submitBtn: $('input[name="registerSubmitBtn"]').val() // for server $_POST
     };
   },
   login: function () {

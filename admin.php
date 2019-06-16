@@ -41,8 +41,8 @@ session_start();
 
         $cAdmin = new Customer();
         $cAdmin->setEmail($cHandler->getEmail());
-        $cAdmin->setIsAdmin((new CustomerHandler())->handleIsAdmin($cAdmin->getEmail()));
-        $isAdmin = $cAdmin->isAdminSignedIn();
+        //$cAdmin->setIsAdmin((new CustomerHandler())->handleIsAdmin($cAdmin->getEmail()));
+        //$isAdmin = $cAdmin->isAdminSignedIn();
 
         // display all reservations
         $bdHandler = new BookingDetailHandler();
