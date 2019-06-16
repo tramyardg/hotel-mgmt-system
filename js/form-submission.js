@@ -123,24 +123,28 @@ const updateProfileSubmit = function () {
     data: updateData
   }).done(function (response) {
     $(formIds.updateProfile).find('.alert').remove();
-    $(formIds.updateProfile).prepend(`
-        <div class="form-group">
-            <div id="path"><div id="brick"></div></div><p>Reloading the page in 5 seconds.</p>
-        </div>`
-    );
+    reloadAnimation($(formIds.updateProfile));
     $(formIds.updateProfile).prepend(response);
+    $(formIds.updateProfile).find('input').prop('disabled', true);
+  });
+  let reloadAnimation = (animContainer) => {
+    animContainer.prepend(
+      `<div class="form-group">
+            <div id="path"><div id="brick"></div></div><span>Reloading the page in 5 seconds.</span>
+        </div>`);
+    // eslint-disable-next-line no-undef
     animate({
       duration: 5000,
-      timing: function(timeFraction) {
+      timing: function (timeFraction) {
         return Math.pow(timeFraction, 2);
       },
-      draw: function(progress) {
+      draw: function (progress) {
+        // eslint-disable-next-line no-undef
         brick.style.left = progress * 91.5 + '%';
         location.reload();
       }
     });
-    $(formIds.updateProfile).find('input').prop('disabled', true);
-  });
+  };
 };
 
 $(document).ready(function () {
