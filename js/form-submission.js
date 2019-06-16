@@ -123,7 +123,22 @@ const updateProfileSubmit = function () {
     data: updateData
   }).done(function (response) {
     $(formIds.updateProfile).find('.alert').remove();
+    $(formIds.updateProfile).prepend(`
+        <div class="form-group">
+            <div id="path"><div id="brick"></div></div><p>Reloading the page in 5 seconds.</p>
+        </div>`
+    );
     $(formIds.updateProfile).prepend(response);
+    animate({
+      duration: 5000,
+      timing: function(timeFraction) {
+        return Math.pow(timeFraction, 2);
+      },
+      draw: function(progress) {
+        brick.style.left = progress * 91.5 + '%';
+        location.reload();
+      }
+    });
     $(formIds.updateProfile).find('input').prop('disabled', true);
   });
 };

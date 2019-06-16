@@ -435,6 +435,7 @@ session_start();
         crossorigin="anonymous"></script>
 <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/select/1.2.5/js/dataTables.select.min.js"></script>
+<script src="js/animatejscx.js"></script>
 <script src="js/form-submission.js"></script>
 <script>
     $(document).ready(function () {
