@@ -375,7 +375,7 @@ session_start();
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Update profile</h5>
+                    <h5 class="modal-title">Update Profile</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -388,12 +388,12 @@ session_start();
                                 <input type="number" id="customerId" hidden
                                        name="customerId" value="<?php echo $cHandler->getId(); ?>" >
                                 <div class="form-group">
-                                    <label for="updateFullName">Full name</label>
+                                    <label for="updateFullName">Full Name</label>
                                     <input type="text" class="form-control" id="updateFullName"
                                            name="updateFullName" value="<?php echo $cHandler->getFullName(); ?>" >
                                 </div>
                                 <div class="form-group">
-                                    <label for="updatePhoneNumber">Phone number</label>
+                                    <label for="updatePhoneNumber">Phone Number</label>
                                     <input type="text" class="form-control" id="updatePhoneNumber"
                                            name="updatePhoneNumber" value="<?php echo $cHandler->getPhone(); ?>">
                                 </div>
@@ -403,7 +403,7 @@ session_start();
                                            name="updateEmail" value="<?php echo $cHandler->getEmail(); ?>" readonly>
                                 </div>
                                 <div class="form-group">
-                                    <label for="updatePassword">New password</label>
+                                    <label for="updatePassword">New Password</label>
                                     <input type="password" class="form-control" id="updatePassword"
                                            name="updatePassword"
                                            title="At least 4 characters with letters and numbers">
