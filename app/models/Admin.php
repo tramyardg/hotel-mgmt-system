@@ -22,12 +22,12 @@ class Admin
         $this->adminId = $adminId;
     }
 
-    public function getFullname()
+    public function getFullName()
     {
         return $this->fullname;
     }
 
-    public function setFullname($fullname)
+    public function setFullName($fullname)
     {
         $this->fullname = $fullname;
     }

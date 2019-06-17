@@ -34,6 +34,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submitBtn"])) {
         if (!$handler->doesCustomerExists($_POST["email"])) {
             echo Util::displayAlertV1("Email is not registered with us.", "warning");
         } else {
+
+            // check whether email belongs to customer or admin
+
             $customer = new Customer();
             $customer->setEmail($_POST["email"]);
             $newCustomer = new Customer();
@@ -61,7 +64,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submitBtn"])) {
  * [x] if no errors check if email is registered
  *     if not registered, display not registered message
  *     otherwise, create a customer object
- * [x] check if password entered match with database password
+ * [x] check if password entered match with db password
  *     if not match display incorrect message
  *     otherwise, create a session variables
  */

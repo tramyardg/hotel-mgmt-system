@@ -120,11 +120,12 @@ class CustomerHandler extends CustomerDAO
 
     public function isPasswordMatchWithEmail($password, Customer $customer)
     {
-        $hash = null;
-        foreach ($this->getSingleRow($customer->getEmail()) as $obj) {
-            $hash = $obj->getPassword();
+        $cust = $this->getSingleRow($customer->getEmail())[0];
+        if (password_verify($password, $cust->getPassword())) {
+            return 'Password is valid!';
+        } else {
+            return 'Invalid password.';
         }
-        return password_verify($password, $hash);
     }
 
     public function totalCustomersCount()
