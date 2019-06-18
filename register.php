@@ -9,11 +9,6 @@ if (isset($_SESSION["authenticated"]))
         header("Location: index.php");
     }
 }
-$registerAsAdmin = false;
-if (isset($_GET['registerAdmin'])) {
-    $registerAsAdmin = true;
-}
-// echo $registerAsAdmin;
 ?>
 <!doctype html>
 <html lang="en">

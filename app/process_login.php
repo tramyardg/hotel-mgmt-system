@@ -36,6 +36,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submitBtn"])) {
         } else {
 
             // check whether email belongs to customer or admin
+            // if email belongs to admin no need for password hashing
 
             $customer = new Customer();
             $customer->setEmail($_POST["email"]);
