@@ -1,13 +1,5 @@
 <?php
 
-
-namespace dao;
-
-
-use DB;
-use PDO;
-use models;
-
 class AdminDAO
 {
     public function __construct()
@@ -38,7 +30,7 @@ class AdminDAO
         return $stmt->fetchAll(PDO::FETCH_CLASS, "Admin");
     }
 
-    protected function create(Admin $admin)
+    public function create(Admin $admin)
     {
         $sql = 'INSERT INTO `administrator`(`fullname`, `password`, `email`, `phone`) VALUES (?,?,?,?)';
         $stmt = DB::getInstance()->prepare($sql);
