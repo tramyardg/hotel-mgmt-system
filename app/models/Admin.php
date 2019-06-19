@@ -1,9 +1,6 @@
 <?php
 
 
-namespace models;
-
-
 class Admin
 {
     private $adminId;

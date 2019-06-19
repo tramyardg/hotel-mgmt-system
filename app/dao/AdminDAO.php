@@ -6,6 +6,7 @@ namespace dao;
 
 use DB;
 use PDO;
+use models;
 
 class AdminDAO
 {
@@ -35,6 +36,19 @@ class AdminDAO
         $stmt = DB::getInstance()->prepare($sql);
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_CLASS, "Admin");
+    }
+
+    protected function create(Admin $admin)
+    {
+        $sql = 'INSERT INTO `administrator`(`fullname`, `password`, `email`, `phone`) VALUES (?,?,?,?)';
+        $stmt = DB::getInstance()->prepare($sql);
+        $exec = $stmt->execute([
+            $admin->getFullName(),
+            $admin->getPassword(),
+            $admin->getEmail(),
+            $admin->getPhone()
+        ]);
+        return $exec;
     }
 
 }
