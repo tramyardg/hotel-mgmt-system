@@ -28,5 +28,14 @@ class AdminHandler extends AdminDAO
         }
     }
 
+    public function getAdmins()
+    {
+        if ($this->fetchAll()) {
+            $this->setExecutionFeedback('Admin(s) found!');
+            return $this->fetchAll();
+        } else {
+            return Util::DB_SERVER_ERROR;
+        }
+    }
 
 }

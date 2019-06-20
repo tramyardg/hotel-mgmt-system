@@ -21,6 +21,8 @@ class AdminDAOTest extends PHPUnit_Framework_TestCase
     public function testFetchAll()
     {
         $adminHandler = new AdminHandler();
+        $this->assertNotNull($adminHandler->getAdmins());
+        $this->assertEquals('Admin(s) found!', $adminHandler->getExecutionFeedback());
 
     }
 
