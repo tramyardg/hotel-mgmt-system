@@ -30,7 +30,7 @@ class AdminDAO
         return $stmt->fetchAll(PDO::FETCH_CLASS, "Admin");
     }
 
-    public function create(Admin $admin)
+    protected function create(Admin $admin)
     {
         $sql = 'INSERT INTO `administrator`(`fullname`, `password`, `email`, `phone`) VALUES (?,?,?,?)';
         $stmt = DB::getInstance()->prepare($sql);
