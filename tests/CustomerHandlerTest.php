@@ -23,6 +23,7 @@ class CustomerHandlerTest extends PHPUnit_Framework_TestCase
         $ch = new CustomerHandler();
         $email = "admin@gmail.com";
         $this->assertNotEmpty($ch->getCustomerObj($email));
+        print_r($ch->getCustomerObj($email));
         $customerEmail = $ch->getCustomerObj($email)->getEmail();
         $this->assertEquals("admin@gmail.com", $customerEmail);
     }
