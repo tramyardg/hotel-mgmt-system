@@ -38,4 +38,14 @@ class AdminHandler extends AdminDAO
         }
     }
 
+    public function getAdminByEmail(Admin $admin)
+    {
+        if ($this->fetchByEmail($admin->getEmail())) {
+            $this->setExecutionFeedback($admin->getEmail());
+            return $this->fetchByEmail($admin->getEmail());
+        } else {
+            return $this->setExecutionFeedback(Util::DB_SERVER_ERROR);
+        }
+    }
+
 }

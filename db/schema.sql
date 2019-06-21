@@ -20,7 +20,7 @@ CREATE TABLE administrator
     adminId  INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
     fullname VARCHAR(100)    DEFAULT NULL,
     password VARCHAR(100)    NOT NULL,
-    email    VARCHAR(30)     NOT NULL,
+    email    VARCHAR(30)     NOT NULL UNIQUE,
     phone    VARCHAR(25)     DEFAULT NULL
 );
 
