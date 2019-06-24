@@ -15,8 +15,11 @@ require '../lib/phpPasswordHashing/passwordLib.php';
 require 'DB.php';
 require 'Util.php';
 require 'dao/CustomerDAO.php';
+require 'dao/AdminDAO.php';
 require 'models/Customer.php';
+require 'models/Admin.php';
 require 'handlers/CustomerHandler.php';
+require 'handlers/AdminHandler.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submitBtn"])) {
     $errors_ = null;
@@ -30,33 +33,49 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submitBtn"])) {
     if (!empty($errors_)) {
         echo $errors_;
     } else {
-        $handler = new CustomerHandler();
-        if (!$handler->doesCustomerExists($_POST["email"])) {
-            echo Util::displayAlertV1("Email is not registered with us.", "warning");
-        } else {
+//        if (!$handler->doesCustomerExists($_POST["email"])) {
+//            echo Util::displayAlertV1("Email is not registered with us.", "warning");
+//        } else {
 
             // check whether email belongs to customer or admin
             // if email belongs to admin no need for password hashing
 
-            $customer = new Customer();
-            $customer->setEmail($_POST["email"]);
-            $newCustomer = new Customer();
-            if (!$handler->isPasswordMatchWithEmail($_POST['password'], $customer)) {
-                echo Util::displayAlertV1("Incorrect password.", "warning");
+            $adminHandler = new AdminHandler();
+            $admin = new Admin();
+            // before running this method, make sure email exists
+            $admin->setEmail($_POST["email"]);
+            $adminId = ($adminHandler->getObjectUtil($admin->getEmail())->getAdminId());
+
+            if ($adminId > 1 || intval($adminId) > 0) {
+                $_SESSION["username"] = $_POST["email"];
+                $_SESSION["accountEmail"] = $_POST["email"];
+                $_SESSION['isAdmin'] = 1;
+                echo $_SESSION['isAdmin'];
             } else {
-                $_SESSION["username"] = $handler->getUsername($_POST["email"]);
-                $_SESSION["customerEmail"] = $customer->getEmail();
-                $_SESSION["authenticated"] = 1;
-                $_SESSION["password"] = $_POST["password"];
+                $handler = new CustomerHandler();
+                $customer = new Customer();
+                $customer->setEmail($_POST["email"]);
 
-                // set the session phone number too
-                if ($handler->getCustomerObj($_POST["email"])->getPhone()) {
-                    $_SESSION["phoneNumber"] = $handler->getCustomerObj($_POST["email"])->getPhone();
+                // if admin, set is admin to true, set to false otherwise
+
+                $newCustomer = new Customer();
+                if (!$handler->isPasswordMatchWithEmail($_POST['password'], $customer)) {
+                    echo Util::displayAlertV1("Incorrect password.", "warning");
+                } else {
+                    $_SESSION["username"] = $handler->getUsername($_POST["email"]);
+                    $_SESSION["accountEmail"] = $customer->getEmail();
+                    $_SESSION["authenticated"] = 1;
+                    $_SESSION["password"] = $_POST["password"];
+
+                    // set the session phone number too
+                    if ($handler->getCustomerObj($_POST["email"])->getPhone()) {
+                        $_SESSION["phoneNumber"] = $handler->getCustomerObj($_POST["email"])->getPhone();
+                    }
+
+                    echo $_SESSION["authenticated"];
                 }
-
-                echo $_SESSION["authenticated"];
             }
-        }
+//        }
     }
 }
 

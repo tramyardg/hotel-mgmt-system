@@ -31,21 +31,23 @@ session_start();
     $cHandler = null;
     $bdHandler = null;
     $cBookings = null;
-    if (isset($_SESSION["username"]))
-    {
+    $isAdmin = 0;
+    if (isset($_SESSION["username"])) {
         $username = $_SESSION["username"];
-        $isSessionExists = true;
 
         $cHandler = new CustomerHandler();
-        $cHandler = $cHandler->getCustomerObj($_SESSION["customerEmail"]);
-
+        $cHandler = $cHandler->getCustomerObj($_SESSION["accountEmail"]);
         $cAdmin = new Customer();
         $cAdmin->setEmail($cHandler->getEmail());
-        //$cAdmin->setIsAdmin((new CustomerHandler())->handleIsAdmin($cAdmin->getEmail()));
-        $isAdmin = false;
 
         $bdHandler = new BookingDetailHandler();
         $cBookings = $bdHandler->getCustomerBookings($cHandler);
+        $isSessionExists = true;
+    }
+    if (isset($_SESSION["isAdmin"]) && isset($_SESSION["username"])) {
+        $isSessionExists = true;
+        $username = $_SESSION["username"];
+        $isAdmin = $_SESSION["isAdmin"];
     }
 
     ?>
@@ -66,7 +68,7 @@ session_start();
                     <?php if ($isSessionExists) { ?>
                     <h4 class="text-white"><?php echo $username; ?></h4>
                     <ul class="list-unstyled">
-                        <?php if ($isAdmin) { ?>
+                        <?php if ($isAdmin == 1) { ?>
                         <li><a href="admin.php" class="text-white">Manage reservation<i class="far fa-address-book ml-2"></i></a></li>
                         <?php } else { ?>
                         <li><a href="#" class="text-white my-reservations">View my bookings<i class="far fa-address-book ml-2"></i></a></li>
@@ -250,7 +252,7 @@ session_start();
                     </button>
                 </div>
                 <div class="modal-body" id="reservationModalBody">
-                    <?php if ($isSessionExists && !$isAdmin) { ?>
+                    <?php if ($isSessionExists && $isAdmin != 0) { ?>
                     <form role="form" autocomplete="off" id="reservation-form" method="post">
                         <?php if ($isSessionExists) { ?>
                         <input type="number" id="cid" name="cid" value="<?php echo $cHandler->getId() ?>" hidden>

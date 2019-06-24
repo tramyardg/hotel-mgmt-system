@@ -42,7 +42,7 @@ class AdminHandler extends AdminDAO
     {
         if ($this->fetchByEmail($admin->getEmail())) {
             $this->setExecutionFeedback($admin->getEmail());
-            return $this->getObject($admin->getEmail());
+            return $this->getObjectUtil($admin->getEmail());
         } else {
             return $this->setExecutionFeedback(Util::DB_SERVER_ERROR);
         }
