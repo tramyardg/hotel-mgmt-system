@@ -25,7 +25,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submitBtn"])) {
     $errors_ = null;
 
     if (!filter_var($_POST["email"], FILTER_VALIDATE_EMAIL)) {
-        $errors_ .=  Util::displayAlertV1("Please enter a valid email address", "warning");
+        $errors_ .= Util::displayAlertV1("Please enter a valid email address", "warning");
     }
     if (empty($_POST["password"])) {
         $errors_ .= Util::displayAlertV1("Password is required.", "warning");
@@ -33,49 +33,42 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submitBtn"])) {
     if (!empty($errors_)) {
         echo $errors_;
     } else {
-//        if (!$handler->doesCustomerExists($_POST["email"])) {
-//            echo Util::displayAlertV1("Email is not registered with us.", "warning");
-//        } else {
 
-            // check whether email belongs to customer or admin
-            // if email belongs to admin no need for password hashing
+        // check whether email belongs to customer or admin
+        // if email belongs to admin no need for password hashing
 
-            $adminHandler = new AdminHandler();
-            $admin = new Admin();
-            // before running this method, make sure email exists
-            $admin->setEmail($_POST["email"]);
-            $adminId = ($adminHandler->getObjectUtil($admin->getEmail())->getAdminId());
+        $adminHandler = new AdminHandler();
+        $admin = new Admin();
+        // before running this method, make sure email exists
+        $admin->setEmail($_POST["email"]);
+        $adminId = ($adminHandler->getObjectUtil($admin->getEmail())->getAdminId());
 
-            if ($adminId > 1 || intval($adminId) > 0) {
-                $_SESSION["username"] = $_POST["email"];
-                $_SESSION["accountEmail"] = $_POST["email"];
-                $_SESSION['isAdmin'] = 1;
-                echo $_SESSION['isAdmin'];
+        if ($adminId > 1 || intval($adminId) > 0) {
+            $_SESSION["username"] = $_POST["email"];
+            $_SESSION["accountEmail"] = $_POST["email"];
+            $_SESSION['isAdmin'] = 1;
+            echo $_SESSION['isAdmin'];
+        } else {
+            $handler = new CustomerHandler();
+            $customer = new Customer();
+            $customer->setEmail($_POST["email"]);
+
+            $newCustomer = new Customer();
+            if (!$handler->isPasswordMatchWithEmail($_POST['password'], $customer)) {
+                echo Util::displayAlertV1("Incorrect password.", "warning");
             } else {
-                $handler = new CustomerHandler();
-                $customer = new Customer();
-                $customer->setEmail($_POST["email"]);
+                $_SESSION["username"] = $handler->getUsername($_POST["email"]);
+                $_SESSION["accountEmail"] = $customer->getEmail();
+                $_SESSION["authenticated"] = 1;
+                $_SESSION["password"] = $_POST["password"];
 
-                // if admin, set is admin to true, set to false otherwise
-
-                $newCustomer = new Customer();
-                if (!$handler->isPasswordMatchWithEmail($_POST['password'], $customer)) {
-                    echo Util::displayAlertV1("Incorrect password.", "warning");
-                } else {
-                    $_SESSION["username"] = $handler->getUsername($_POST["email"]);
-                    $_SESSION["accountEmail"] = $customer->getEmail();
-                    $_SESSION["authenticated"] = 1;
-                    $_SESSION["password"] = $_POST["password"];
-
-                    // set the session phone number too
-                    if ($handler->getCustomerObj($_POST["email"])->getPhone()) {
-                        $_SESSION["phoneNumber"] = $handler->getCustomerObj($_POST["email"])->getPhone();
-                    }
-
-                    echo $_SESSION["authenticated"];
+                // set the session phone number too
+                if ($handler->getCustomerObj($_POST["email"])->getPhone()) {
+                    $_SESSION["phoneNumber"] = $handler->getCustomerObj($_POST["email"])->getPhone();
                 }
+                echo $_SESSION["authenticated"];
             }
-//        }
+        }
     }
 }
 
