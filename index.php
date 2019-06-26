@@ -26,11 +26,8 @@ session_start();
     require 'app/handlers/CustomerHandler.php';
     require 'app/handlers/BookingDetailHandler.php';
 
-    $username = null;
+    $username = $cHandler = $bdHandler = $cBookings = null;
     $isSessionExists = false;
-    $cHandler = null;
-    $bdHandler = null;
-    $cBookings = null;
     $isAdmin = 0;
     if (isset($_SESSION["username"])) {
         $username = $_SESSION["username"];

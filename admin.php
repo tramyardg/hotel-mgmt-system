@@ -37,12 +37,10 @@ session_start();
         $isSessionExists = true;
 
         $cHandler = new CustomerHandler();
-        $cHandler = $cHandler->getCustomerObj($_SESSION["customerEmail"]);
+        $cHandler = $cHandler->getCustomerObj($_SESSION["accountEmail"]);
 
         $cAdmin = new Customer();
         $cAdmin->setEmail($cHandler->getEmail());
-        //$cAdmin->setIsAdmin((new CustomerHandler())->handleIsAdmin($cAdmin->getEmail()));
-        //$isAdmin = $cAdmin->isAdminSignedIn();
 
         // display all reservations
         $bdHandler = new BookingDetailHandler();
@@ -55,6 +53,11 @@ session_start();
         $confirmedReservation = $bdHandler->getConfirmed();
         $totalCustomers = $cCommon->totalCustomersCount();
         $totalReservations = count($bdHandler->getAllBookings());
+    }
+    if (isset($_SESSION["isAdmin"]) && isset($_SESSION["username"])) {
+        $isSessionExists = true;
+        $username = $_SESSION["username"];
+        $isAdmin = $_SESSION["isAdmin"];
     }
 
     ?>
