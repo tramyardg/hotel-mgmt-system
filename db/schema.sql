@@ -6,6 +6,15 @@ CREATE TABLE `booking`
     `notes`  varchar(500) DEFAULT NULL
 );
 
+# propose schema for booking
+CREATE TABLE `booking1`
+(
+    `id`     int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
+    `cid`    int(11)             NOT NULL,
+    `status` ENUM('PENDING', 'CONFIRMED', 'CANCELLED') DEFAULT 'PENDING',
+    `notes`  varchar(500) DEFAULT NULL
+);
+
 CREATE TABLE `customer`
 (
     `cid`      int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
