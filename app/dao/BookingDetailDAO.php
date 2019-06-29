@@ -66,6 +66,23 @@ class BookingDetailDAO
         $exec = $stmt->execute(["CANCELLED"]);
         return $exec;
     }
+
+    // proposed data manipulation function for booking status
+    // example usage: updateBooking(1, true, false)
+    protected function updateBooking($id, $isForConfirmation, $isForCancellation)
+    {
+        $sql = 'UPDATE `booking` SET `status` = ? WHERE `booking`.`id` = ' . $id . ';';
+        $stmt = DB::getInstance()->prepare($sql);
+        $updateStatus = [\models\StatusEnum::PENDING_STR, \models\StatusEnum::CONFIRMED_STR, \models\StatusEnum::CANCELLED_STR];
+        if ($isForConfirmation) {
+            $exec = $stmt->execute($updateStatus[1]);
+        } else if ($isForCancellation) {
+            $exec = $stmt->execute($updateStatus[2]);
+        } else {
+            $exec = $stmt->execute($updateStatus[0]);
+        }
+        return $exec;
+    }
 }
 
 
