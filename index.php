@@ -48,8 +48,8 @@ session_start();
     }
 
     ?>
-
     <title>Home</title>
+    <?php //echo '<title>Home isAdmin=' . $isAdmin . ' $isSessionExists=' . $isSessionExists . '</title>'?>
 </head>
 <body>
 
@@ -249,7 +249,7 @@ session_start();
                     </button>
                 </div>
                 <div class="modal-body" id="reservationModalBody">
-                    <?php if ($isSessionExists && $isAdmin != 0) { ?>
+                    <?php if ($isSessionExists == 1 && $isAdmin == 0) { ?>
                     <form role="form" autocomplete="off" id="reservation-form" method="post">
                         <?php if ($isSessionExists) { ?>
                         <input type="number" id="cid" name="cid" value="<?php echo $cHandler->getId() ?>" hidden>
