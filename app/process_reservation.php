@@ -5,6 +5,7 @@ require 'Util.php';
 require 'dao/BookingReservationDAO.php';
 require 'models/Booking.php';
 require 'models/Reservation.php';
+require 'models/StatusEnum.php';
 require 'handlers/BookingReservationHandler.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submitBtn"])) {
@@ -41,7 +42,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submitBtn"])) {
     } else {
         $r = new Reservation();
         $r->setCid($_POST["cid"]);
-        $r->setStatus("pending");
+        $r->setStatus(\models\StatusEnum::PENDING_STR);
         $r->setNotes(null);
         $r->setStart($_POST["start"]);
         $r->setEnd($_POST["end"]);
