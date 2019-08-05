@@ -76,6 +76,15 @@ class BookingDetailHandler extends BookingDetailDAO
     public function cancelSelection($item)
     {
         for ($i = 0; $i < count($item); $i++) {
+            /*
+            if ($this->updateBooking($item[$i], false, true)) {
+                $out = "These reservations have been successfully <b>cancelled</b>.";
+                $out .= " This page will reload to reflect changes.";
+                $this->setExecutionFeedback($out);
+            } else {
+                $this->setExecutionFeedback("There must be an error processing your request. Please try again later.");
+            }
+            */
             if ($this->updateCancelled($item[$i])) {
                 $out = "These reservations have been successfully <b>cancelled</b>.";
                 $out .= " This page will reload to reflect changes.";
@@ -86,3 +95,5 @@ class BookingDetailHandler extends BookingDetailDAO
         }
     }
 }
+
+// todo: protect booking functionalities (only admin can perform)

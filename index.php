@@ -66,7 +66,7 @@ session_start();
                     <h4 class="text-white"><?php echo $username; ?></h4>
                     <ul class="list-unstyled">
                         <?php if ($isAdmin == 1) { ?>
-                        <li><a href="admin.php" class="text-white">Manage reservation<i class="far fa-address-book ml-2"></i></a></li>
+                        <li><a href="admin.php" class="text-white">Manage customer reservation(s)<i class="far fa-address-book ml-2"></i></a></li>
                         <?php } else { ?>
                         <li><a href="#" class="text-white my-reservations">View my bookings<i class="far fa-address-book ml-2"></i></a></li>
                         <li>
