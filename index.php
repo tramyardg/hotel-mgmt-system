@@ -20,6 +20,7 @@ session_start();
     require 'app/Util.php';
     require 'app/dao/CustomerDAO.php';
     require 'app/dao/BookingDetailDAO.php';
+    require 'app/models/RequirementEnum.php';
     require 'app/models/Customer.php';
     require 'app/models/Booking.php';
     require 'app/models/Reservation.php';
@@ -291,9 +292,9 @@ session_start();
                             </label>
                             <div class="col-sm-9">
                                 <select required class="custom-select mr-sm-2" id="roomType" name="roomType">
-                                    <option value="deluxe">Deluxe room</option>
-                                    <option value="double">Double room</option>
-                                    <option value="single">Single room</option>
+                                    <option value="<?php echo \models\RequirementEnum::DELUXE; ?>">Deluxe room</option>
+                                    <option value="<?php echo \models\RequirementEnum::DOUBLE; ?>">Double room</option>
+                                    <option value="<?php echo \models\RequirementEnum::SINGLE; ?>">Single room</option>
                                 </select>
                             </div>
                         </div>
