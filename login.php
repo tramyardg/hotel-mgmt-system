@@ -76,17 +76,26 @@
       console.log('Successful login for: ' + response.name);
       document.getElementById('status').innerHTML =
           'Thanks for logging in, ' + response.name + '!';
-      let p = document.getElementsByTagName('fb:login-button')[0].parentElement;
-      let c = document.getElementsByTagName('fb:login-button')[0];
-      p.removeChild(c);
+      removeLoginButton();
+      document.getElementById('logoutDiv').innerHTML = logoutButton();
     });
   }
 
+  function logoutButton() {
+    return '<button onclick="logoutFb()">Logout</button>';
+  }
+
   function logoutFb() {
-    FB.logout(function(response) {
+    FB.logout(function (response) {
       console.log('response', response);
       console.log('successfully logout');
     });
+  }
+
+  function removeLoginButton() {
+    let p = document.getElementsByTagName('fb:login-button')[0].parentElement;
+    let c = document.getElementsByTagName('fb:login-button')[0];
+    p.removeChild(c);
   }
 
 </script>
@@ -101,6 +110,6 @@
 </fb:login-button>
 <div id="status">
 </div>
-<button onclick="logoutFb()">logout</button>
+<div id="logoutDiv"></div>
 </body>
 </html>
