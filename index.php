@@ -176,7 +176,7 @@ session_start();
                             <div class="d-flex justify-content-between align-items-center">
                                 <div class="btn-group">
                                     <?php if ($isSessionExists) { ?>
-                                    <button type="button" class="btn btn-sm btn-outline-success" data-toggle="modal" data-target=".book-now-modal-lg">
+                                    <button type="button" class="btn btn-sm btn-outline-success" data-rtype="Deluxe" data-toggle="modal" data-target=".book-now-modal-lg">
                                         Book
                                     </button>
                                     <?php } else { ?>
@@ -200,7 +200,7 @@ session_start();
                             <p class="card-text">The standard twin room is equipped with two single beds to house two people. An enticing set of top notch facilities to the optimum security level, a fully air conditioned twin room remains the perfect choice for your needs. Book hotel rooms with us and enjoy your trip with full fervor.</p>
                             <div class="d-flex justify-content-between align-items-center">
                                 <?php if ($isSessionExists) { ?>
-                                <button type="button" class="btn btn-sm btn-outline-success" data-toggle="modal" data-target=".book-now-modal-lg">
+                                <button type="button" class="btn btn-sm btn-outline-success" data-rtype="Double" data-toggle="modal" data-target=".book-now-modal-lg">
                                     Book
                                 </button>
                                 <?php } else { ?>
@@ -223,7 +223,7 @@ session_start();
                             <p class="card-text">A modestly sized single room with en suite bathroom with shower and/or bathtub, a hairdryer and complimentary toiletries. Amenities include free WiFi, a telephone, a minibar, and a flat-screen TV with a variety of channels and films.</p>
                             <div class="d-flex justify-content-between align-items-center">
                                 <?php if ($isSessionExists) { ?>
-                                <button type="button" class="btn btn-sm btn-outline-success" data-toggle="modal" data-target=".book-now-modal-lg">
+                                <button type="button" class="btn btn-sm btn-outline-success" data-toggle="modal" data-rtype="Single" data-target=".book-now-modal-lg">
                                     Book
                                 </button>
                                 <?php } else { ?>
@@ -445,6 +445,13 @@ session_start();
             reservationDiv.slideToggle( "slow");
         });
         $('#myReservationsTbl').DataTable();
+
+        $('.book-now-modal-lg').on('show.bs.modal', function (event) {
+          let button = $(event.relatedTarget);
+          let roomType = button.data('rtype');
+          let modal = $(this);
+          modal.find('.modal-body select#roomType').val(roomType);
+        })
     });
 </script>
 </body>
