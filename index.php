@@ -185,7 +185,7 @@ session_start();
                                     </button>
                                     <?php } ?>
                                 </div>
-                                <small class="text-muted">250 / night</small>
+                                <small class="text-muted">$250 / night</small>
                             </div>
                         </div>
                     </div>
@@ -208,7 +208,7 @@ session_start();
                                     Book
                                 </button>
                                 <?php } ?>
-                                <small class="text-muted">180 / night</small>
+                                <small class="text-muted">$180 / night</small>
                             </div>
                         </div>
                     </div>
@@ -231,7 +231,7 @@ session_start();
                                     Book
                                 </button>
                                 <?php } ?>
-                                <small class="text-muted">130 / night</small>
+                                <small class="text-muted">$130 / night</small>
                             </div>
                         </div>
                     </div>
@@ -256,7 +256,7 @@ session_start();
                         <input type="number" id="cid" name="cid" value="<?php echo $cHandler->getId() ?>" hidden>
                         <?php } ?>
                         <div class="form-group row">
-                            <label for="startDate" class="col-sm-3 col-form-label">From
+                            <label for="startDate" class="col-sm-3 col-form-label">Check-in
                                 <span class="red-asterisk"> *</span>
                             </label>
                             <div class="col-sm-9">
@@ -272,7 +272,7 @@ session_start();
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="endDate" class="col-sm-3 col-form-label">To
+                            <label for="endDate" class="col-sm-3 col-form-label">Check-out
                                 <span class="red-asterisk"> *</span>
                             </label>
                             <div class="col-sm-9">

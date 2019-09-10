@@ -27,3 +27,6 @@ label.error {
     width: 100%;
     height: 20px;
 }
+textarea#specialRequests {
+    resize: none;
+}
