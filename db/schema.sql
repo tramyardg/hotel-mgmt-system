@@ -15,6 +15,14 @@ CREATE TABLE `customer`
     `phone`    varchar(25) DEFAULT NULL
 );
 
+CREATE TABLE `pricing`
+(
+    `pricing_id`  int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
+    `booking_id`  int(11) NOT NULL,
+    `nights`      int(11) NOT NULL,
+    `total_price` double  NOT NULL
+);
+
 CREATE TABLE administrator
 (
     `adminId`  INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
