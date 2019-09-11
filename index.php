@@ -355,6 +355,119 @@ session_start();
         </div>
     </div>
 
+    <!--  testing multi step rsvp  -->
+    <div class="row">
+        <div class="col-md-12">
+            <form role="form" autocomplete="off" method="post">
+                <div class="rsvnTab">
+                    <div class="form-group row">
+                        <label for="startDate" class="col-sm-3 col-form-label">Check-in
+                            <span class="red-asterisk"> *</span>
+                        </label>
+                        <div class="col-sm-9">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                        <span class="input-group-text">
+                            <i class="fa fa-calendar"></i>
+                        </span>
+                                </div>
+                                <input type="date" class="form-control" id="startDate_"
+                                       name="startDate" min="" required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="endDate" class="col-sm-3 col-form-label">Check-out
+                            <span class="red-asterisk"> *</span>
+                        </label>
+                        <div class="col-sm-9">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                        <span class="input-group-text" id="inputGroupPrepend">
+                            <i class="fa fa-calendar"></i>
+                        </span>
+                                </div>
+                                <input type="date" class="form-control" id="endDate_" name="endDate" required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row align-items-center">
+                        <label class="col-sm-3 col-form-label" for="roomType">Room type
+                            <span class="red-asterisk"> *</span>
+                        </label>
+                        <div class="col-sm-9">
+                            <select required class="custom-select mr-sm-2" id="roomType_" name="roomType">
+                                <option value="">Deluxe room</option>
+                                <option value="">Double room</option>
+                                <option value="">Single room</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group row align-items-center">
+                        <label class="col-sm-3 col-form-label" for="roomRequirement">Room requirements</label>
+                        <div class="col-sm-9">
+                            <select class="custom-select mr-sm-2" id="roomRequirement_" name="roomRequirement">
+                                <option value="no preference" selected>No preference</option>
+                                <option value="non smoking">Non smoking</option>
+                                <option value="smoking">Smoking</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group row align-items-center">
+                        <label class="col-sm-3 col-form-label" for="adults">Adults
+                            <span class="red-asterisk"> *</span>
+                        </label>
+                        <div class="col-sm-9">
+                            <select required class="custom-select mr-sm-2" id="adults_" name="adults">
+                                <option selected value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group row align-items-center">
+                        <label class="col-sm-3 col-form-label" for="children">Children</label>
+                        <div class="col-sm-9">
+                            <select class="custom-select mr-sm-2" id="children_" name="children">
+                                <option selected value="0">-</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group row align-items-center">
+                        <label class="col-sm-3 col-form-label" for="specialRequests">Special requirements</label>
+                        <div class="col-sm-9">
+                <textarea rows="3" maxlength="500" id="specialRequests_" name="specialRequests"
+                          class="form-control"></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="rsvnTab">
+                </div>
+
+                <div style="overflow:auto;">
+                    <div style="float:right;">
+                        <button type="button" class="btn btn-success" id="rsvnPrevBtn" onclick="rsvnNextPrev(-1)">Previous</button>
+                        <button type="button" class="btn btn-success" id="rsvnNextBtn" onclick="rsvnNextPrev(1)">Next</button>
+                    </div>
+                </div>
+
+                <div style="text-align:center;margin-top:40px;">
+                    <span class="step"></span>
+                    <span class="step"></span>
+                    <span class="step"></span>
+                    <span class="step"></span>
+                </div>
+
+            </form>
+        </div>
+    </div>
+
     <div class="modal sign-in-to-book-modal" tabindex="-1" role="dialog" aria-labelledby="signInToBookModal" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
@@ -451,8 +564,38 @@ session_start();
           let roomType = button.data('rtype');
           let modal = $(this);
           modal.find('.modal-body select#roomType').val(roomType);
-        })
-    });
+        });
+
+      // rsvn multi steps
+      let currentTab = 0;
+      showTab(currentTab);
+
+      function showTab(n) {
+        let x = document.getElementsByClassName("rsvnTab");
+        x[n].style.display = "block";
+
+        if (n === 0) {
+          document.getElementById("rsvnPrevBtn").style.display = "none";
+        } else {
+          document.getElementById("rsvnPrevBtn").style.display = "inline";
+        }
+        if (n === (x.length - 1)) {
+          document.getElementById("rsvnNextBtn").innerHTML = "Submit";
+        } else {
+          document.getElementById("rsvnNextBtn").innerHTML = "Next";
+        }
+        fixStepIndicator(n);
+      }
+
+      function fixStepIndicator(n) {
+        let i, x = document.getElementsByClassName("step");
+        for (i = 0; i < x.length; i++) {
+          x[i].className = x[i].className.replace(" active", "");
+        }
+        x[n].className += " active";
+      }
+
+    })
 </script>
 </body>
 </html>
