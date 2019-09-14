@@ -448,6 +448,12 @@ session_start();
                 </div>
 
                 <div class="rsvnTab">
+                    <div class="form-group row align-items-center">
+                        <label class="col-sm-3 col-form-label" for="adults">Booked Date</label>
+                        <div class="col-sm-9">
+                            July 13, 2019
+                        </div>
+                    </div>
                 </div>
 
                 <div style="overflow:auto;">
@@ -593,6 +599,11 @@ session_start();
           x[i].className = x[i].className.replace(" active", "");
         }
         x[n].className += " active";
+      }
+
+      function rsvnNextPrev(n) {
+        let x = document.getElementsByClassName("rsvnTab");
+        
       }
 
     })
