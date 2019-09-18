@@ -449,9 +449,29 @@ session_start();
 
                 <div class="rsvnTab">
                     <div class="form-group row align-items-center">
-                        <label class="col-sm-3 col-form-label" for="adults">Booked Date</label>
+                        <label class="col-sm-3 col-form-label font-weight-bold" for="bookedDate">Booked Date</label>
                         <div class="col-sm-9">
                             July 13, 2019
+                        </div>
+                    </div>
+                    <div class="form-group row align-items-center">
+                        <label class="col-sm-3 col-form-label font-weight-bold" for="roomPrice">Room Price</label>
+                        <div class="col-sm-9">
+                            $235.75
+                        </div>
+                    </div>
+                    <div class="form-group row align-items-center">
+                        <label class="col-sm-3 col-form-label font-weight-bold" for="numNights">3 nights </label>
+                        <div class="col-sm-9">
+                            $69.63 avg. / night
+                        </div>
+                        <label class="col-sm-3 col-form-label">Thu. Jul 4 </label>
+                        <div class="col-sm-9">
+                            $69.63
+                        </div>
+                        <label class="col-sm-3 col-form-label">Fri. Jul 5 </label>
+                        <div class="col-sm-9">
+                            $69.63
                         </div>
                     </div>
                 </div>

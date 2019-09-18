@@ -20,7 +20,8 @@ function showTab (n) {
 }
 
 function fixStepIndicator (n) {
-  let i, x = document.getElementsByClassName('step');
+  let i;
+  let x = document.getElementsByClassName('step');
   for (i = 0; i < x.length; i++) {
     x[i].className = x[i].className.replace(' active', '');
   }
