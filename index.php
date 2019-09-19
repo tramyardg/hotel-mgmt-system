@@ -445,6 +445,12 @@ session_start();
                           class="form-control"></textarea>
                         </div>
                     </div>
+                    <div class="form-group row align-items-center">
+                        <button type="button" class="btn btn-secondary" data-container="body" data-toggle="popover"
+                                data-placement="right" data-content="Vivamus sagittis lacus vel augue laoreet rutrum faucibus.">
+                            Check-in policies
+                        </button>
+                    </div>
                 </div>
 
                 <div class="rsvnTab">
@@ -567,8 +573,7 @@ session_start();
 </footer>
 
 <script src="node_modules/jquery/dist/jquery.min.js"></script>
-<script src="node_modules/popper.js/dist/popper.min.js"></script>
-<script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 <script defer src="https://use.fontawesome.com/releases/v5.0.10/js/all.js"
         integrity="sha384-slN8GvtUJGnv6ca26v8EzVaR9DC58QEwsIk9q1QXdCU8Yu8ck/tL/5szYlBbqmS+"
         crossorigin="anonymous"></script>
@@ -585,12 +590,15 @@ session_start();
         });
         $('#myReservationsTbl').DataTable();
 
+        // dynamically entered room type value on show modal
         $('.book-now-modal-lg').on('show.bs.modal', function (event) {
           let button = $(event.relatedTarget);
           let roomType = button.data('rtype');
           let modal = $(this);
           modal.find('.modal-body select#roomType').val(roomType);
         });
+      $('[data-toggle="popover"]').popover();
+
     });
 </script>
 <script src="js/multiStepsRsvn.js"></script>
