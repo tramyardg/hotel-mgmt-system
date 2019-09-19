@@ -2,7 +2,7 @@
 let currentTab = 0;
 showTab(currentTab);
 
-function showTab (n) {
+function showTab(n) {
   let x = document.getElementsByClassName('rsvnTab');
   x[n].style.display = 'block';
 
@@ -19,7 +19,7 @@ function showTab (n) {
   fixStepIndicator(n);
 }
 
-function fixStepIndicator (n) {
+function fixStepIndicator(n) {
   let i;
   let x = document.getElementsByClassName('step');
   for (i = 0; i < x.length; i++) {
@@ -28,7 +28,7 @@ function fixStepIndicator (n) {
   x[n].className += ' active';
 }
 
-function rsvnNextPrev (n) {
+function rsvnNextPrev(n) {
   let x = document.getElementsByClassName('rsvnTab');
   // if (n === 1) return false;
   // Hide the current tab:
