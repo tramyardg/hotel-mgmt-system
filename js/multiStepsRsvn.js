@@ -37,3 +37,6 @@ function rsvnNextPrev(n) {
 
   showTab(currentTab);
 }
+
+// todo
+// get date range, convert to thu. jul 4 format

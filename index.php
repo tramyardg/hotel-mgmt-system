@@ -454,6 +454,7 @@ session_start();
                 </div>
 
                 <div class="rsvnTab">
+                    <div class="form-group row align-items-center"><h2>Reservation's Cost Summary</h2></div>
                     <div class="form-group row align-items-center">
                         <label class="col-sm-3 col-form-label font-weight-bold" for="bookedDate">Booked Date</label>
                         <div class="col-sm-9">
@@ -479,6 +480,14 @@ session_start();
                         <div class="col-sm-9">
                             $69.63
                         </div>
+                        <label class="col-sm-3 col-form-label">Sat. Jul 6 </label>
+                        <div class="col-sm-9">
+                            $69.63
+                        </div>
+                        <label class="col-sm-3 col-form-label">Taxes </label>
+                        <div class="col-sm-9">
+                            $0.00
+                        </div>
                     </div>
                 </div>
 
@@ -490,7 +499,6 @@ session_start();
                 </div>
 
                 <div style="text-align:center;margin-top:40px;">
-                    <span class="step"></span>
                     <span class="step"></span>
                     <span class="step"></span>
                     <span class="step"></span>
@@ -583,20 +591,22 @@ session_start();
 <script src="js/form-submission.js"></script>
 <script>
     $(document).ready(function () {
-        let reservationDiv = $("#my-reservations-div");
-        reservationDiv.hide();
-        $(".my-reservations").click(function() {
-            reservationDiv.slideToggle( "slow");
-        });
-        $('#myReservationsTbl').DataTable();
+      let reservationDiv = $("#my-reservations-div");
+      reservationDiv.hide();
+      $(".my-reservations").click(function () {
+        reservationDiv.slideToggle("slow");
+      });
+      $('#myReservationsTbl').DataTable();
 
-        // dynamically entered room type value on show modal
-        $('.book-now-modal-lg').on('show.bs.modal', function (event) {
-          let button = $(event.relatedTarget);
-          let roomType = button.data('rtype');
-          let modal = $(this);
-          modal.find('.modal-body select#roomType').val(roomType);
-        });
+      // dynamically entered room type value on show modal
+      $('.book-now-modal-lg').on('show.bs.modal', function (event) {
+        let button = $(event.relatedTarget);
+        let roomType = button.data('rtype');
+        let modal = $(this);
+        modal.find('.modal-body select#roomType').val(roomType);
+      });
+
+      // check-in policies popover
       $('[data-toggle="popover"]').popover();
 
     });
