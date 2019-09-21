@@ -38,5 +38,8 @@ function rsvnNextPrev(n) {
   showTab(currentTab);
 }
 
+// function validateRsvnForm() {}
+
 // todo
+// validate inputs in the current tab on click next
 // get date range, convert to thu. jul 4 format
