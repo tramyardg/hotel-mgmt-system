@@ -446,8 +446,8 @@ session_start();
                         </div>
                     </div>
                     <div class="form-group row align-items-center">
-                        <button type="button" class="btn btn-secondary" data-container="body" data-toggle="popover"
-                                data-placement="right" data-content="Vivamus sagittis lacus vel augue laoreet rutrum faucibus.">
+                        <button type="button" class="btn btn-info" data-container="body" data-toggle="popover"
+                                data-placement="right" data-content="Check-in time starts at 3 PM. If a late check-in is planned, please contact our support department.">
                             Check-in policies
                         </button>
                     </div>
