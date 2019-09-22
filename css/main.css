@@ -64,3 +64,7 @@ textarea#specialRequests {
 .step.finish {
     background-color: #4CAF50;
 }
+
+input.invalid {
+    background-color: #ffdddd;
+}

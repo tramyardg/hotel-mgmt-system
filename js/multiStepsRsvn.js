@@ -30,7 +30,7 @@ function fixStepIndicator(n) {
 
 function rsvnNextPrev(n) {
   let x = document.getElementsByClassName('rsvnTab');
-  // if (n === 1) return false;
+  if (n === 1 && !validateRsvnForm()) return false;
   // Hide the current tab:
   x[currentTab].style.display = 'none';
   currentTab = currentTab + n;
@@ -38,8 +38,24 @@ function rsvnNextPrev(n) {
   showTab(currentTab);
 }
 
-// function validateRsvnForm() {}
+function validateRsvnForm() {
+  let tab = document.getElementsByClassName('rsvnTab');
+  let valid = true;
+  let inputs = tab[currentTab].getElementsByTagName('input');
+  for (let i = 0; i < inputs.length; i++) {
+    if (inputs[i].hasAttribute('required')) {
+      if (inputs[i].value === '') {
+        inputs[i].className += ' invalid';
+        valid = false;
+      }
+    }
+  }
+  if (valid) {
+    document.getElementsByClassName('step')[currentTab].className += ' finish';
+  }
+  return valid;
+}
 
 // todo
-// validate inputs in the current tab on click next
+// [x] - validate inputs in the current tab on click next
 // get date range, convert to thu. jul 4 format
