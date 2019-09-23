@@ -58,4 +58,11 @@ function validateRsvnForm() {
 
 // todo
 // [x] - validate inputs in the current tab on click next
-// get date range, convert to thu. jul 4 format
+// calculate difference between dates
+/**
+ var date1 = new Date("9/16/2019");
+ var date2 = new Date("9/20/2019");
+ var timeDiff = Math.abs(date2.getTime() - date1.getTime());
+ var diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
+ alert(diffDays);
+ */
