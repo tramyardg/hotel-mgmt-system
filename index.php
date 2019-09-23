@@ -472,6 +472,10 @@ session_start();
                         <div class="col-sm-9">
                             $69.63 avg. / night
                         </div>
+                        <label class="col-sm-3 col-form-label font-weight-bold" for="numNights">From - to</label>
+                        <div class="col-sm-9">
+                            Mon. July 4 to Wed. July 6
+                        </div>
                         <label class="col-sm-3 col-form-label">Taxes </label>
                         <div class="col-sm-9">
                             $0.00

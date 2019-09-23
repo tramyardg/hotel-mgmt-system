@@ -60,6 +60,7 @@ function validateRsvnForm() {
 // [x] - validate inputs in the current tab on click next
 // calculate difference between dates
 /**
+ * https://stackoverflow.com/questions/3224834/get-difference-between-2-dates-in-javascript
  var date1 = new Date("9/16/2019");
  var date2 = new Date("9/20/2019");
  var timeDiff = Math.abs(date2.getTime() - date1.getTime());
