@@ -372,7 +372,7 @@ session_start();
                         </span>
                                 </div>
                                 <input type="date" class="form-control" id="startDate_"
-                                       name="startDate" min="" required>
+                                       name="startDate" min="<?php echo Util::dateToday(); ?>" required>
                             </div>
                         </div>
                     </div>
@@ -471,18 +471,6 @@ session_start();
                         <label class="col-sm-3 col-form-label font-weight-bold" for="numNights">3 nights </label>
                         <div class="col-sm-9">
                             $69.63 avg. / night
-                        </div>
-                        <label class="col-sm-3 col-form-label">Thu. Jul 4 </label>
-                        <div class="col-sm-9">
-                            $69.63
-                        </div>
-                        <label class="col-sm-3 col-form-label">Fri. Jul 5 </label>
-                        <div class="col-sm-9">
-                            $69.63
-                        </div>
-                        <label class="col-sm-3 col-form-label">Sat. Jul 6 </label>
-                        <div class="col-sm-9">
-                            $69.63
                         </div>
                         <label class="col-sm-3 col-form-label">Taxes </label>
                         <div class="col-sm-9">
