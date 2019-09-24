@@ -253,7 +253,7 @@ session_start();
                     <?php if ($isSessionExists == 1 && $isAdmin == 0) { ?>
                     <form role="form" autocomplete="off" id="reservation-form" method="post">
                         <?php if ($isSessionExists) { ?>
-                        <input type="number" id="cid" name="cid" value="<?php echo $cHandler->getId() ?>" hidden>
+                        <input type="number" id="cid" name="cid" isForTest="false" value="<?php echo $cHandler->getId() ?>" hidden>
                         <?php } ?>
                         <div class="form-group row">
                             <label for="startDate" class="col-sm-3 col-form-label">Check-in
@@ -266,7 +266,7 @@ session_start();
                                             <i class="fa fa-calendar"></i>
                                         </span>
                                     </div>
-                                    <input type="date" class="form-control" id="startDate"
+                                    <input type="date" class="form-control" id="startDate" isForTest="false"
                                            name="startDate" min="<?php echo Util::dateToday(); ?>" required>
                                  </div>
                             </div>
@@ -282,7 +282,7 @@ session_start();
                                             <i class="fa fa-calendar"></i>
                                         </span>
                                     </div>
-                                    <input type="date" class="form-control" id="endDate" name="endDate" required>
+                                    <input type="date" class="form-control" id="endDate" isForTest="false" name="endDate" required>
                                 </div>
                             </div>
                         </div>
@@ -291,7 +291,7 @@ session_start();
                                 <span class="red-asterisk"> *</span>
                             </label>
                             <div class="col-sm-9">
-                                <select required class="custom-select mr-sm-2" id="roomType" name="roomType">
+                                <select class="custom-select mr-sm-2" id="roomType" isForTest="false" name="roomType" required>
                                     <option value="<?php echo \models\RequirementEnum::DELUXE; ?>">Deluxe room</option>
                                     <option value="<?php echo \models\RequirementEnum::DOUBLE; ?>">Double room</option>
                                     <option value="<?php echo \models\RequirementEnum::SINGLE; ?>">Single room</option>
@@ -301,7 +301,7 @@ session_start();
                         <div class="form-group row align-items-center">
                             <label class="col-sm-3 col-form-label" for="roomRequirement">Room requirements</label>
                             <div class="col-sm-9">
-                                <select class="custom-select mr-sm-2" id="roomRequirement" name="roomRequirement">
+                                <select class="custom-select mr-sm-2" id="roomRequirement" isForTest="false" name="roomRequirement">
                                     <option value="no preference" selected>No preference</option>
                                     <option value="non smoking">Non smoking</option>
                                     <option value="smoking">Smoking</option>
@@ -313,7 +313,7 @@ session_start();
                                 <span class="red-asterisk"> *</span>
                             </label>
                             <div class="col-sm-9">
-                                <select required class="custom-select mr-sm-2" id="adults" name="adults">
+                                <select required class="custom-select mr-sm-2" id="adults" isForTest="false" name="adults">
                                     <option selected value="1">1</option>
                                     <option value="2">2</option>
                                     <option value="3">3</option>
@@ -324,7 +324,7 @@ session_start();
                         <div class="form-group row align-items-center">
                             <label class="col-sm-3 col-form-label" for="children">Children</label>
                             <div class="col-sm-9">
-                                <select class="custom-select mr-sm-2" id="children" name="children">
+                                <select class="custom-select mr-sm-2" id="children" isForTest="false" name="children">
                                     <option selected value="0">-</option>
                                     <option value="1">1</option>
                                     <option value="2">2</option>
@@ -336,7 +336,7 @@ session_start();
                         <div class="form-group row align-items-center">
                             <label class="col-sm-3 col-form-label" for="specialRequests">Special requirements</label>
                             <div class="col-sm-9">
-                                <textarea rows="3" maxlength="500" id="specialRequests" name="specialRequests" class="form-control"></textarea>
+                                <textarea rows="3" maxlength="500" id="specialRequests" isForTest="false" name="specialRequests" class="form-control"></textarea>
                             </div>
                         </div>
                         <div class="form-group row align-items-center">
@@ -400,9 +400,9 @@ session_start();
                         </label>
                         <div class="col-sm-9">
                             <select required class="custom-select mr-sm-2" isForTest="true" name="roomType">
-                                <option value="">Deluxe room</option>
-                                <option value="">Double room</option>
-                                <option value="">Single room</option>
+                                <option value="<?php echo \models\RequirementEnum::DELUXE; ?>">Deluxe room</option>
+                                <option value="<?php echo \models\RequirementEnum::DOUBLE; ?>">Double room</option>
+                                <option value="<?php echo \models\RequirementEnum::SINGLE; ?>">Single room</option>
                             </select>
                         </div>
                     </div>

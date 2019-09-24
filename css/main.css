@@ -65,6 +65,6 @@ textarea#specialRequests {
     background-color: #4CAF50;
 }
 
-input.invalid {
+input.invalid, select.invalid {
     background-color: #ffdddd;
 }
