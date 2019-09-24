@@ -2,7 +2,7 @@
 let currentTab = 0;
 showTab(currentTab);
 
-function showTab(n) {
+function showTab (n) {
   let x = document.getElementsByClassName('rsvnTab');
   x[n].style.display = 'block';
 
@@ -19,7 +19,7 @@ function showTab(n) {
   fixStepIndicator(n);
 }
 
-function fixStepIndicator(n) {
+function fixStepIndicator (n) {
   let i;
   let x = document.getElementsByClassName('step');
   for (i = 0; i < x.length; i++) {
@@ -28,7 +28,7 @@ function fixStepIndicator(n) {
   x[n].className += ' active';
 }
 
-function rsvnNextPrev(n) {
+function rsvnNextPrev (n) {
   let x = document.getElementsByClassName('rsvnTab');
   if (n === 1 && !validateRsvnForm()) return false;
   // Hide the current tab:
@@ -38,7 +38,7 @@ function rsvnNextPrev(n) {
   showTab(currentTab);
 }
 
-function validateRsvnForm() {
+function validateRsvnForm () {
   let tab = document.getElementsByClassName('rsvnTab');
   let valid = true;
   let inputs = tab[currentTab].getElementsByTagName('input');
@@ -59,11 +59,3 @@ function validateRsvnForm() {
 // todo
 // [x] - validate inputs in the current tab on click next
 // calculate difference between dates
-/**
- * https://stackoverflow.com/questions/3224834/get-difference-between-2-dates-in-javascript
- var date1 = new Date("9/16/2019");
- var date2 = new Date("9/20/2019");
- var timeDiff = Math.abs(date2.getTime() - date1.getTime());
- var diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
- alert(diffDays);
- */

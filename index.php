@@ -360,6 +360,9 @@ session_start();
         <div class="col-md-12">
             <form role="form" autocomplete="off" method="post">
                 <div class="rsvnTab">
+                    <?php if ($isSessionExists) { ?>
+                        <input type="number" isForTest="true" name="cid" value="<?php echo $cHandler->getId() ?>" hidden>
+                    <?php } ?>
                     <div class="form-group row">
                         <label for="startDate" class="col-sm-3 col-form-label">Check-in
                             <span class="red-asterisk"> *</span>
@@ -371,8 +374,8 @@ session_start();
                             <i class="fa fa-calendar"></i>
                         </span>
                                 </div>
-                                <input type="date" class="form-control" id="startDate_"
-                                       name="startDate" min="<?php echo Util::dateToday(); ?>" required>
+                                <input type="date" class="form-control"
+                                       name="startDate" isForTest="true" min="<?php echo Util::dateToday(); ?>" required>
                             </div>
                         </div>
                     </div>
@@ -387,7 +390,7 @@ session_start();
                             <i class="fa fa-calendar"></i>
                         </span>
                                 </div>
-                                <input type="date" class="form-control" id="endDate_" name="endDate" required>
+                                <input type="date" class="form-control" isForTest="true" name="endDate" required>
                             </div>
                         </div>
                     </div>
@@ -396,7 +399,7 @@ session_start();
                             <span class="red-asterisk"> *</span>
                         </label>
                         <div class="col-sm-9">
-                            <select required class="custom-select mr-sm-2" id="roomType_" name="roomType">
+                            <select required class="custom-select mr-sm-2" isForTest="true" name="roomType">
                                 <option value="">Deluxe room</option>
                                 <option value="">Double room</option>
                                 <option value="">Single room</option>
@@ -406,7 +409,7 @@ session_start();
                     <div class="form-group row align-items-center">
                         <label class="col-sm-3 col-form-label" for="roomRequirement">Room requirements</label>
                         <div class="col-sm-9">
-                            <select class="custom-select mr-sm-2" id="roomRequirement_" name="roomRequirement">
+                            <select class="custom-select mr-sm-2" isForTest="true" name="roomRequirement">
                                 <option value="no preference" selected>No preference</option>
                                 <option value="non smoking">Non smoking</option>
                                 <option value="smoking">Smoking</option>
@@ -418,7 +421,7 @@ session_start();
                             <span class="red-asterisk"> *</span>
                         </label>
                         <div class="col-sm-9">
-                            <select required class="custom-select mr-sm-2" id="adults_" name="adults">
+                            <select required class="custom-select mr-sm-2" isForTest="true" name="adults">
                                 <option selected value="1">1</option>
                                 <option value="2">2</option>
                                 <option value="3">3</option>
@@ -429,7 +432,7 @@ session_start();
                     <div class="form-group row align-items-center">
                         <label class="col-sm-3 col-form-label" for="children">Children</label>
                         <div class="col-sm-9">
-                            <select class="custom-select mr-sm-2" id="children_" name="children">
+                            <select class="custom-select mr-sm-2" isForTest="true" name="children">
                                 <option selected value="0">-</option>
                                 <option value="1">1</option>
                                 <option value="2">2</option>
@@ -441,7 +444,7 @@ session_start();
                     <div class="form-group row align-items-center">
                         <label class="col-sm-3 col-form-label" for="specialRequests">Special requirements</label>
                         <div class="col-sm-9">
-                <textarea rows="3" maxlength="500" id="specialRequests_" name="specialRequests"
+                <textarea rows="3" maxlength="500" isForTest="true" name="specialRequests"
                           class="form-control"></textarea>
                         </div>
                     </div>
@@ -571,7 +574,7 @@ session_start();
 <footer class="container">
     <p>&copy; Company 2017-2018</p>
 </footer>
-
+<script src="js/utilityFunctions.js"></script>
 <script src="node_modules/jquery/dist/jquery.min.js"></script>
 <script src="node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 <script defer src="https://use.fontawesome.com/releases/v5.0.10/js/all.js"
