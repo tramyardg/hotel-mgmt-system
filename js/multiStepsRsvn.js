@@ -50,6 +50,17 @@ function validateRsvnForm () {
       }
     }
   }
+
+  let selects = tab[currentTab].getElementsByTagName('select');
+  for (let i = 0; i < selects.length; i++) {
+    if (selects[i].hasAttribute('required')) {
+      if (selects[i].value === '') {
+        selects[i].className += ' invalid';
+        valid = false;
+      }
+    }
+  }
+
   if (valid) {
     document.getElementsByClassName('step')[currentTab].className += ' finish';
   }
