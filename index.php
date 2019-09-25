@@ -460,7 +460,7 @@ session_start();
                     <div class="form-group row align-items-center"><h2>Reservation's Cost Summary</h2></div>
                     <div class="form-group row align-items-center">
                         <label class="col-sm-3 col-form-label font-weight-bold" for="bookedDate">Booked Date</label>
-                        <div class="col-sm-9">
+                        <div class="col-sm-9 bookedDateTxt">
                             July 13, 2019
                         </div>
                     </div>

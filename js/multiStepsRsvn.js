@@ -1,3 +1,7 @@
+const DELUXE_PER_NIGHT = 250;
+const DOUBLE_PER_NIGHT = 180;
+const SINGLE_PER_NIGHT = 150;
+
 // rsvn multi steps
 let currentTab = 0;
 showTab(currentTab);
@@ -5,7 +9,6 @@ showTab(currentTab);
 function showTab (n) {
   let x = document.getElementsByClassName('rsvnTab');
   x[n].style.display = 'block';
-
   if (n === 0) {
     document.getElementById('rsvnPrevBtn').style.display = 'none';
   } else {
@@ -31,10 +34,8 @@ function fixStepIndicator (n) {
 function rsvnNextPrev (n) {
   let x = document.getElementsByClassName('rsvnTab');
   if (n === 1 && !validateRsvnForm()) return false;
-  // Hide the current tab:
   x[currentTab].style.display = 'none';
   currentTab = currentTab + n;
-
   showTab(currentTab);
 }
 
@@ -62,9 +63,38 @@ function validateRsvnForm () {
   }
 
   if (valid) {
+    console.log({
+      cid: $('input[name="cid"][isForTest="true"]').val(),
+      start: $('input[name="startDate"][isForTest="true"]').val(),
+      end: $('input[name="endDate"][isForTest="true"]').val(),
+      type: $('select[name="roomType"][isForTest="true"]').val(),
+      requirement: $('select[name="roomRequirement"][isForTest="true"]').val(),
+      adults: $('select[name="adults"][isForTest="true"]').val(),
+      children: $('select[name="children"][isForTest="true"]').val(),
+      requests: $('textarea[name="specialRequests"][isForTest="true"]').val()
+    });
     document.getElementsByClassName('step')[currentTab].className += ' finish';
+    let today = new Date();
+    let bookDate = today.toDateString();
+    const rsvnCostSummary = new ReservationCost(bookDate, null, null, null);
+    console.log(rsvnCostSummary);
+    rsvnCostSummary.displayBookedDate();
   }
   return valid;
+}
+
+class ReservationCost {
+  constructor(bookDate, roomPrice, numNights, fromTo) {
+    this.bookDate = bookDate;
+    this.roomPrice = roomPrice;
+    this.numNights = numNights;
+    this.fromTo = fromTo;
+  }
+
+  displayBookedDate() {
+    document.getElementsByClassName('bookedDateTxt')[0].innerHTML = this.bookDate;
+  }
+
 }
 
 // todo
