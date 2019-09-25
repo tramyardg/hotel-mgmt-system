@@ -74,25 +74,47 @@ function validateRsvnForm () {
       requests: $('textarea[name="specialRequests"][isForTest="true"]').val()
     });
     document.getElementsByClassName('step')[currentTab].className += ' finish';
-    let today = new Date();
-    let bookDate = today.toDateString();
-    const rsvnCostSummary = new ReservationCost(bookDate, null, null, null);
+
+    const rsvnCostSummary = new ReservationCost($('select[name="roomType"][isForTest="true"]').val(), $('input[name="startDate"][isForTest="true"]').val(), $('input[name="endDate"][isForTest="true"]').val());
     console.log(rsvnCostSummary);
     rsvnCostSummary.displayBookedDate();
+    rsvnCostSummary.displayRoomPrice();
   }
   return valid;
 }
 
 class ReservationCost {
-  constructor(bookDate, roomPrice, numNights, fromTo) {
-    this.bookDate = bookDate;
-    this.roomPrice = roomPrice;
-    this.numNights = numNights;
-    this.fromTo = fromTo;
+  constructor (roomType, startDate, endDate) {
+    let today = new Date();
+    this.bookDate = today.toDateString();
+    this.roomType = roomType;
+    this.startDate = new Date(startDate);
+    this.endDate = new Date(endDate);
   }
 
-  displayBookedDate() {
+  priceByRoomType () {
+    if (this.roomType === 'Deluxe') {
+      return DELUXE_PER_NIGHT;
+    }
+    if (this.roomType === 'Double') {
+      return DOUBLE_PER_NIGHT;
+    }
+    if (this.roomType === 'Single') {
+      return SINGLE_PER_NIGHT;
+    }
+  }
+
+  numNights () {
+    const diffInDaysFn = new UtilityFunctions();
+    return diffInDaysFn.dateDiffInDays(this.startDate, this.endDate);
+  }
+
+  displayBookedDate () {
     document.getElementsByClassName('bookedDateTxt')[0].innerHTML = this.bookDate;
+  }
+
+  displayRoomPrice () {
+    document.getElementsByClassName('roomPriceTxt')[0].innerHTML = this.numNights() * this.priceByRoomType();
   }
 
 }
