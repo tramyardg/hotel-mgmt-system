@@ -113,11 +113,12 @@ class ReservationCost {
   }
 
   displayRoomPrice () {
-    document.getElementsByClassName('roomPriceTxt')[0].innerHTML = this.numNights() * this.priceByRoomType();
+    document.getElementsByClassName('roomPriceTxt')[0].innerHTML = '$' + this.numNights() * this.priceByRoomType();
   }
 
   displayNumNights () {
     document.getElementsByClassName('numNightsTxt')[0].innerHTML = this.numNights();
+    document.getElementsByClassName('roomPricePerNightTxt')[0].innerHTML = this.priceByRoomType();
   }
 
   displayAll () {

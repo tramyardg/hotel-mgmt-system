@@ -466,14 +466,12 @@ session_start();
                     </div>
                     <div class="form-group row align-items-center">
                         <label class="col-sm-3 col-form-label font-weight-bold" for="roomPrice">Room Price</label>
-                        <div class="col-sm-9 roomPriceTxt">
-                            $235.75
-                        </div>
+                        <div class="col-sm-9 roomPriceTxt">235.75</div>
                     </div>
                     <div class="form-group row align-items-center">
                         <label class="col-sm-3 col-form-label font-weight-bold" for="numNights"><span class="numNightsTxt">3</span> nights </label>
                         <div class="col-sm-9">
-                            $69.63 avg. / night
+                            $<span class="roomPricePerNightTxt">69.63</span> avg. / night
                         </div>
                         <label class="col-sm-3 col-form-label font-weight-bold" for="numNights">From - to</label>
                         <div class="col-sm-9">
