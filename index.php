@@ -471,7 +471,7 @@ session_start();
                         </div>
                     </div>
                     <div class="form-group row align-items-center">
-                        <label class="col-sm-3 col-form-label font-weight-bold" for="numNights">3 nights </label>
+                        <label class="col-sm-3 col-form-label font-weight-bold" for="numNights"><span class="numNightsTxt">3</span> nights </label>
                         <div class="col-sm-9">
                             $69.63 avg. / night
                         </div>

@@ -77,8 +77,7 @@ function validateRsvnForm () {
 
     const rsvnCostSummary = new ReservationCost($('select[name="roomType"][isForTest="true"]').val(), $('input[name="startDate"][isForTest="true"]').val(), $('input[name="endDate"][isForTest="true"]').val());
     console.log(rsvnCostSummary);
-    rsvnCostSummary.displayBookedDate();
-    rsvnCostSummary.displayRoomPrice();
+    rsvnCostSummary.displayAll();
   }
   return valid;
 }
@@ -115,6 +114,16 @@ class ReservationCost {
 
   displayRoomPrice () {
     document.getElementsByClassName('roomPriceTxt')[0].innerHTML = this.numNights() * this.priceByRoomType();
+  }
+
+  displayNumNights () {
+    document.getElementsByClassName('numNightsTxt')[0].innerHTML = this.numNights();
+  }
+
+  displayAll () {
+    this.displayBookedDate();
+    this.displayRoomPrice();
+    this.displayNumNights();
   }
 
 }
