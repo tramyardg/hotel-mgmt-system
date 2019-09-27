@@ -474,7 +474,7 @@ session_start();
                             $<span class="roomPricePerNightTxt">69.63</span> avg. / night
                         </div>
                         <label class="col-sm-3 col-form-label font-weight-bold" for="numNights">From - to</label>
-                        <div class="col-sm-9">
+                        <div class="col-sm-9 fromToTxt">
                             Mon. July 4 to Wed. July 6
                         </div>
                         <label class="col-sm-3 col-form-label">Taxes </label>

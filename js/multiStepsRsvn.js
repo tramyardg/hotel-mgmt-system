@@ -117,14 +117,21 @@ class ReservationCost {
   }
 
   displayNumNights () {
-    document.getElementsByClassName('numNightsTxt')[0].innerHTML = this.numNights();
+    document.getElementsByClassName('numNightsTxt')[0].innerHTML = this.numNights().toString();
     document.getElementsByClassName('roomPricePerNightTxt')[0].innerHTML = this.priceByRoomType();
+  }
+
+  displayFromTo () {
+    let start = this.startDate.getFullYear() + '-' + (this.startDate.getMonth() + 1) + '-' + (this.startDate.getDate() + 1);
+    let end = this.endDate.getFullYear() + '-' + (this.endDate.getMonth() + 1) + '-' + (this.endDate.getDate() + 1);
+    document.getElementsByClassName('fromToTxt')[0].innerHTML = start + ' to ' + end;
   }
 
   displayAll () {
     this.displayBookedDate();
     this.displayRoomPrice();
     this.displayNumNights();
+    this.displayFromTo();
   }
 
 }
