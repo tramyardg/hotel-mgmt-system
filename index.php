@@ -477,9 +477,13 @@ session_start();
                         <div class="col-sm-9 fromToTxt">
                             Mon. July 4 to Wed. July 6
                         </div>
-                        <label class="col-sm-3 col-form-label">Taxes </label>
+                        <label class="col-sm-3 col-form-label font-weight-bold">Taxes </label>
                         <div class="col-sm-9">
-                            $0.00
+                            $<span class="taxesTxt">0</span>
+                        </div>
+                        <label class="col-sm-3 col-form-label">Total </label>
+                        <div class="col-sm-9">
+                            $<span class="totalTxt">0.00</span>
                         </div>
                     </div>
                 </div>

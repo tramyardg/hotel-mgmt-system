@@ -127,11 +127,18 @@ class ReservationCost {
     document.getElementsByClassName('fromToTxt')[0].innerHTML = start + ' to ' + end;
   }
 
+  displayTotalCost () {
+    let totalRoomPrice = (this.numNights() * this.priceByRoomType());
+    let taxesTxt = document.getElementsByClassName('taxesTxt')[0].innerHTML;
+    document.getElementsByClassName('totalTxt')[0].innerHTML = (totalRoomPrice + parseInt(taxesTxt));
+  }
+
   displayAll () {
     this.displayBookedDate();
     this.displayRoomPrice();
     this.displayNumNights();
     this.displayFromTo();
+    this.displayTotalCost();
   }
 
 }
