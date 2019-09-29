@@ -21,7 +21,13 @@ class BookingDetailHandlerTest extends PHPUnit_Framework_TestCase
         $r->setRequests($faker->text(20));
         $r->setTimestamp($faker->unixTime);
 
-        $brh = new BookingReservationHandler($r);
+        $p = new Pricing();
+        $p->setBookedDate(Util::dateToday('0'));
+        $p->setNights(3);
+        $p->setPricingId(1);
+        $p->setTotalPrice(2000);
+
+        $brh = new BookingReservationHandler($r, $p);
         $brh->create();
 
         $bdh = new BookingDetailHandler();

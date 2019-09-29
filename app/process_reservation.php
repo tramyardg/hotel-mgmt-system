@@ -5,6 +5,7 @@ require 'Util.php';
 require 'dao/BookingReservationDAO.php';
 require 'models/Booking.php';
 require 'models/Reservation.php';
+require 'models/Pricing.php';
 require 'models/StatusEnum.php';
 require 'handlers/BookingReservationHandler.php';
 
@@ -54,7 +55,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submitBtn"])) {
         $unique = uniqid();
         $r->setHash($unique);
 
-        $brh = new BookingReservationHandler($r);
+        $p = new Pricing();
+        $p->setBookedDate(Util::dateToday('0'));
+        $p->setNights(3);
+        $p->setPricingId(1);
+        $p->setTotalPrice(2000);
+
+        $brh = new BookingReservationHandler($r, $p);
         $brh->create();
         $out = array(
             "success" => "true",
