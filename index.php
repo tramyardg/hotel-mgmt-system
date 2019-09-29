@@ -267,7 +267,7 @@ session_start();
                                         </span>
                                     </div>
                                     <input type="date" class="form-control" id="startDate" isForTest="false"
-                                           name="startDate" min="<?php echo Util::dateToday(); ?>" required>
+                                           name="startDate" min="<?php echo Util::dateToday('0'); ?>" required>
                                  </div>
                             </div>
                         </div>
@@ -375,7 +375,7 @@ session_start();
                         </span>
                                 </div>
                                 <input type="date" class="form-control"
-                                       name="startDate" isForTest="true" min="<?php echo Util::dateToday(); ?>" required>
+                                       name="startDate" isForTest="true" min="<?php echo Util::dateToday('0'); ?>" required>
                             </div>
                         </div>
                     </div>
@@ -390,7 +390,7 @@ session_start();
                             <i class="fa fa-calendar"></i>
                         </span>
                                 </div>
-                                <input type="date" class="form-control" isForTest="true" name="endDate" required>
+                                <input type="date" class="form-control" isForTest="true" min="<?php echo Util::dateToday('1'); ?>" name="endDate" required>
                             </div>
                         </div>
                     </div>
@@ -481,14 +481,12 @@ session_start();
                         <div class="col-sm-9">
                             $<span class="taxesTxt">0</span>
                         </div>
-                        <label class="col-sm-3 col-form-label">Total </label>
+                        <label class="col-sm-3 col-form-label font-weight-bold">Total </label>
                         <div class="col-sm-9">
                             $<span class="totalTxt">0.00</span>
                         </div>
                     </div>
                 </div>
-
-                <div class="rsvnTab"><p>Hello there</p></div>
 
                 <div style="overflow:auto;">
                     <div style="float:right;">
@@ -498,7 +496,6 @@ session_start();
                 </div>
 
                 <div style="text-align:center;margin-top:40px;">
-                    <span class="step"></span>
                     <span class="step"></span>
                     <span class="step"></span>
                 </div>
