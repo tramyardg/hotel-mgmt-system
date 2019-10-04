@@ -16,7 +16,9 @@ function showTab (n) {
   }
   if (n === (x.length - 1)) {
     document.getElementById('rsvnNextBtn').innerHTML = 'Submit';
+    document.getElementById('rsvnNextBtn').setAttribute('readySubmit', 'true');
   } else {
+    document.getElementById('rsvnNextBtn').setAttribute('readySubmit', 'false');
     document.getElementById('rsvnNextBtn').innerHTML = 'Next';
   }
   fixStepIndicator(n);

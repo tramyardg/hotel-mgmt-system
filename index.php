@@ -282,7 +282,7 @@ session_start();
                                             <i class="fa fa-calendar"></i>
                                         </span>
                                     </div>
-                                    <input type="date" class="form-control" id="endDate" isForTest="false" name="endDate" required>
+                                    <input type="date" class="form-control" min="<?php echo Util::dateToday('1'); ?>" id="endDate" isForTest="false" name="endDate" required>
                                 </div>
                             </div>
                         </div>
@@ -491,7 +491,7 @@ session_start();
                 <div style="overflow:auto;">
                     <div style="float:right;">
                         <button type="button" class="btn btn-success" id="rsvnPrevBtn" onclick="rsvnNextPrev(-1)">Previous</button>
-                        <button type="button" class="btn btn-success" id="rsvnNextBtn" onclick="rsvnNextPrev(1)">Next</button>
+                        <button type="button" class="btn btn-success" id="rsvnNextBtn" onclick="rsvnNextPrev(1)" readySubmit="false">Next</button>
                     </div>
                 </div>
 
