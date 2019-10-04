@@ -17,11 +17,30 @@ function showTab (n) {
   if (n === (x.length - 1)) {
     document.getElementById('rsvnNextBtn').innerHTML = 'Submit';
     document.getElementById('rsvnNextBtn').setAttribute('readySubmit', 'true');
+    document.getElementById('rsvnNextBtn').setAttribute('onclick', 'submitMultiStepRsvn()');
   } else {
     document.getElementById('rsvnNextBtn').setAttribute('readySubmit', 'false');
     document.getElementById('rsvnNextBtn').innerHTML = 'Next';
   }
   fixStepIndicator(n);
+}
+
+function submitMultiStepRsvn() {
+  if (!validateRsvnForm()) {
+    console.log('clicked!');
+    return false;
+  } else {
+    console.log({
+      cid: $('input[name="cid"][isForTest="true"]').val(),
+      start: $('input[name="startDate"][isForTest="true"]').val(),
+      end: $('input[name="endDate"][isForTest="true"]').val(),
+      type: $('select[name="roomType"][isForTest="true"]').val(),
+      requirement: $('select[name="roomRequirement"][isForTest="true"]').val(),
+      adults: $('select[name="adults"][isForTest="true"]').val(),
+      children: $('select[name="children"][isForTest="true"]').val(),
+      requests: $('textarea[name="specialRequests"][isForTest="true"]').val()
+    });
+  }
 }
 
 function fixStepIndicator (n) {
@@ -65,21 +84,10 @@ function validateRsvnForm () {
   }
 
   if (valid) {
-    console.log({
-      cid: $('input[name="cid"][isForTest="true"]').val(),
-      start: $('input[name="startDate"][isForTest="true"]').val(),
-      end: $('input[name="endDate"][isForTest="true"]').val(),
-      type: $('select[name="roomType"][isForTest="true"]').val(),
-      requirement: $('select[name="roomRequirement"][isForTest="true"]').val(),
-      adults: $('select[name="adults"][isForTest="true"]').val(),
-      children: $('select[name="children"][isForTest="true"]').val(),
-      requests: $('textarea[name="specialRequests"][isForTest="true"]').val()
-    });
     document.getElementsByClassName('step')[currentTab].className += ' finish';
-
-    const rsvnCostSummary = new ReservationCost($('select[name="roomType"][isForTest="true"]').val(), $('input[name="startDate"][isForTest="true"]').val(), $('input[name="endDate"][isForTest="true"]').val());
-    console.log(rsvnCostSummary);
-    rsvnCostSummary.displayAll();
+    new ReservationCost($('select[name="roomType"][isForTest="true"]').val(),
+        $('input[name="startDate"][isForTest="true"]').val(),
+        $('input[name="endDate"][isForTest="true"]').val()).displayAll();
   }
   return valid;
 }
@@ -144,7 +152,9 @@ class ReservationCost {
   }
 
 }
+$(document).ready(function () {
 
+});
 // todo
 // [x] - validate inputs in the current tab on click next
 // calculate difference between dates
