@@ -40,6 +40,13 @@ function submitMultiStepRsvn() {
       children: $('select[name="children"][isForTest="true"]').val(),
       requests: $('textarea[name="specialRequests"][isForTest="true"]').val()
     });
+    // for pricing
+    let bookedDate = document.getElementsByClassName('bookedDateTxt')[0].innerHTML;
+    let numNights = document.getElementsByClassName('numNightsTxt')[0].innerHTML;
+    let totalPrice = document.getElementsByClassName('totalTxt')[0].innerHTML;
+    console.log('bookedDate', bookedDate);
+    console.log('numNights', numNights);
+    console.log('totalPrice', totalPrice);
   }
 }
 
