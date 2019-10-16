@@ -17,17 +17,19 @@ function showTab (n) {
   if (n === (x.length - 1)) {
     document.getElementById('rsvnNextBtn').innerHTML = 'Submit';
     document.getElementById('rsvnNextBtn').setAttribute('readySubmit', 'true');
+    document.getElementById('rsvnNextBtn').setAttribute('type', 'submit');
     document.getElementById('rsvnNextBtn').setAttribute('onclick', 'submitMultiStepRsvn()');
   } else {
     document.getElementById('rsvnNextBtn').setAttribute('readySubmit', 'false');
+    document.getElementById('rsvnNextBtn').setAttribute('type', 'button');
     document.getElementById('rsvnNextBtn').innerHTML = 'Next';
   }
   fixStepIndicator(n);
 }
 
 function submitMultiStepRsvn() {
-  if (!validateRsvnForm()) {
-    console.log('clicked!');
+  let canSubmit = document.getElementById('rsvnNextBtn').getAttribute('readySubmit');
+  if (!validateRsvnForm() && !canSubmit) {
     return false;
   } else {
     console.log({

@@ -488,19 +488,18 @@ session_start();
                     </div>
                 </div>
 
-                <div style="overflow:auto;">
-                    <div style="float:right;">
-                        <button type="button" class="btn btn-success" id="rsvnPrevBtn" onclick="rsvnNextPrev(-1)">Previous</button>
-                        <button type="button" class="btn btn-success" id="rsvnNextBtn" onclick="rsvnNextPrev(1)" readySubmit="false">Next</button>
-                    </div>
-                </div>
-
                 <div style="text-align:center;margin-top:40px;">
                     <span class="step"></span>
                     <span class="step"></span>
                 </div>
 
             </form>
+            <div style="overflow:auto;">
+                <div style="float:right;">
+                    <button type="button" class="btn btn-success" id="rsvnPrevBtn" onclick="rsvnNextPrev(-1)">Previous</button>
+                    <button type="button" class="btn btn-success" id="rsvnNextBtn" onclick="rsvnNextPrev(1)" readySubmit="false">Next</button>
+                </div>
+            </div>
         </div>
     </div>
 
