@@ -2,6 +2,29 @@ const DELUXE_PER_NIGHT = 250;
 const DOUBLE_PER_NIGHT = 180;
 const SINGLE_PER_NIGHT = 150;
 
+const multiStepRsvnFormId = '#multiStepRsvnForm';
+const multiStepRsvnformData = {
+  cDate: function (dt) {
+    let subject = new Date(dt);
+    return [subject.getFullYear(), subject.getMonth() + 1, subject.getDate()].join('-');
+  },
+  d: function () {
+    return {
+      cid: $('input[name="cid"][isForTest="true"]').val(),
+      start: $('input[name="startDate"][isForTest="true"]').val(),
+      end: $('input[name="endDate"][isForTest="true"]').val(),
+      type: $('select[name="roomType"][isForTest="true"]').val(),
+      requirement: $('select[name="roomRequirement"][isForTest="true"]').val(),
+      adults: $('select[name="adults"][isForTest="true"]').val(),
+      children: $('select[name="children"][isForTest="true"]').val(),
+      requests: $('textarea[name="specialRequests"][isForTest="true"]').val(),
+      bookedDate: multiStepRsvnformData.cDate(document.getElementsByClassName('bookedDateTxt')[0].innerHTML),
+      numNights: document.getElementsByClassName('numNightsTxt')[0].innerHTML,
+      totalPrice: document.getElementsByClassName('totalTxt')[0].innerHTML
+    };
+  }
+};
+
 // rsvn multi steps
 let currentTab = 0;
 showTab(currentTab);
@@ -27,28 +50,12 @@ function showTab (n) {
   fixStepIndicator(n);
 }
 
-function submitMultiStepRsvn() {
+function submitMultiStepRsvn () {
   let canSubmit = document.getElementById('rsvnNextBtn').getAttribute('readySubmit');
   if (!validateRsvnForm() && !canSubmit) {
     return false;
   } else {
-    console.log({
-      cid: $('input[name="cid"][isForTest="true"]').val(),
-      start: $('input[name="startDate"][isForTest="true"]').val(),
-      end: $('input[name="endDate"][isForTest="true"]').val(),
-      type: $('select[name="roomType"][isForTest="true"]').val(),
-      requirement: $('select[name="roomRequirement"][isForTest="true"]').val(),
-      adults: $('select[name="adults"][isForTest="true"]').val(),
-      children: $('select[name="children"][isForTest="true"]').val(),
-      requests: $('textarea[name="specialRequests"][isForTest="true"]').val()
-    });
-    // for pricing
-    let bookedDate = document.getElementsByClassName('bookedDateTxt')[0].innerHTML;
-    let numNights = document.getElementsByClassName('numNightsTxt')[0].innerHTML;
-    let totalPrice = document.getElementsByClassName('totalTxt')[0].innerHTML;
-    console.log('bookedDate', bookedDate);
-    console.log('numNights', numNights);
-    console.log('totalPrice', totalPrice);
+    console.log(multiStepRsvnformData.d());
   }
 }
 
@@ -95,8 +102,8 @@ function validateRsvnForm () {
   if (valid) {
     document.getElementsByClassName('step')[currentTab].className += ' finish';
     new ReservationCost($('select[name="roomType"][isForTest="true"]').val(),
-        $('input[name="startDate"][isForTest="true"]').val(),
-        $('input[name="endDate"][isForTest="true"]').val()).displayAll();
+      $('input[name="startDate"][isForTest="true"]').val(),
+      $('input[name="endDate"][isForTest="true"]').val()).displayAll();
   }
   return valid;
 }
@@ -159,7 +166,6 @@ class ReservationCost {
     this.displayFromTo();
     this.displayTotalCost();
   }
-
 }
 $(document).ready(function () {
 

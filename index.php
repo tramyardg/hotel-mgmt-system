@@ -358,7 +358,7 @@ session_start();
     <!--  testing multi step rsvp  -->
     <div class="row">
         <div class="col-md-12">
-            <form role="form" autocomplete="off" method="post">
+            <form role="form" autocomplete="off" method="post" id="multiStepRsvnForm">
                 <div class="rsvnTab">
                     <?php if ($isSessionExists) { ?>
                         <input type="number" isForTest="true" name="cid" value="<?php echo $cHandler->getId() ?>" hidden>
