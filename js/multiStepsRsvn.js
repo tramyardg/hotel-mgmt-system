@@ -37,15 +37,17 @@ function showTab (n) {
   } else {
     document.getElementById('rsvnPrevBtn').style.display = 'inline';
   }
+  let rsvnNextBtn = $('#rsvnNextBtn');
   if (n === (x.length - 1)) {
-    document.getElementById('rsvnNextBtn').innerHTML = 'Submit';
-    document.getElementById('rsvnNextBtn').setAttribute('readySubmit', 'true');
-    document.getElementById('rsvnNextBtn').setAttribute('type', 'submit');
-    document.getElementById('rsvnNextBtn').setAttribute('onclick', 'submitMultiStepRsvn()');
+    rsvnNextBtn.text('Submit');
+    rsvnNextBtn.attr('readySubmit', 'true');
+    rsvnNextBtn.attr('type', 'submit');
+    rsvnNextBtn.attr('onclick', 'submitMultiStepRsvn()');
   } else {
-    document.getElementById('rsvnNextBtn').setAttribute('readySubmit', 'false');
-    document.getElementById('rsvnNextBtn').setAttribute('type', 'button');
-    document.getElementById('rsvnNextBtn').innerHTML = 'Next';
+    rsvnNextBtn.text('Next');
+    rsvnNextBtn.attr('readySubmit', 'false');
+    rsvnNextBtn.attr('type', 'button');
+    rsvnNextBtn.attr('onclick', 'rsvnNextPrev(1)');
   }
   fixStepIndicator(n);
 }
@@ -55,7 +57,16 @@ function submitMultiStepRsvn () {
   if (!validateRsvnForm() && !canSubmit) {
     return false;
   } else {
-    console.log(multiStepRsvnformData.d());
+    let d = multiStepRsvnformData.d();
+    console.log(d);
+
+    $.ajax({
+      url: 'app/process_reservation_.php',
+      type: 'post',
+      data: d
+    }).done(function (response) {
+
+    });
   }
 }
 
@@ -130,8 +141,7 @@ class ReservationCost {
   }
 
   numNights () {
-    const diffInDaysFn = new UtilityFunctions();
-    return diffInDaysFn.dateDiffInDays(this.startDate, this.endDate);
+    return new UtilityFunctions().dateDiffInDays(this.startDate, this.endDate);
   }
 
   displayBookedDate () {
