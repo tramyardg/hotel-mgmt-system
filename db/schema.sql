@@ -57,3 +57,7 @@ ALTER TABLE `booking`
 --
 ALTER TABLE `reservation`
     ADD CONSTRAINT `reservation_booking__fk` FOREIGN KEY (`id`) REFERENCES `booking` (`id`) ON DELETE CASCADE;
+
+
+ALTER TABLE `pricing`
+    ADD CONSTRAINT `pricing_booking__fk` FOREIGN KEY (`booking_id`) REFERENCES `booking` (`id`) ON DELETE CASCADE;
