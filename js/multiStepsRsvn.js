@@ -20,7 +20,8 @@ const multiStepRsvnformData = {
       requests: $('textarea[name="specialRequests"][isForTest="true"]').val(),
       bookedDate: multiStepRsvnformData.cDate(document.getElementsByClassName('bookedDateTxt')[0].innerHTML),
       numNights: document.getElementsByClassName('numNightsTxt')[0].innerHTML,
-      totalPrice: document.getElementsByClassName('totalTxt')[0].innerHTML
+      totalPrice: document.getElementsByClassName('totalTxt')[0].innerHTML,
+      readySubmit: $('#rsvnNextBtn').attr('readySubmit')
     };
   }
 };
@@ -61,11 +62,19 @@ function submitMultiStepRsvn () {
     console.log(d);
 
     $.ajax({
-      url: 'app/process_reservation_.php',
+      url: 'app/process_reservation.php',
       type: 'post',
       data: d
     }).done(function (response) {
-
+      try {
+        let out = JSON.parse(response);
+        if (out.success === 'true') {
+          $(multiStepRsvnFormId).prepend(out.response);
+          $(multiStepRsvnFormId).find('button[type=submit]').prop('disabled', true);
+        }
+      } catch (string) {
+        $(multiStepRsvnFormId).prepend(response);
+      }
     });
   }
 }

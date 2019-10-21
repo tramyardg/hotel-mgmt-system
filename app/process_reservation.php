@@ -9,7 +9,7 @@ require 'models/Pricing.php';
 require 'models/StatusEnum.php';
 require 'handlers/BookingReservationHandler.php';
 
-if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submitBtn"])) {
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["readySubmit"])) {
     $startDate = $endDate = null;
     $errors_ = null;
 
@@ -32,10 +32,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submitBtn"])) {
         $errors_ .= Util::displayAlertV1("Please enter a number of adults.", "info");
     }
 
-    $startDate = new DateTime($_POST["start"]);
-    $endDate = new DateTime($_POST["end"]);
-    if ($endDate <= $startDate) {
-        $errors_ .= Util::displayAlertV1("End date cannot be less or equal to start date.", "info");
+    try {
+        $startDate = new DateTime($_POST["start"]);
+        $endDate = new DateTime($_POST["end"]);
+        if ($endDate <= $startDate) {
+            $errors_ .= Util::displayAlertV1("End date cannot be less or equal to start date.", "info");
+        }
+    } catch (Exception $e) {
+        $errors_ .= Util::displayAlertV1("Invalid date type!", "info");
     }
 
     if (!empty($errors_)) {
@@ -56,10 +60,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submitBtn"])) {
         $r->setHash($unique);
 
         $p = new Pricing();
-        $p->setBookedDate(Util::dateToday('0'));
-        $p->setNights(3);
-        $p->setPricingId(1);
-        $p->setTotalPrice(2000);
+        $p->setBookedDate($_POST['bookedDate']);
+        $p->setNights($_POST['numNights']);
+        $p->setTotalPrice($_POST['totalPrice']);
 
         $brh = new BookingReservationHandler($r, $p);
         $brh->create();
@@ -70,7 +73,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submitBtn"])) {
         echo json_encode($out, JSON_PRETTY_PRINT);
     }
 }
-
 /*
  * validation:
  * if end date is less than start date -> invalid
