@@ -249,256 +249,154 @@ session_start();
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
+
                 <div class="modal-body" id="reservationModalBody">
                     <?php if ($isSessionExists == 1 && $isAdmin == 0) { ?>
-                    <form role="form" autocomplete="off" id="reservation-form" method="post">
-                        <?php if ($isSessionExists) { ?>
-                        <input type="number" id="cid" name="cid" isForTest="false" value="<?php echo $cHandler->getId() ?>" hidden>
-                        <?php } ?>
-                        <div class="form-group row">
-                            <label for="startDate" class="col-sm-3 col-form-label">Check-in
-                                <span class="red-asterisk"> *</span>
-                            </label>
-                            <div class="col-sm-9">
-                                <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text">
-                                            <i class="fa fa-calendar"></i>
-                                        </span>
+                        <form role="form" autocomplete="off" method="post" id="multiStepRsvnForm">
+                            <div class="rsvnTab">
+                                <?php if ($isSessionExists) { ?>
+                                    <input type="number" isForTest="true" name="cid" value="<?php echo $cHandler->getId() ?>" hidden>
+                                <?php } ?>
+                                <div class="form-group row">
+                                    <label for="startDate" class="col-sm-3 col-form-label">Check-in
+                                        <span class="red-asterisk"> *</span>
+                                    </label>
+                                    <div class="col-sm-9">
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">
+                                                    <i class="fa fa-calendar"></i>
+                                                </span>
+                                            </div>
+                                            <input type="date" class="form-control"
+                                                   name="startDate" isForTest="true" min="<?php echo Util::dateToday('0'); ?>" required>
+                                        </div>
                                     </div>
-                                    <input type="date" class="form-control" id="startDate" isForTest="false"
-                                           name="startDate" min="<?php echo Util::dateToday('0'); ?>" required>
-                                 </div>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label for="endDate" class="col-sm-3 col-form-label">Check-out
-                                <span class="red-asterisk"> *</span>
-                            </label>
-                            <div class="col-sm-9">
-                                <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text" id="inputGroupPrepend">
-                                            <i class="fa fa-calendar"></i>
-                                        </span>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="endDate" class="col-sm-3 col-form-label">Check-out
+                                        <span class="red-asterisk"> *</span>
+                                    </label>
+                                    <div class="col-sm-9">
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text" id="inputGroupPrepend">
+                                                    <i class="fa fa-calendar"></i>
+                                                </span>
+                                            </div>
+                                            <input type="date" class="form-control" isForTest="true" min="<?php echo Util::dateToday('1'); ?>" name="endDate" required>
+                                        </div>
                                     </div>
-                                    <input type="date" class="form-control" min="<?php echo Util::dateToday('1'); ?>" id="endDate" isForTest="false" name="endDate" required>
+                                </div>
+                                <div class="form-group row align-items-center">
+                                    <label class="col-sm-3 col-form-label" for="roomType">Room type
+                                        <span class="red-asterisk"> *</span>
+                                    </label>
+                                    <div class="col-sm-9">
+                                        <select required class="custom-select mr-sm-2" isForTest="true" name="roomType">
+                                            <option value="<?php echo \models\RequirementEnum::DELUXE; ?>">Deluxe room</option>
+                                            <option value="<?php echo \models\RequirementEnum::DOUBLE; ?>">Double room</option>
+                                            <option value="<?php echo \models\RequirementEnum::SINGLE; ?>">Single room</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group row align-items-center">
+                                    <label class="col-sm-3 col-form-label" for="roomRequirement">Room requirements</label>
+                                    <div class="col-sm-9">
+                                        <select class="custom-select mr-sm-2" isForTest="true" name="roomRequirement">
+                                            <option value="no preference" selected>No preference</option>
+                                            <option value="non smoking">Non smoking</option>
+                                            <option value="smoking">Smoking</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group row align-items-center">
+                                    <label class="col-sm-3 col-form-label" for="adults">Adults
+                                        <span class="red-asterisk"> *</span>
+                                    </label>
+                                    <div class="col-sm-9">
+                                        <select required class="custom-select mr-sm-2" isForTest="true" name="adults">
+                                            <option selected value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group row align-items-center">
+                                    <label class="col-sm-3 col-form-label" for="children">Children</label>
+                                    <div class="col-sm-9">
+                                        <select class="custom-select mr-sm-2" isForTest="true" name="children">
+                                            <option selected value="0">-</option>
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group row align-items-center">
+                                    <label class="col-sm-3 col-form-label" for="specialRequests">Special requirements</label>
+                                    <div class="col-sm-9">
+                                        <textarea rows="3" maxlength="500" isForTest="true" name="specialRequests" class="form-control"></textarea>
+                                    </div>
+                                </div>
+                                <div class="form-group row align-items-center">
+                                    <button type="button" class="btn btn-info" style="margin-left: 0.8em;" data-container="body" data-toggle="popover"
+                                            data-placement="right" data-content="Check-in time starts at 3 PM. If a late check-in is planned, please contact our support department.">
+                                        Check-in policies
+                                    </button>
                                 </div>
                             </div>
-                        </div>
-                        <div class="form-group row align-items-center">
-                            <label class="col-sm-3 col-form-label" for="roomType">Room type
-                                <span class="red-asterisk"> *</span>
-                            </label>
-                            <div class="col-sm-9">
-                                <select class="custom-select mr-sm-2" id="roomType" isForTest="false" name="roomType" required>
-                                    <option value="<?php echo \models\RequirementEnum::DELUXE; ?>">Deluxe room</option>
-                                    <option value="<?php echo \models\RequirementEnum::DOUBLE; ?>">Double room</option>
-                                    <option value="<?php echo \models\RequirementEnum::SINGLE; ?>">Single room</option>
-                                </select>
+
+                            <div class="rsvnTab">
+                                <div class="form-group row align-items-center">
+                                    <label class="col-sm-3 col-form-label font-weight-bold" for="bookedDate">Booked Date</label>
+                                    <div class="col-sm-9 bookedDateTxt">
+                                        July 13, 2019
+                                    </div>
+                                </div>
+                                <div class="form-group row align-items-center">
+                                    <label class="col-sm-3 col-form-label font-weight-bold" for="roomPrice">Room Price</label>
+                                    <div class="col-sm-9 roomPriceTxt">235.75</div>
+                                </div>
+                                <div class="form-group row align-items-center">
+                                    <label class="col-sm-3 col-form-label font-weight-bold" for="numNights"><span class="numNightsTxt">3</span> nights </label>
+                                    <div class="col-sm-9">
+                                        $<span class="roomPricePerNightTxt">69.63</span> avg. / night
+                                    </div>
+                                    <label class="col-sm-3 col-form-label font-weight-bold" for="numNights">From - to</label>
+                                    <div class="col-sm-9 fromToTxt">
+                                        Mon. July 4 to Wed. July 6
+                                    </div>
+                                    <label class="col-sm-3 col-form-label font-weight-bold">Taxes </label>
+                                    <div class="col-sm-9">
+                                        $<span class="taxesTxt">0</span>
+                                    </div>
+                                    <label class="col-sm-3 col-form-label font-weight-bold">Total </label>
+                                    <div class="col-sm-9">
+                                        $<span class="totalTxt">0.00</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div style="text-align:center;margin-top:40px;">
+                                <span class="step"></span>
+                                <span class="step"></span>
+                            </div>
+
+                        </form>
+                        <div style="overflow:auto;">
+                            <div style="float:right;">
+                                <button type="button" class="btn btn-success" id="rsvnPrevBtn" onclick="rsvnNextPrev(-1)">Previous</button>
+                                <button type="button" class="btn btn-success" id="rsvnNextBtn" onclick="rsvnNextPrev(1)" readySubmit="false">Next</button>
                             </div>
                         </div>
-                        <div class="form-group row align-items-center">
-                            <label class="col-sm-3 col-form-label" for="roomRequirement">Room requirements</label>
-                            <div class="col-sm-9">
-                                <select class="custom-select mr-sm-2" id="roomRequirement" isForTest="false" name="roomRequirement">
-                                    <option value="no preference" selected>No preference</option>
-                                    <option value="non smoking">Non smoking</option>
-                                    <option value="smoking">Smoking</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-group row align-items-center">
-                            <label class="col-sm-3 col-form-label" for="adults">Adults
-                                <span class="red-asterisk"> *</span>
-                            </label>
-                            <div class="col-sm-9">
-                                <select required class="custom-select mr-sm-2" id="adults" isForTest="false" name="adults">
-                                    <option selected value="1">1</option>
-                                    <option value="2">2</option>
-                                    <option value="3">3</option>
-                                    <option value="4">4</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-group row align-items-center">
-                            <label class="col-sm-3 col-form-label" for="children">Children</label>
-                            <div class="col-sm-9">
-                                <select class="custom-select mr-sm-2" id="children" isForTest="false" name="children">
-                                    <option selected value="0">-</option>
-                                    <option value="1">1</option>
-                                    <option value="2">2</option>
-                                    <option value="3">3</option>
-                                    <option value="4">4</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-group row align-items-center">
-                            <label class="col-sm-3 col-form-label" for="specialRequests">Special requirements</label>
-                            <div class="col-sm-9">
-                                <textarea rows="3" maxlength="500" id="specialRequests" isForTest="false" name="specialRequests" class="form-control"></textarea>
-                            </div>
-                        </div>
-                        <div class="form-group row align-items-center">
-                            <div class="col-sm-3"></div>
-                            <div class="col-sm-9">
-                                <input type="submit" class="btn btn-primary float-right"
-                                       name="reservationSubmitBtn" value="Submit">
-                            </div>
-                        </div>
-                    </form>
                     <?php } else { ?>
                         <p>Booking is reserved for customers.</p>
                     <?php } ?>
                 </div>
-            </div>
-        </div>
-    </div>
 
-    <!--  testing multi step rsvp  -->
-    <div class="row">
-        <div class="col-md-12">
-            <form role="form" autocomplete="off" method="post" id="multiStepRsvnForm">
-                <div class="rsvnTab">
-                    <?php if ($isSessionExists) { ?>
-                        <input type="number" isForTest="true" name="cid" value="<?php echo $cHandler->getId() ?>" hidden>
-                    <?php } ?>
-                    <div class="form-group row">
-                        <label for="startDate" class="col-sm-3 col-form-label">Check-in
-                            <span class="red-asterisk"> *</span>
-                        </label>
-                        <div class="col-sm-9">
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                        <span class="input-group-text">
-                            <i class="fa fa-calendar"></i>
-                        </span>
-                                </div>
-                                <input type="date" class="form-control"
-                                       name="startDate" isForTest="true" min="<?php echo Util::dateToday('0'); ?>" required>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label for="endDate" class="col-sm-3 col-form-label">Check-out
-                            <span class="red-asterisk"> *</span>
-                        </label>
-                        <div class="col-sm-9">
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                        <span class="input-group-text" id="inputGroupPrepend">
-                            <i class="fa fa-calendar"></i>
-                        </span>
-                                </div>
-                                <input type="date" class="form-control" isForTest="true" min="<?php echo Util::dateToday('1'); ?>" name="endDate" required>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group row align-items-center">
-                        <label class="col-sm-3 col-form-label" for="roomType">Room type
-                            <span class="red-asterisk"> *</span>
-                        </label>
-                        <div class="col-sm-9">
-                            <select required class="custom-select mr-sm-2" isForTest="true" name="roomType">
-                                <option value="<?php echo \models\RequirementEnum::DELUXE; ?>">Deluxe room</option>
-                                <option value="<?php echo \models\RequirementEnum::DOUBLE; ?>">Double room</option>
-                                <option value="<?php echo \models\RequirementEnum::SINGLE; ?>">Single room</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-group row align-items-center">
-                        <label class="col-sm-3 col-form-label" for="roomRequirement">Room requirements</label>
-                        <div class="col-sm-9">
-                            <select class="custom-select mr-sm-2" isForTest="true" name="roomRequirement">
-                                <option value="no preference" selected>No preference</option>
-                                <option value="non smoking">Non smoking</option>
-                                <option value="smoking">Smoking</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-group row align-items-center">
-                        <label class="col-sm-3 col-form-label" for="adults">Adults
-                            <span class="red-asterisk"> *</span>
-                        </label>
-                        <div class="col-sm-9">
-                            <select required class="custom-select mr-sm-2" isForTest="true" name="adults">
-                                <option selected value="1">1</option>
-                                <option value="2">2</option>
-                                <option value="3">3</option>
-                                <option value="4">4</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-group row align-items-center">
-                        <label class="col-sm-3 col-form-label" for="children">Children</label>
-                        <div class="col-sm-9">
-                            <select class="custom-select mr-sm-2" isForTest="true" name="children">
-                                <option selected value="0">-</option>
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                                <option value="3">3</option>
-                                <option value="4">4</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-group row align-items-center">
-                        <label class="col-sm-3 col-form-label" for="specialRequests">Special requirements</label>
-                        <div class="col-sm-9">
-                <textarea rows="3" maxlength="500" isForTest="true" name="specialRequests"
-                          class="form-control"></textarea>
-                        </div>
-                    </div>
-                    <div class="form-group row align-items-center">
-                        <button type="button" class="btn btn-info" data-container="body" data-toggle="popover"
-                                data-placement="right" data-content="Check-in time starts at 3 PM. If a late check-in is planned, please contact our support department.">
-                            Check-in policies
-                        </button>
-                    </div>
-                </div>
-
-                <div class="rsvnTab">
-                    <div class="form-group row align-items-center"><h2>Reservation's Cost Summary</h2></div>
-                    <div class="form-group row align-items-center">
-                        <label class="col-sm-3 col-form-label font-weight-bold" for="bookedDate">Booked Date</label>
-                        <div class="col-sm-9 bookedDateTxt">
-                            July 13, 2019
-                        </div>
-                    </div>
-                    <div class="form-group row align-items-center">
-                        <label class="col-sm-3 col-form-label font-weight-bold" for="roomPrice">Room Price</label>
-                        <div class="col-sm-9 roomPriceTxt">235.75</div>
-                    </div>
-                    <div class="form-group row align-items-center">
-                        <label class="col-sm-3 col-form-label font-weight-bold" for="numNights"><span class="numNightsTxt">3</span> nights </label>
-                        <div class="col-sm-9">
-                            $<span class="roomPricePerNightTxt">69.63</span> avg. / night
-                        </div>
-                        <label class="col-sm-3 col-form-label font-weight-bold" for="numNights">From - to</label>
-                        <div class="col-sm-9 fromToTxt">
-                            Mon. July 4 to Wed. July 6
-                        </div>
-                        <label class="col-sm-3 col-form-label font-weight-bold">Taxes </label>
-                        <div class="col-sm-9">
-                            $<span class="taxesTxt">0</span>
-                        </div>
-                        <label class="col-sm-3 col-form-label font-weight-bold">Total </label>
-                        <div class="col-sm-9">
-                            $<span class="totalTxt">0.00</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div style="text-align:center;margin-top:40px;">
-                    <span class="step"></span>
-                    <span class="step"></span>
-                </div>
-
-            </form>
-            <div style="overflow:auto;">
-                <div style="float:right;">
-                    <button type="button" class="btn btn-success" id="rsvnPrevBtn" onclick="rsvnNextPrev(-1)">Previous</button>
-                    <button type="button" class="btn btn-success" id="rsvnNextBtn" onclick="rsvnNextPrev(1)" readySubmit="false">Next</button>
-                </div>
             </div>
         </div>
     </div>

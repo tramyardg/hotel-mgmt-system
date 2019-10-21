@@ -70,7 +70,7 @@ function submitMultiStepRsvn () {
         let out = JSON.parse(response);
         if (out.success === 'true') {
           $(multiStepRsvnFormId).prepend(out.response);
-          $(multiStepRsvnFormId).find('button[type=submit]').prop('disabled', true);
+          document.getElementById('rsvnNextBtn').disabled = true;
         }
       } catch (string) {
         $(multiStepRsvnFormId).prepend(response);
@@ -186,9 +186,3 @@ class ReservationCost {
     this.displayTotalCost();
   }
 }
-$(document).ready(function () {
-
-});
-// todo
-// [x] - validate inputs in the current tab on click next
-// calculate difference between dates
