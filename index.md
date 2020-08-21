@@ -1,37 +1,54 @@
-## Welcome to GitHub Pages
+# Hotel Management System
+## Table of Contents
+- [Setup](#setup)
+- [Screenshots](#screenshots)
+- [For developer](#for-developer)
 
-You can use the [editor on GitHub](https://github.com/tramyardg/hotel-mgmt-system/edit/gh-pages/index.md) to maintain and preview the content for your website in Markdown files.
+## Setup
+1. Make sure you have `MySQL` and a web server to run/interpret `PHP` in your system.
+2. Clone or download the repo and put it to `xampp/htdocs/` if you're using windows, otherwise check tutorial(s) for your corresponding web server and OS. 
+3. Install dependencies for JavaScript, `npm install` and PHP, `composer install`.
+4. Create a database named `hotel` and run the script `hotel.sql` to create tables. Make sure your configuration matches with `app/DB.php`, otherwise make the desired changes.
+5. Run the app by `http://localhost/hotel-mgmt-system-master/index.php`.
+ 
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+## Screenshots
+**Customer**
+- Room pricing
+![room_pricing](https://user-images.githubusercontent.com/5623994/51089111-f0131a00-1735-11e9-8758-847091e9b68e.PNG)
+- Reservation form
+![reservation_form](https://user-images.githubusercontent.com/5623994/51089124-218be580-1736-11e9-9400-3cfd5454fe56.PNG)
+- View reservation(s)
+![view_booking](https://user-images.githubusercontent.com/5623994/51089133-38cad300-1736-11e9-857a-64f9956b9f17.PNG)
+- About user
+![about_user](https://user-images.githubusercontent.com/5623994/51089140-4f712a00-1736-11e9-850f-6bb67151711e.PNG)
 
-### Markdown
+**Admin**
+- Manage reservations
+![manage_booking](https://user-images.githubusercontent.com/5623994/51089150-6d3e8f00-1736-11e9-9af0-601ef58847b4.PNG)
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
-
-```markdown
-Syntax highlighted code block
-
-# Header 1
-## Header 2
-### Header 3
-
-- Bulleted
-- List
-
-1. Numbered
-2. List
-
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
+## For developer
+**Run PHP unit tests**
 ```
-
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
-
-### Jekyll Themes
-
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/tramyardg/hotel-mgmt-system/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
-
-### Support or Contact
-
-Having trouble with Pages? Check out our [documentation](https://docs.github.com/categories/github-pages-basics/) or [contact support](https://github.com/contact) and we’ll help you sort it out.
+$ ./vendor/bin/phpunit tests
+```
+```
+$ ./vendor/bin/phpunit tests/CustomerHandlerTest.php
+```
+```
+$ ./vendor/bin/phpunit --filter testUpdateCustomer tests
+```
+**Run PHP code beautifier and fixer**
+```
+$ ./vendor/bin/phpcbf app/process_login.php --standard=ruleset.xml
+```
+```
+$ ./vendor/bin/phpcbf app/*/*.php --standard=ruleset.xml
+```
+**Run ESLint to format/fix JavaScript code**
+```
+npm run eslint
+```
+```
+npm run eslint -- --fix
+```
