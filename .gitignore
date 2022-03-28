@@ -3,4 +3,4 @@ vendor/
 node_modules/
 package-lock.json
 composer.lock
-admin.json
+yarn.lock
