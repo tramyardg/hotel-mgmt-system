@@ -36,4 +36,11 @@ class Util
           <p class="mb-0">' . $message["footer"] . '</p>
         </div>';
     }
+
+    public static function sanitize_xss($value) 
+    {
+      return htmlspecialchars(strip_tags($value));
+    }
+      
+  
 }
