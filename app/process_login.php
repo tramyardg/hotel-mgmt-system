@@ -34,28 +34,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submitBtn"])) {
         echo $errors_;
     } else {
 
-        // check whether email belongs to customer or admin
-        // if email belongs to admin no need for password hashing
+        // check whether email belongs to customer
+        $handler = new CustomerHandler();
+        $customer = new Customer();
+        $customer->setEmail($_POST["email"]);
 
-        $adminHandler = new AdminHandler();
-        $admin = new Admin();
-        // before running this method, make sure email exists
-        $admin->setEmail($_POST["email"]);
-        $adminId = ($adminHandler->getObjectUtil($admin->getEmail())->getAdminId());
+        $isAdmin = $handler->handleIsAdmin($_POST["email"]);
 
-        if ($adminId > 1 || intval($adminId) > 0) {
-            $_SESSION["username"] = $_POST["email"];
-            $_SESSION["accountEmail"] = $_POST["email"];
-            $_SESSION['isAdmin'] = 1;
-            echo $_SESSION['isAdmin'];
+        if (!$handler->isPasswordMatchWithEmail($_POST['password'], $customer)) {
+            echo Util::displayAlertV1("Incorrect password.", "warning");
         } else {
-            $handler = new CustomerHandler();
-            $customer = new Customer();
-            $customer->setEmail($_POST["email"]);
-
-            $newCustomer = new Customer();
-            if (!$handler->isPasswordMatchWithEmail($_POST['password'], $customer)) {
-                echo Util::displayAlertV1("Incorrect password.", "warning");
+            if ($isAdmin) { 
+                $_SESSION["username"] = $_POST["email"];
+                $_SESSION["accountEmail"] = $_POST["email"];
+                $_SESSION["isAdmin"] = 1;
+                echo $_SESSION["isAdmin"];
             } else {
                 $_SESSION["username"] = $handler->getUsername($_POST["email"]);
                 $_SESSION["accountEmail"] = $customer->getEmail();
