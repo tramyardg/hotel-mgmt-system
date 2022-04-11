@@ -26,14 +26,14 @@ const formData = {
   },
   reservation: function () {
     return {
-      cid: $('input[name="cid"][isForTest="false"]').val(),
-      start: $('input[name="startDate"][isForTest="false"]').val(),
-      end: $('input[name="endDate"][isForTest="false"]').val(),
-      type: $('select[name="roomType"][isForTest="false"]').val(),
-      requirement: $('select[name="roomRequirement"][isForTest="false"]').val(),
-      adults: $('select[name="adults"][isForTest="false"]').val(),
-      children: $('select[name="children"][isForTest="false"]').val(),
-      requests: $('textarea[name="specialRequests"][isForTest="false"]').val(),
+      cid: $('input[name="cid"]').val(),
+      start: $('input[name="startDate"]').val(),
+      end: $('input[name="endDate"]').val(),
+      type: $('select[name="roomType"]').val(),
+      requirement: $('select[name="roomRequirement"]').val(),
+      adults: $('select[name="adults"]').val(),
+      children: $('select[name="children"]').val(),
+      requests: $('textarea[name="specialRequests"]').val(),
       submitBtn: $('input[name="reservationSubmitBtn"]').val()
     };
   },
