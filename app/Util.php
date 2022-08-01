@@ -4,8 +4,12 @@ class Util
 {
     const DB_SERVER_ERROR = "Server error occurred. Please try again later.";
 
-    public static function dateToday()
+    public static function dateToday($plus)
     {
+        $dateToday = date("Y-m-d");
+        if ($plus != '0') {
+            return date('Y-m-d', strtotime($dateToday . ' + ' . $plus . ' days'));
+        }
         return date("Y-m-d");
     }
 
@@ -32,4 +36,11 @@ class Util
           <p class="mb-0">' . $message["footer"] . '</p>
         </div>';
     }
+
+    public static function sanitize_xss($value) 
+    {
+      return htmlspecialchars(strip_tags($value));
+    }
+      
+  
 }

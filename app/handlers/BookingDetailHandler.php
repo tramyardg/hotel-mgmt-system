@@ -30,19 +30,18 @@ class BookingDetailHandler extends BookingDetailDAO
     public function getCustomerBookings(Customer $c)
     {
         if ($this->fetchBookingByCid($c->getId())) {
+            $this->setExecutionFeedback(1);
             return $this->fetchBookingByCid($c->getId());
-        } else {
-            return Util::DB_SERVER_ERROR;
         }
+        return $this->setExecutionFeedback(0);
     }
 
     public function getPending()
     {
         $count = 0;
+        $pending = \models\StatusEnum::PENDING_STR;
         foreach ($this->getAllBookings() as $v) {
-            $b = new Booking();
-            $pending = \models\StatusEnum::PENDING;
-            if ($v["status"] == $b->status()[$pending]) {
+            if (($v["status"] == $pending) || (strtoupper($v["status"]) == $pending)) {
                 $count++;
             }
         }
@@ -52,10 +51,9 @@ class BookingDetailHandler extends BookingDetailDAO
     public function getConfirmed()
     {
         $count = 0;
+        $confirmed = \models\StatusEnum::CONFIRMED_STR;
         foreach ($this->getAllBookings() as $v) {
-            $b = new Booking();
-            $confirmed = \models\StatusEnum::CONFIRMED;
-            if ($v["status"] == $b->status()[$confirmed]) {
+            if (($v["status"] == $confirmed) || (strtoupper($v["status"]) == $confirmed)) {
                 $count++;
             }
         }
@@ -78,6 +76,15 @@ class BookingDetailHandler extends BookingDetailDAO
     public function cancelSelection($item)
     {
         for ($i = 0; $i < count($item); $i++) {
+            /*
+            if ($this->updateBooking($item[$i], false, true)) {
+                $out = "These reservations have been successfully <b>cancelled</b>.";
+                $out .= " This page will reload to reflect changes.";
+                $this->setExecutionFeedback($out);
+            } else {
+                $this->setExecutionFeedback("There must be an error processing your request. Please try again later.");
+            }
+            */
             if ($this->updateCancelled($item[$i])) {
                 $out = "These reservations have been successfully <b>cancelled</b>.";
                 $out .= " This page will reload to reflect changes.";
@@ -88,3 +95,5 @@ class BookingDetailHandler extends BookingDetailDAO
         }
     }
 }
+
+// todo: protect booking functionalities (only admin can perform)

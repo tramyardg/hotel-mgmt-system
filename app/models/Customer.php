@@ -62,19 +62,4 @@ class Customer
     {
         $this->phone = $phone;
     }
-
-    public function isAdminSignedIn()
-    {
-        $admins = file_get_contents("admin.json");
-        $content = json_decode($admins, true);
-
-        $isAdmin = false;
-        foreach ($content as $k => $v) {
-            if ($this->getEmail() == $v["email"]) {
-                $isAdmin = true;
-                break;
-            }
-        }
-        return $isAdmin;
-    }
 }

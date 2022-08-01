@@ -27,10 +27,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submitBtn"])) {
         echo $errors_;
     } else {
         $customer = new Customer();
-        $customer->setFullName($_POST["fullName"]);
-        $customer->setEmail($_POST["email"]);
-        $customer->setPhone($_POST["phoneNumber"]);
-        $customer->setPassword($_POST["password"]);
+        $customer->setFullName(Util::sanitize_xss($_POST["fullName"]));
+        $customer->setEmail(Util::sanitize_xss($_POST["email"]));
+        $customer->setPhone(Util::sanitize_xss($_POST["phoneNumber"]));
+        $customer->setPassword(Util::sanitize_xss($_POST["password"]));
 
         $handler = new CustomerHandler();
         $handler->insertCustomer($customer);

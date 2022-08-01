@@ -57,6 +57,7 @@ if (isset($_SESSION["authenticated"]))
                                     <p>Not registered? <a href="register.php">Register here.</a></p>
                                 </div>
                                 <div class="form-group">
+                                    <a  href="index.php" class="btn btn-dark">Home</a>
                                     <input type="submit" class="btn btn-primary btn-md float-right"
                                            value="Sign in" name="loginSubmitBtn">
                                 </div>

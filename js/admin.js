@@ -1,16 +1,13 @@
 const getTblContainer = function () {
   return $('#tableContainer');
 };
-
 const appendResponse = function (response) {
   getTblContainer().find('.alert').remove();
   getTblContainer().prepend(response);
 };
-
 const getSelectedItems = function () {
   return $('#reservationDataTable tr.selected');
 };
-
 const actions = {
   confirm: function () {
     return {
@@ -27,7 +24,6 @@ const actions = {
     };
   }
 };
-
 const getBookIdFromSelected = function () {
   let id = [];
   getSelectedItems().each(function () {
@@ -35,7 +31,6 @@ const getBookIdFromSelected = function () {
   });
   return id;
 };
-
 const confirmReservation = function () {
   actions.confirm().mainBtn.click(function () {
     if (getSelectedItems().length === 0) {
@@ -49,7 +44,6 @@ const confirmReservation = function () {
     });
   });
 };
-
 const confirmAjaxRequest = function (selectedItems) {
   $.ajax({
     url: 'app/admin/manage_reservation.php',
@@ -61,7 +55,6 @@ const confirmAjaxRequest = function (selectedItems) {
     setTimeout(location.reload.bind(location), 3000);
   });
 };
-
 const cancelReservation = function () {
   actions.cancel().mainBtn.click(function () {
     if (getSelectedItems().length === 0) {
@@ -75,7 +68,6 @@ const cancelReservation = function () {
     });
   });
 };
-
 const cancelAjaxRequest = function (selectedItems) {
   $.ajax({
     url: 'app/admin/manage_reservation.php',
@@ -87,6 +79,37 @@ const cancelAjaxRequest = function (selectedItems) {
     setTimeout(location.reload.bind(location), 3000);
   });
 };
+const viewRSVProws = {
+  tableId: null,
+  viewOption: null,
+  setConstruct: function (tableId, viewOption) {
+    viewRSVProws.tableId = tableId;
+    viewRSVProws.viewOption = viewOption;
+  },
+  defaultConfig: function () {
+    $(viewRSVProws.tableId).DataTable({
+      select: {style: 'multi'},
+      'pageLength': 6
+    });
+  },
+  main: function () {
+    $(viewRSVProws.viewOption).change(function () {
+      if (this.checked) {
+        if (this.value === 'confirmed') {
+          $(viewRSVProws.tableId).DataTable().search('CONFIRMED').draw();
+        } else if (this.value === 'pending') {
+          $(viewRSVProws.tableId).DataTable().search('PENDING').draw();
+        } else {
+          $(viewRSVProws.tableId).DataTable({
+            destroy: true,
+            select: {style: 'multi'},
+            paging: false
+          });
+        }
+      }
+    });
+  }
+};
 
 $(document).ready(function () {
   $('.card-footer').on('click', function (e) {
@@ -94,17 +117,10 @@ $(document).ready(function () {
     let aHref = $(this).attr('href');
     $('#adminTab a[href="' + aHref + '"]').tab('show');
   });
-
-  // data table plugin for reservation table
-  $('#reservationDataTable').DataTable({
-    select: {
-      style: 'multi'
-    },
-    'pageLength': 6
-  });
-
+  viewRSVProws.setConstruct('#reservationDataTable', 'input[type=radio][name=viewOption]');
+  viewRSVProws.defaultConfig();
+  viewRSVProws.main();
   $('#customerTable').DataTable();
-
   confirmReservation();
   cancelReservation();
 });

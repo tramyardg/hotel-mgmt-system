@@ -3,11 +3,13 @@
 class BookingReservationHandler extends BookingReservationDAO
 {
     private $reservation;
+    private $pricing;
     private $executionFeedback;
 
-    public function __construct(Reservation $reservation)
+    public function __construct(Reservation $reservation, Pricing $pricing)
     {
         $this->reservation = $reservation;
+        $this->pricing = $pricing;
     }
 
     public function getExecutionFeedback()
@@ -33,7 +35,7 @@ class BookingReservationHandler extends BookingReservationDAO
     public function create()
     {
         $dao = new BookingReservationDAO();
-        if ($dao->insert($this->reservation)) {
+        if ($dao->insert($this->reservation, $this->pricing)) {
             $this->setExecutionFeedback(
                 array(
                 "heading" => "Well done!",

@@ -37,11 +37,10 @@ session_start();
         $isSessionExists = true;
 
         $cHandler = new CustomerHandler();
-        $cHandler = $cHandler->getCustomerObj($_SESSION["customerEmail"]);
+        $cHandler = $cHandler->getCustomerObj($_SESSION["accountEmail"]);
 
         $cAdmin = new Customer();
         $cAdmin->setEmail($cHandler->getEmail());
-        $isAdmin = $cAdmin->isAdminSignedIn();
 
         // display all reservations
         $bdHandler = new BookingDetailHandler();
@@ -54,6 +53,11 @@ session_start();
         $confirmedReservation = $bdHandler->getConfirmed();
         $totalCustomers = $cCommon->totalCustomersCount();
         $totalReservations = count($bdHandler->getAllBookings());
+    }
+    if (isset($_SESSION["isAdmin"]) && isset($_SESSION["username"])) {
+        $isSessionExists = true;
+        $username = $_SESSION["username"];
+        $isAdmin = $_SESSION["isAdmin"];
     }
 
     ?>
@@ -75,6 +79,7 @@ session_start();
                     <?php if ($isSessionExists) { ?>
                     <h4 class="text-white"><?php echo $username; ?></h4>
                     <ul class="list-unstyled">
+                        <li><a href="index.php" class="text-white">Home</a><i class="fas fa-home ml-2"></i></a></li>
                         <li><a href="#" id="sign-out-link" class="text-white">Sign out<i class="fas fa-sign-out-alt ml-2"></i></a></li>
                     </ul>
                     <?php } else { ?>
@@ -208,9 +213,21 @@ session_start();
                     </tbody>
                 </table>
                 <div class="my-3">
-                    <label class="text-secondary font-weight-bold">With selected:</label>
-                    <button type="button" id="confirm-booking" class="btn btn-outline-success btn-sm">Confirm</button>
-                    <button type="button" id="cancel-booking" class="btn btn-outline-danger btn-sm">Cancel</button>
+                    <div class="row">
+                        <div class="col-6">
+                            <label class="text-secondary font-weight-bold">With selected:</label>
+                            <button type="button" id="confirm-booking" class="btn btn-outline-success btn-sm">Confirm
+                            </button>
+                            <button type="button" id="cancel-booking" class="btn btn-outline-danger btn-sm">Cancel
+                            </button>
+                        </div>
+                        <div class="col-6 text-right">
+                            View:
+                            <input type="radio" name="viewOption" value="confirmed">&nbsp;Confirmed&nbsp;
+                            <input type="radio" name="viewOption" value="pending">&nbsp;Pending
+                            <input type="radio" name="viewOption" value="all">&nbsp;All
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="tab-pane fade" id="customers" role="tabpanel" aria-labelledby="customers-tab">

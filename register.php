@@ -40,10 +40,10 @@ if (isset($_SESSION["authenticated"]))
                                     <input type="text" class="form-control"
                                            id="registrationFullName"
                                            name="registrationFullName"
-                                           placeholder="full name">
+                                           placeholder="Full name">
                                 </div>
                                 <div class="form-group">
-                                    <label for="registrationPhoneNumber">Phone number</label>
+                                    <label for="registrationPhoneNumber">Phone Number</label>
                                     <input type="text" class="form-control"
                                            id="registrationPhoneNumber"
                                            name="registrationPhoneNumber"
@@ -68,19 +68,20 @@ if (isset($_SESSION["authenticated"]))
                                            required="">
                                 </div>
                                 <div class="form-group">
-                                    <label for="registrationPassword2">Confirm password</label>
+                                    <label for="registrationPassword2">Confirm Password</label>
                                     <span class="red-asterisk"> *</span>
                                     <input type="password" class="form-control"
                                            id="registrationPassword2"
                                            name="registrationPassword2"
-                                           placeholder="password (again)" required="">
+                                           placeholder="Retype Password" required="">
                                 </div>
                                 <div class="form-group">
                                     <p>Already registered? <a href="sign-in.php">Sign in here.</a></p>
                                 </div>
                                 <div class="form-group">
+                                    <a  href="index.php" class="btn btn-dark">Home</a>
                                     <input type="submit" class="btn btn-primary btn-md float-right"
-                                            name="registerSubmitBtn" value="Register">
+                                            name="registerSubmitBtn" value="Submit">
                                 </div>
                             </form>
                         </div>
