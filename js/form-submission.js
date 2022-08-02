@@ -14,7 +14,7 @@ const formData = {
       email: $("input[name='registrationEmail']").val(),
       password: $("input[name='registrationPassword']").val(),
       password2: $("input[name='registrationPassword2']").val(),
-      submitBtn: $('input[name="registerSubmitBtn"]').val()
+      submitBtn: $('input[name="registerSubmitBtn"]').val() // for server $_POST
     };
   },
   login: function () {
@@ -29,11 +29,11 @@ const formData = {
       cid: $('input[name="cid"]').val(),
       start: $('input[name="startDate"]').val(),
       end: $('input[name="endDate"]').val(),
-      type: $('#roomType').val(),
-      requirement: $('#roomRequirement').val(),
-      adults: $('#adults').val(),
-      children: $('#children').val(),
-      requests: $('#specialRequests').val(),
+      type: $('select[name="roomType"]').val(),
+      requirement: $('select[name="roomRequirement"]').val(),
+      adults: $('select[name="adults"]').val(),
+      children: $('select[name="children"]').val(),
+      requests: $('textarea[name="specialRequests"]').val(),
       submitBtn: $('input[name="reservationSubmitBtn"]').val()
     };
   },
@@ -123,9 +123,28 @@ const updateProfileSubmit = function () {
     data: updateData
   }).done(function (response) {
     $(formIds.updateProfile).find('.alert').remove();
+    reloadAnimation($(formIds.updateProfile));
     $(formIds.updateProfile).prepend(response);
     $(formIds.updateProfile).find('input').prop('disabled', true);
   });
+  let reloadAnimation = (animContainer) => {
+    animContainer.prepend(
+      `<div class="form-group">
+            <div id="path"><div id="brick"></div></div><span>Reloading the page in 5 seconds.</span>
+        </div>`);
+    // eslint-disable-next-line no-undef
+    animate({
+      duration: 5000,
+      timing: function (timeFraction) {
+        return Math.pow(timeFraction, 2);
+      },
+      draw: function (progress) {
+        // eslint-disable-next-line no-undef
+        brick.style.left = progress * 91.5 + '%';
+        location.reload();
+      }
+    });
+  };
 };
 
 $(document).ready(function () {

@@ -4,12 +4,12 @@ require 'app/DB.php';
 
 require 'app/dao/BookingReservationDAO.php';
 require 'app/dao/CustomerDAO.php';
-require 'app/dao/ReservationDAO.php';
 require 'app/dao/BookingDetailDAO.php';
 
 require 'app/models/Customer.php';
 require 'app/models/Booking.php';
 require 'app/models/Reservation.php';
+require 'app/models/Pricing.php';
 
 require 'app/handlers/BookingReservationHandler.php';
 
@@ -30,8 +30,13 @@ try {
     $r->setHash(uniqid());
     // and all reservation information
 
+    $p = new Pricing();
+    $p->setBookedDate(Util::dateToday('0'));
+    $p->setNights(3);
+    $p->setPricingId(1);
+    $p->setTotalPrice(2000);
 
-    $brh = new BookingReservationHandler($r);
+    $brh = new BookingReservationHandler($r, $p);
     echo $brh->create();
 
 } catch (Exception $e) {

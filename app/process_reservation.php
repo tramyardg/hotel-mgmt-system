@@ -5,9 +5,11 @@ require 'Util.php';
 require 'dao/BookingReservationDAO.php';
 require 'models/Booking.php';
 require 'models/Reservation.php';
+require 'models/Pricing.php';
+require 'models/StatusEnum.php';
 require 'handlers/BookingReservationHandler.php';
 
-if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submitBtn"])) {
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["readySubmit"])) {
     $startDate = $endDate = null;
     $errors_ = null;
 
@@ -30,10 +32,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submitBtn"])) {
         $errors_ .= Util::displayAlertV1("Please enter a number of adults.", "info");
     }
 
-    $startDate = new DateTime($_POST["start"]);
-    $endDate = new DateTime($_POST["end"]);
-    if ($endDate <= $startDate) {
-        $errors_ .= Util::displayAlertV1("End date cannot be less or equal to start date.", "info");
+    try {
+        $startDate = new DateTime($_POST["start"]);
+        $endDate = new DateTime($_POST["end"]);
+        if ($endDate <= $startDate) {
+            $errors_ .= Util::displayAlertV1("End date cannot be less or equal to start date.", "info");
+        }
+    } catch (Exception $e) {
+        $errors_ .= Util::displayAlertV1("Invalid date type!", "info");
     }
 
     if (!empty($errors_)) {
@@ -41,7 +47,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submitBtn"])) {
     } else {
         $r = new Reservation();
         $r->setCid($_POST["cid"]);
-        $r->setStatus("pending");
+        $r->setStatus(\models\StatusEnum::PENDING_STR);
         $r->setNotes(null);
         $r->setStart($_POST["start"]);
         $r->setEnd($_POST["end"]);
@@ -53,7 +59,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submitBtn"])) {
         $unique = uniqid();
         $r->setHash($unique);
 
-        $brh = new BookingReservationHandler($r);
+        $p = new Pricing();
+        $p->setBookedDate($_POST['bookedDate']);
+        $p->setNights($_POST['numNights']);
+        $p->setTotalPrice($_POST['totalPrice']);
+
+        $brh = new BookingReservationHandler($r, $p);
         $brh->create();
         $out = array(
             "success" => "true",
@@ -62,7 +73,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submitBtn"])) {
         echo json_encode($out, JSON_PRETTY_PRINT);
     }
 }
-
 /*
  * validation:
  * if end date is less than start date -> invalid

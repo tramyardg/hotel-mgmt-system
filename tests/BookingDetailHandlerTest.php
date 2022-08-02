@@ -10,7 +10,7 @@ class BookingDetailHandlerTest extends PHPUnit_Framework_TestCase
         $faker = Faker\Factory::create();
         $r = new Reservation();
 		$r->setCid(28);
-        $r->setStatus($r->status()[\models\StatusEnum::CONFIRMED]);
+        $r->setStatus(\models\StatusEnum::CONFIRMED_STR);
         $r->setNotes(null);
         $r->setStart($faker->date("2018-12-12"));
         $r->setEnd($faker->date("2018-12-22"));
@@ -21,7 +21,13 @@ class BookingDetailHandlerTest extends PHPUnit_Framework_TestCase
         $r->setRequests($faker->text(20));
         $r->setTimestamp($faker->unixTime);
 
-        $brh = new BookingReservationHandler($r);
+        $p = new Pricing();
+        $p->setBookedDate(Util::dateToday('0'));
+        $p->setNights(3);
+        $p->setPricingId(1);
+        $p->setTotalPrice(2000);
+
+        $brh = new BookingReservationHandler($r, $p);
         $brh->create();
 
         $bdh = new BookingDetailHandler();
@@ -36,6 +42,7 @@ class BookingDetailHandlerTest extends PHPUnit_Framework_TestCase
         $bdh = new BookingDetailHandler();
         $this->assertNotEmpty($bdh->getCustomerBookings($c));
         $this->assertNotNull($bdh->getCustomerBookings($c));
+        $this->assertEquals(1, $bdh->getExecutionFeedback());
     }
 
     public function testGetPending()
@@ -58,12 +65,12 @@ class BookingDetailHandlerTest extends PHPUnit_Framework_TestCase
 
     public function testConfirmSelection()
     {
-
+        // TODO
     }
 
     public function testCancelSelection()
     {
-
+        // TODO
     }
 
 }

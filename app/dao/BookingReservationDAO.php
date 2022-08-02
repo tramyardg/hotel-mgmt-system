@@ -2,7 +2,7 @@
 
 class BookingReservationDAO
 {
-    protected function insert(Reservation $r)
+    protected function insert(Reservation $r, Pricing $p)
     {
         $sqlInsertBooking = 'INSERT INTO `booking` (`cid`, `status`, `notes`) VALUES (?, ?, ?)';
         $db = DB::getInstance();
@@ -25,6 +25,15 @@ class BookingReservationDAO
             $r->getHash()
             )
         );
+
+        // Pricing insertion of entries
+        $pricingSql = 'INSERT INTO `pricing`(`booking_id`, `nights`, `total_price`, `booked_date`) VALUES (?, ?, ?, ?);';
+        $pExec = DB::getInstance()->prepare($pricingSql)->execute([
+            $lastInsertedBookId,
+            $p->getNights(),
+            $p->getTotalPrice(),
+            $p->getBookedDate()
+        ]);
 
         return $exec;
     }
