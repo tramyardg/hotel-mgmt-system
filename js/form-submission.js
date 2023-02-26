@@ -70,7 +70,9 @@ const loginSubmit = function () {
     type: 'post',
     data: loginData
   }).done(function (response) {
-    if (response === '1') {
+    let resp = JSON.parse(response);
+    if (resp[0] === 1) {
+      new UtilityFunctions().setCookie('is_admin', resp[1]);
       let locHref = location.href;
       let homePageLink = locHref.substring(0, locHref.lastIndexOf('/')) + '/index.php';
       window.location.replace(homePageLink);
@@ -87,6 +89,7 @@ const clickSignOut = function () {
     type: 'get'
   }).done(function (response) {
     if (response === '1') {
+      new UtilityFunctions().eraseCookie('is_admin');
       let locHref = location.href;
       let homePageLink = locHref.substring(0, locHref.lastIndexOf('/')) + '/index.php';
       window.location.replace(homePageLink);

@@ -3,11 +3,10 @@
 ob_start();
 session_start();
 
-if (isset($_SESSION["username"]) && $_SESSION["isAdmin"] == "1") {
+if (isset($_COOKIE['is_admin']) && $_COOKIE['is_admin'] == 'true') {
     header("location: page-404.php");
 }
-
-if(!isset($_SESSION["username"])) {
+if (isset($_SESSION["isAdmin"]) && $_SESSION["isAdmin"][1] == "true") {
     header("location: page-404.php");
 }
 
@@ -44,7 +43,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submitBtn"]) && isset(
         $c->setEmail(Util::sanitize_xss($_POST["email"]));
         $c->setPassword(Util::sanitize_xss($pwd));
 
-        if ($_SESSION["isAdmin"] == 0) {
+        if (isset($_SESSION["authenticated"]) && $_SESSION["authenticated"][1] == "false" &&
+            isset($_COOKIE['is_admin']) && $_COOKIE['is_admin'] == "false") {
             $cHandler = new CustomerHandler();
             $cHandler->updateCustomer($c);
             echo Util::displayAlertV1($cHandler->getExecutionFeedback(), "success");    
@@ -59,5 +59,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submitBtn"]) && isset(
     }
 }
 
-// echo $_SESSION["isAdmin"];
-// echo $_SESSION["username"];
+if (isset($_COOKIE['is_admin'])) {
+    echo $_COOKIE['is_admin'];
+}
+
+if (isset($_SESSION["authenticated"])) {
+    var_dump($_SESSION["authenticated"]);
+}
