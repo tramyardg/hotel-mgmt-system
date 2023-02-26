@@ -41,6 +41,13 @@ class Util
     {
       return htmlspecialchars(strip_tags($value));
     }
+
+    public static function has_reserved_words($str) 
+    {
+      $re = '/\b(ADD|ALTER|AND|AS|BETWEEN|BY|CASE|CREATE|DATABASE|DELETE|DESC|DISTINCT|DROP|EXISTS|FROM|GROUP|HAVING|IN|INSERT|INTO|IS|JOIN|LIKE|LIMIT|NOT|NULL|OR|ORDER|SELECT|SET|TABLE|UPDATE|VALUES|WHERE)\b/mi';
+      preg_match_all($re, $str, $matches, PREG_SET_ORDER, 0);
+      return count($matches) > 0;
+    }
       
   
 }
