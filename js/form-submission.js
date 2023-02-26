@@ -76,6 +76,7 @@ const formData = {
 
 const registrationSubmit = function () {
   let registrationData = formData.registration();
+  // TODO : use findMatchReservedWords here
   $.ajax({
     url: 'app/process_registration.php',
     type: 'post',
@@ -88,6 +89,7 @@ const registrationSubmit = function () {
 
 const loginSubmit = function () {
   let loginData = formData.login();
+  // TODO : use findMatchReservedWords here
   $.ajax({
     url: 'app/process_login.php',
     type: 'post',
@@ -121,6 +123,7 @@ const clickSignOut = function () {
 
 const reservationSubmit = function () {
   let reservation = formData.reservation();
+  // TODO : use findMatchReservedWords here
   $.ajax({
     url: 'app/process_reservation.php',
     type: 'post',
