@@ -2,8 +2,12 @@
 
 ob_start();
 session_start();
-if (!isset($_SESSION["username"]))
-{
+
+if (isset($_SESSION["username"]) && $_SESSION["isAdmin"] == "1") {
+    header("location: page-404.php");
+}
+
+if(!isset($_SESSION["username"])) {
     header("location: page-404.php");
 }
 
@@ -40,10 +44,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submitBtn"]) && isset(
         $c->setEmail(Util::sanitize_xss($_POST["email"]));
         $c->setPassword(Util::sanitize_xss($pwd));
 
-        $cHandler = new CustomerHandler();
-        $cHandler->updateCustomer($c);
-        echo Util::displayAlertV1($cHandler->getExecutionFeedback(), "success");
-
+        if ($_SESSION["isAdmin"] == 0) {
+            $cHandler = new CustomerHandler();
+            $cHandler->updateCustomer($c);
+            echo Util::displayAlertV1($cHandler->getExecutionFeedback(), "success");    
+        }
+        
         if (isset($_SESSION["username"])) {
             $_SESSION["username"] = $cHandler->getUsername($_POST["email"]);
         }
@@ -52,3 +58,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submitBtn"]) && isset(
         }
     }
 }
+
+// echo $_SESSION["isAdmin"];
+// echo $_SESSION["username"];
