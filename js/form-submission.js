@@ -142,34 +142,42 @@ const reservationSubmit = function () {
 const updateProfileSubmit = function () {
   let updateData = formData.updateProfile();
   console.log(updateData);
-  $.ajax({
-    url: 'app/process_update_profile.php',
-    type: 'post',
-    data: updateData
-  }).done(function (response) {
-    $(formIds.updateProfile).find('.alert').remove();
-    reloadAnimation($(formIds.updateProfile));
-    $(formIds.updateProfile).prepend(response);
-    $(formIds.updateProfile).find('input').prop('disabled', true);
-  });
-  let reloadAnimation = (animContainer) => {
-    animContainer.prepend(
-      `<div class="form-group">
-            <div id="path"><div id="brick"></div></div><span>Reloading the page in 5 seconds.</span>
-        </div>`);
-    // eslint-disable-next-line no-undef
-    animate({
-      duration: 5000,
-      timing: function (timeFraction) {
-        return Math.pow(timeFraction, 2);
-      },
-      draw: function (progress) {
-        // eslint-disable-next-line no-undef
-        brick.style.left = progress * 91.5 + '%';
-        location.reload();
-      }
+  updateData.submitBtn = 'updatebtn'; // to exclude from reserved words
+
+  let dataStr = Object.values(updateData).join(' ');
+  if (!findMatchReservedWords(dataStr)) {
+    console.log('found match');
+    $.ajax({
+      url: 'app/process_update_profile.php',
+      type: 'post',
+      data: updateData
+    }).done(function (response) {
+      $(formIds.updateProfile).find('.alert').remove();
+      reloadAnimation($(formIds.updateProfile));
+      $(formIds.updateProfile).prepend(response);
+      $(formIds.updateProfile).find('input').prop('disabled', true);
     });
-  };
+    let reloadAnimation = (animContainer) => {
+      animContainer.prepend(
+        `<div class="form-group">
+              <div id="path"><div id="brick"></div></div><span>Reloading the page in 5 seconds.</span>
+          </div>`);
+      // eslint-disable-next-line no-undef
+      animate({
+        duration: 5000,
+        timing: function (timeFraction) {
+          return Math.pow(timeFraction, 2);
+        },
+        draw: function (progress) {
+          // eslint-disable-next-line no-undef
+          brick.style.left = progress * 91.5 + '%';
+          location.reload();
+        }
+      });
+    };
+  } else {
+    alert('Something went wrong!');
+  }
 };
 
 $(document).ready(function () {
