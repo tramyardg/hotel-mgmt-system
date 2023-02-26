@@ -48,13 +48,16 @@ class CustomerDAO
 
     protected function update(Customer $customer)
     {
-        $sql = 'UPDATE `customer` ';
-        $sql .= 'SET fullname = "' . $customer->getFullName() . '", ';
-        $sql .= 'password = "' . $customer->getPassword() . '", ';
-        $sql .= 'phone = "' . $customer->getPhone() . '"';
-        $sql .= ' WHERE `customer`.`cid`= ' . $customer->getId();
-        $stmt = DB::getInstance()->prepare($sql);
-        $exec = $stmt->execute();
+        $query = "UPDATE customer SET fullname = :fullname, password = :password, phone = :phone WHERE cid = :cid;";
+        $stmt = DB::getInstance()->prepare($query);
+        $exec = $stmt->execute(
+            array(
+                'fullname' => $customer->getFullName(),
+                'password' => $customer->getPassword(),
+                'phone' => $customer->getPhone(),
+                'cid' => $customer->getId()
+            )
+        );
         return $exec;
     }
 
