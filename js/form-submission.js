@@ -1,3 +1,28 @@
+const regexReservedWords = /\b(ADD|ALTER|AND|AS|BETWEEN|BY|CASE|CREATE|DELETE|DESC|DISTINCT|DROP|EXISTS|FROM|GROUP|HAVING|IN|INSERT|INTO|IS|JOIN|LIKE|LIMIT|NOT|NULL|OR|ORDER|SELECT|SET|TABLE|UPDATE|VALUES|WHERE)\b/gmi;
+// Alternative syntax using RegExp constructor
+// const regex = new RegExp('\\b(ADD|ALTER|AND|AS|BETWEEN|BY|CASE|CREATE|DELETE|DESC|DISTINCT|DROP|EXISTS|FROM|GROUP|HAVING|IN|INSERT|INTO|IS|JOIN|LIKE|LIMIT|NOT|NULL|OR|ORDER|SELECT|SET|TABLE|UPDATE|VALUES|WHERE)\\b', 'gmi')
+
+const findMatchReservedWords = (str) => {
+  let m;
+  let foundMatch = false;
+
+  while ((m = regexReservedWords.exec(str)) !== null) {
+    // This is necessary to avoid infinite loops with zero-width matches
+    if (m.index === regexReservedWords.lastIndex) {
+      regexReservedWords.lastIndex++;
+    }
+
+    // The result can be accessed through the `m`-variable.
+    for (let i = 0; i < m.length; i++) {
+      // const match = m[i];
+      // console.log(`Found match, group ${i}: ${match}`);
+      foundMatch = true;
+      break;
+    }
+  }
+  return foundMatch;
+};
+
 const formIds = {
   register: '#registration-form',
   login: '#login-form',
