@@ -49,10 +49,10 @@ session_start();
         $isAdmin = $_SESSION["isAdmin"];
     }
 
-    if (isset($_COOKIE['is_admin'])) {
-        echo $_COOKIE['is_admin'];
-        var_dump($isAdmin);
-    }
+    // if (isset($_COOKIE['is_admin'])) {
+    //     echo $_COOKIE['is_admin'];
+    //     var_dump($isAdmin);
+    // }
 
     ?>
     <title>Home</title>

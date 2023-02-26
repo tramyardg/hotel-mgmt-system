@@ -65,10 +65,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["readySubmit"])) {
         $p->setTotalPrice(Util::sanitize_xss($_POST['totalPrice']));
 
         $brh = new BookingReservationHandler($r, $p);
-        $brh->create();
+        $temp = $brh->create();
         $out = array(
             "success" => "true",
-            "response" => Util::displayAlertV2($brh->getExecutionFeedback(), "success")
+            "response" => Util::displayAlertV2($brh->getExecutionFeedback(), $temp)
         );
         echo json_encode($out, JSON_PRETTY_PRINT);
     }

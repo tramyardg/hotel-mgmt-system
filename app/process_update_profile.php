@@ -59,10 +59,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submitBtn"]) && isset(
     }
 }
 
-if (isset($_COOKIE['is_admin'])) {
-    echo $_COOKIE['is_admin'];
-}
+// if (isset($_COOKIE['is_admin'])) {
+//     echo $_COOKIE['is_admin'];
+// }
 
-if (isset($_SESSION["authenticated"])) {
-    var_dump($_SESSION["authenticated"]);
-}
+// if (isset($_SESSION["authenticated"])) {
+//     var_dump($_SESSION["authenticated"]);
+// }
