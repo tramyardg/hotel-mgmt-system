@@ -48,6 +48,9 @@ session_start();
         $isAdmin = $_SESSION["isAdmin"];
     }
 
+    if (isset($_COOKIE['is_admin'])) {
+        echo $_COOKIE['is_admin'];
+    }
     ?>
     <title>Home</title>
     <?php //echo '<title>Home isAdmin=' . $isAdmin . ' $isSessionExists=' . $isSessionExists . '</title>'?>
@@ -66,13 +69,11 @@ session_start();
                     <?php if ($isSessionExists) { ?>
                     <h4 class="text-white"><?php echo $username; ?></h4>
                     <ul class="list-unstyled">
-                        <?php if ($isAdmin == 1) { ?>
-                        <li><a href="admin.php" class="text-white">Manage customer reservation(s)<i class="far fa-address-book ml-2"></i></a></li>
+                        <?php if ($isAdmin == 1 && isset($_COOKIE['is_admin']) && $_COOKIE['is_admin'] == 'true') { ?>
+                            <li><a href="admin.php" class="text-white">Manage customer reservation(s)<i class="far fa-address-book ml-2"></i></a></li>
                         <?php } else { ?>
-                        <li><a href="#" class="text-white my-reservations">View my bookings<i class="far fa-address-book ml-2"></i></a></li>
-                        <li>
-                            <a href="#" class="text-white" data-toggle="modal" data-target="#myProfileModal">Update profile<i class="fas fa-user ml-2"></i></a>
-                        </li>
+                            <li><a href="#" class="text-white my-reservations">View my bookings<i class="far fa-address-book ml-2"></i></a></li>
+                            <li><a href="#" class="text-white" data-toggle="modal" data-target="#myProfileModal">Update profile<i class="fas fa-user ml-2"></i></a></li>
                         <?php } ?>
                         <li><a href="#" id="sign-out-link" class="text-white">Sign out<i class="fas fa-sign-out-alt ml-2"></i></a></li>
                     </ul>
@@ -417,6 +418,7 @@ session_start();
         </div>
     </div>
 
+    <?php if (isset($_COOKIE['is_admin']) && $_COOKIE['is_admin'] == 'false') { ?>
     <div class="modal" id="myProfileModal" tabindex="-1" role="dialog">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -466,6 +468,7 @@ session_start();
             </div>
         </div>
     </div>
+    <?php } ?>
 
 </main>
 

@@ -94,7 +94,16 @@ class CustomerHandler extends CustomerDAO
 
     public function updateCustomer(Customer $customer)
     {
-        if ($this->isCustomerExists($customer->getEmail()) == 1) {
+        $c_data = [
+            $customer->getId(),
+            $customer->getFullName(), 
+            $customer->getPhone(), 
+            $customer->getEmail(), 
+            $customer->getPassword()
+        ];
+        $c_data_string = implode(", ", $c_data);
+
+        if ($this->isCustomerExists($customer->getEmail()) == 1 && !Util::has_reserved_words($c_data_string)) {            
             if ($this->update($customer)) {
                 $this->setExecutionFeedback("You have successfully updated your profile!");
             } else {

@@ -48,25 +48,18 @@ class CustomerDAO
 
     protected function update(Customer $customer)
     {
-        $c_data = [$customer->getId(),$customer->getFullName(), $customer->getPhone(), $customer->getEmail(), $customer->getPassword()];
-        $c_data_string = implode(", ", $c_data);
-        if(Util::has_reserved_words($c_data_string)) {
-            return false;
-        } else {
-            if(Util::has_reserved_words($c_data_string)) {
-                return false;
-            } else {
-                $query = "UPDATE customer SET fullname = :fullname, password = :password, phone = :phone WHERE cid = :cid;";
-                $stmt = DB::getInstance()->prepare($query);
-                $exec = $stmt->execute([
-                    'fullname'  => $customer->getFullName(),
-                    'password'  => $customer->getPassword(),
-                    'phone'     => $customer->getPhone(),
-                    'cid'       => $customer->getId()
-                ]);
-                return $exec;    
-            }
-        }
+        $query = "UPDATE customer SET fullname = :fullname, password = :password, phone = :phone WHERE cid = :cid;";
+        $stmt = DB::getInstance()->prepare($query);
+        $exec = $stmt->execute(
+            array(
+                'fullname' => $customer->getFullName(),
+                'password' => $customer->getPassword(),
+                'phone' => $customer->getPhone(),
+                'cid' => $customer->getId()
+            )
+        );
+        
+        return $exec;
     }
 
     protected function delete(Customer $customer)

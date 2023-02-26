@@ -61,21 +61,26 @@ function submitMultiStepRsvn () {
     let d = multiStepRsvnformData.d();
     console.log(d);
 
-    $.ajax({
-      url: 'app/process_reservation.php',
-      type: 'post',
-      data: d
-    }).done(function (response) {
-      try {
-        let out = JSON.parse(response);
-        if (out.success === 'true') {
-          $(multiStepRsvnFormId).prepend(out.response);
-          document.getElementById('rsvnNextBtn').disabled = true;
-        }
-      } catch (string) {
-        $(multiStepRsvnFormId).prepend(response);
-      }
-    });
+    let dataStr = Object.values(d).join(' ');
+    if (new UtilityFunctions().findMatchReservedWords(dataStr)) {
+      console.log("found");
+    }
+
+    // $.ajax({
+    //   url: 'app/process_reservation.php',
+    //   type: 'post',
+    //   data: d
+    // }).done(function (response) {
+    //   try {
+    //     let out = JSON.parse(response);
+    //     if (out.success === 'true') {
+    //       $(multiStepRsvnFormId).prepend(out.response);
+    //       document.getElementById('rsvnNextBtn').disabled = true;
+    //     }
+    //   } catch (string) {
+    //     $(multiStepRsvnFormId).prepend(response);
+    //   }
+    // });
   }
 }
 

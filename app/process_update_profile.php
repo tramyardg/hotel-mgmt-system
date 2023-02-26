@@ -3,14 +3,6 @@
 ob_start();
 session_start();
 
-if (isset($_SESSION["username"]) && $_SESSION["isAdmin"] == "1") {
-    header("location: page-404.php");
-}
-
-if(!isset($_SESSION["username"])) {
-    header("location: page-404.php");
-}
-
 require '../lib/phpPasswordHashing/passwordLib.php';
 require 'DB.php';
 require 'Util.php';
@@ -44,11 +36,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submitBtn"]) && isset(
         $c->setEmail(Util::sanitize_xss($_POST["email"]));
         $c->setPassword(Util::sanitize_xss($pwd));
 
-        if ($_SESSION["isAdmin"] == 0) {
-            $cHandler = new CustomerHandler();
-            $cHandler->updateCustomer($c);
-            echo Util::displayAlertV1($cHandler->getExecutionFeedback(), "success");    
-        }
+        $cHandler = new CustomerHandler();
+        $cHandler->updateCustomer($c);
+        echo Util::displayAlertV1($cHandler->getExecutionFeedback(), "success");    
         
         if (isset($_SESSION["username"])) {
             $_SESSION["username"] = $cHandler->getUsername($_POST["email"]);

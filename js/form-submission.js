@@ -1,3 +1,28 @@
+function setCookie (name, value, days) {
+  var expires = '';
+  if (days) {
+    var date = new Date();
+    date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+    expires = '; expires=' + date.toUTCString();
+  }
+  document.cookie = name + '=' + (value || '') + expires + '; path=/';
+}
+
+function getCookie (name) {
+  var nameEQ = name + '';
+  var ca = document.cookie.split(';');
+  for (var i = 0; i < ca.length; i++) {
+    var c = ca[i];
+    while (c.charAt(0) === ' ') c = c.substring(1, c.length);
+    if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length, c.length);
+  }
+  return null;
+}
+
+function eraseCookie (name) {
+  document.cookie = name + '=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+}
+
 const regexReservedWords = /\b(ADD|ALTER|AND|AS|BETWEEN|BY|CASE|CREATE|DELETE|DESC|DISTINCT|DROP|EXISTS|FROM|GROUP|HAVING|IN|INSERT|INTO|IS|JOIN|LIKE|LIMIT|NOT|NULL|OR|ORDER|SELECT|SET|TABLE|UPDATE|VALUES|WHERE)\b/gmi;
 // Alternative syntax using RegExp constructor
 // const regex = new RegExp('\\b(ADD|ALTER|AND|AS|BETWEEN|BY|CASE|CREATE|DELETE|DESC|DISTINCT|DROP|EXISTS|FROM|GROUP|HAVING|IN|INSERT|INTO|IS|JOIN|LIKE|LIMIT|NOT|NULL|OR|ORDER|SELECT|SET|TABLE|UPDATE|VALUES|WHERE)\\b', 'gmi')
@@ -76,15 +101,21 @@ const formData = {
 
 const registrationSubmit = function () {
   let registrationData = formData.registration();
-  // TODO : use findMatchReservedWords here
-  $.ajax({
-    url: 'app/process_registration.php',
-    type: 'post',
-    data: registrationData
-  }).done(function (response) {
-    $(formIds.register).find('.alert').remove();
-    $(formIds.register).prepend(response);
-  });
+  registrationData.submitBtn = 'updatebtn';
+  let dataStr = Object.values(registrationData).join(' ');
+  if ((dataStr && dataStr !== '') && !findMatchReservedWords(dataStr)) {
+    $.ajax({
+      url: 'app/process_registration.php',
+      type: 'post',
+      data: registrationData
+    }).done(function (response) {
+      $(formIds.register).find('.alert').remove();
+      $(formIds.register).prepend(response);
+    });
+  } else {
+    console.error('found reserved words');
+    alert('Something went wrong!');
+  }
 };
 
 const loginSubmit = function () {
@@ -95,10 +126,12 @@ const loginSubmit = function () {
     type: 'post',
     data: loginData
   }).done(function (response) {
-    if (response === '1') {
+    let resp = JSON.parse(response);
+    if (resp[0] === 1) {
       let locHref = location.href;
       let homePageLink = locHref.substring(0, locHref.lastIndexOf('/')) + '/index.php';
       window.location.replace(homePageLink);
+      setCookie('is_admin', resp[1]);
     } else {
       $(formIds.login).find('.alert').remove();
       $(formIds.login).prepend(response);
@@ -112,6 +145,7 @@ const clickSignOut = function () {
     type: 'get'
   }).done(function (response) {
     if (response === '1') {
+      eraseCookie('is_admin');
       let locHref = location.href;
       let homePageLink = locHref.substring(0, locHref.lastIndexOf('/')) + '/index.php';
       window.location.replace(homePageLink);
@@ -123,67 +157,57 @@ const clickSignOut = function () {
 
 const reservationSubmit = function () {
   let reservation = formData.reservation();
-  // TODO : use findMatchReservedWords here
-  $.ajax({
-    url: 'app/process_reservation.php',
-    type: 'post',
-    data: reservation
-  }).done(function (response) {
-    $(formIds.reservation).find('.alert').remove();
-    try {
-      let out = JSON.parse(response);
-      if (out.success === 'true') {
-        $(formIds.reservation).prepend(out.response);
-        $(formIds.reservation).find('input[type=submit]').prop('disabled', true);
-      }
-    } catch (string) {
-      $(formIds.reservation).prepend(response);
-    }
-  });
+  reservation.submitBtn = 'updatebtn'; // to exclude from reserved words
+  let dataStr = Object.values(reservation).join(' ');
+  if ((dataStr && dataStr !== '')) {
+    console.log(findMatchReservedWords(reservation));
+  }
+
+  // if ((dataStr && dataStr !== '') && !findMatchReservedWords(reservation)) {
+  //   $.ajax({
+  //     url: 'app/process_reservation.php',
+  //     type: 'post',
+  //     data: reservation
+  //   }).done(function (response) {
+  //     $(formIds.reservation).find('.alert').remove();
+  //     try {
+  //       let out = JSON.parse(response);
+  //       if (out.success === 'true') {
+  //         $(formIds.reservation).prepend(out.response);
+  //         $(formIds.reservation).find('input[type=submit]').prop('disabled', true);
+  //       }
+  //     } catch (string) {
+  //       $(formIds.reservation).prepend(response);
+  //     }
+  //   });
+  // } else {
+  //   console.error('found reserved words');
+  //   alert('Something went wrong!');
+  // }
 };
 
 const updateProfileSubmit = function () {
   let updateData = formData.updateProfile();
-  console.log(updateData);
   updateData.submitBtn = 'updatebtn'; // to exclude from reserved words
-
   let dataStr = Object.values(updateData).join(' ');
-  if (!findMatchReservedWords(dataStr)) {
+  // if ((dataStr && dataStr !== '') && !new UtilityFunctions().findMatchReservedWords(dataStr)) {
     $.ajax({
       url: 'app/process_update_profile.php',
       type: 'post',
       data: updateData
     }).done(function (response) {
       $(formIds.updateProfile).find('.alert').remove();
-      reloadAnimation($(formIds.updateProfile));
       $(formIds.updateProfile).prepend(response);
       $(formIds.updateProfile).find('input').prop('disabled', true);
     });
-    let reloadAnimation = (animContainer) => {
-      animContainer.prepend(
-        `<div class="form-group">
-              <div id="path"><div id="brick"></div></div><span>Reloading the page in 5 seconds.</span>
-          </div>`);
-      // eslint-disable-next-line no-undef
-      animate({
-        duration: 5000,
-        timing: function (timeFraction) {
-          return Math.pow(timeFraction, 2);
-        },
-        draw: function (progress) {
-          // eslint-disable-next-line no-undef
-          brick.style.left = progress * 91.5 + '%';
-          location.reload();
-        }
-      });
-    };
-  } else {
-    console.error('found reserved words');
-    alert('Something went wrong!');
-  }
+  // } else {
+  //   console.error('found reserved words');
+  //   alert('Something went wrong!');
+  // }
 };
 
 $(document).ready(function () {
+  console.log('form-submission.js');
   $(formIds.register).submit(function (event) {
     registrationSubmit();
     event.preventDefault();
