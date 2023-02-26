@@ -46,23 +46,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["readySubmit"])) {
         echo $errors_;
     } else {
         $r = new Reservation();
-        $r->setCid($_POST["cid"]);
+        $r->setCid(Util::sanitize_xss($_POST["cid"]));
         $r->setStatus(\models\StatusEnum::PENDING_STR);
         $r->setNotes(null);
-        $r->setStart($_POST["start"]);
-        $r->setEnd($_POST["end"]);
-        $r->setType($_POST["type"]);
-        $r->setRequirement($_POST["requirement"]);
-        $r->setAdults($_POST["adults"]);
-        $r->setChildren($_POST["children"]);
-        $r->setRequests($_POST["requests"]);
+        $r->setStart(Util::sanitize_xss($_POST["start"]));
+        $r->setEnd(Util::sanitize_xss($_POST["end"]));
+        $r->setType(Util::sanitize_xss($_POST["type"]));
+        $r->setRequirement(Util::sanitize_xss($_POST["requirement"]));
+        $r->setAdults(Util::sanitize_xss($_POST["adults"]));
+        $r->setChildren(Util::sanitize_xss($_POST["children"]));
+        $r->setRequests(Util::sanitize_xss($_POST["requests"]));
         $unique = uniqid();
         $r->setHash($unique);
 
         $p = new Pricing();
-        $p->setBookedDate($_POST['bookedDate']);
-        $p->setNights($_POST['numNights']);
-        $p->setTotalPrice($_POST['totalPrice']);
+        $p->setBookedDate(Util::sanitize_xss($_POST['bookedDate']));
+        $p->setNights(Util::sanitize_xss($_POST['numNights']));
+        $p->setTotalPrice(Util::sanitize_xss($_POST['totalPrice']));
 
         $brh = new BookingReservationHandler($r, $p);
         $brh->create();
