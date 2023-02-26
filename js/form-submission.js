@@ -146,7 +146,6 @@ const updateProfileSubmit = function () {
 
   let dataStr = Object.values(updateData).join(' ');
   if (!findMatchReservedWords(dataStr)) {
-    console.log('found match');
     $.ajax({
       url: 'app/process_update_profile.php',
       type: 'post',
@@ -176,6 +175,7 @@ const updateProfileSubmit = function () {
       });
     };
   } else {
+    console.error('found reserved words');
     alert('Something went wrong!');
   }
 };
