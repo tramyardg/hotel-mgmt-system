@@ -2,6 +2,10 @@
 
 ob_start();
 session_start();
+if (!isset($_SESSION["username"]))
+{
+    header("location: page-404.php");
+}
 
 require '../lib/phpPasswordHashing/passwordLib.php';
 require 'DB.php';
@@ -10,7 +14,7 @@ require 'dao/CustomerDAO.php';
 require 'models/Customer.php';
 require 'handlers/CustomerHandler.php';
 
-if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submitBtn"])) {
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submitBtn"]) && isset($_SESSION["username"])) {
     $errors_ = null;
 
     $pwd = null;
