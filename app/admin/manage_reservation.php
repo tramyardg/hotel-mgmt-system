@@ -1,5 +1,9 @@
 <?php
 
+ob_start();
+session_start();
+
+
 require '../DB.php';
 require '../Util.php';
 require '../dao/BookingDetailDAO.php';
