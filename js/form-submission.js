@@ -51,15 +51,21 @@ const formData = {
 
 const registrationSubmit = function () {
   let registrationData = formData.registration();
-  // TODO : use findMatchReservedWords here
-  $.ajax({
-    url: 'app/process_registration.php',
-    type: 'post',
-    data: registrationData
-  }).done(function (response) {
-    $(formIds.register).find('.alert').remove();
-    $(formIds.register).prepend(response);
-  });
+  registrationData.submitBtn = 'updatebtn'; // to exclude from reserved words
+  let dataStr = Object.values(registrationData).join(' ');
+  if (!new UtilityFunctions().findMatchReservedWords(dataStr)) {
+    $.ajax({
+      url: 'app/process_registration.php',
+      type: 'post',
+      data: registrationData
+    }).done(function (response) {
+      $(formIds.register).find('.alert').remove();
+      $(formIds.register).prepend(response);
+    });
+  } else {
+    console.error('found reserved words');
+    alert('Something went wrong!');
+  }
 };
 
 const loginSubmit = function () {
