@@ -89,12 +89,16 @@ class BookingDetailHandler extends BookingDetailDAO
                 $this->setExecutionFeedback("There must be an error processing your request. Please try again later.");
             }
             */
-            if ($this->updateCancelled($item[$i])) {
-                $out = "These reservations have been successfully <b>cancelled</b>.";
-                $out .= " This page will reload to reflect changes.";
-                $this->setExecutionFeedback($out);
+            if (is_numeric($item[$i])) {
+                if ($this->updateCancelled($item[$i])) {
+                    $out = "These reservations have been successfully <b>cancelled</b>.";
+                    $out .= " This page will reload to reflect changes.";
+                    $this->setExecutionFeedback($out);
+                } else {
+                    $this->setExecutionFeedback("There must be an error processing your request. Please try again later.");
+                }
             } else {
-                $this->setExecutionFeedback("There must be an error processing your request. Please try again later.");
+                $this->setExecutionFeedback("Something is not right!");
             }
         }
     }
