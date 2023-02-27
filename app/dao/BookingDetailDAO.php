@@ -53,17 +53,17 @@ class BookingDetailDAO
     // $i is a booking id from booking table
     protected function updateConfirmed($i)
     {
-        $sql = 'UPDATE `booking` SET `status` = ? WHERE `booking`.`id` = ' . $i . ';';
+        $sql = 'UPDATE `booking` SET `status` = :status WHERE id = :id;';
         $stmt = DB::getInstance()->prepare($sql);
-        $exec = $stmt->execute(["CONFIRMED"]);
+        $exec = $stmt->execute(["id" => $i, "status" => "CONFIRMED"]);
         return $exec;
     }
 
     protected function updateCancelled($i)
     {
-        $sql = 'UPDATE `booking` SET `status` = ? WHERE `booking`.`id` = ' . $i . ';';
+        $sql = 'UPDATE `booking` SET `status` = :status WHERE id = :id;';
         $stmt = DB::getInstance()->prepare($sql);
-        $exec = $stmt->execute(["CANCELLED"]);
+        $exec = $stmt->execute(["id" => $i, "status" => "CANCELLED"]);
         return $exec;
     }
 
