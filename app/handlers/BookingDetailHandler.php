@@ -63,12 +63,16 @@ class BookingDetailHandler extends BookingDetailDAO
     public function confirmSelection($item)
     {
         for ($i = 0; $i < count($item); $i++) {
-            if ($this->updateConfirmed($item[$i])) {
-                $out = "These reservations have been successfully <b>confirmed</b>.";
-                $out .= " This page will reload to reflect changes.";
-                $this->setExecutionFeedback($out);
-            } else {
-                $this->setExecutionFeedback("There must be an error processing your request. Please try again later.");
+            if (is_numeric($item[$i])) {
+                if ($this->updateConfirmed($item[$i])) {
+                    $out = "These reservations have been successfully <b>confirmed</b>.";
+                    $out .= " This page will reload to reflect changes.";
+                    $this->setExecutionFeedback($out);
+                } else {
+                    $this->setExecutionFeedback("There must be an error processing your request. Please try again later.");
+                }
+            }  else {
+                $this->setExecutionFeedback("Something is not right!");
             }
         }
     }
