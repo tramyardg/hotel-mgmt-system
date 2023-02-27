@@ -52,19 +52,32 @@ class UtilityFunctions {
     document.cookie = name + '=' + (value || '') + expires + '; path=/';
   }
 
-  getCookie (name) {
-    var nameEQ = name + '';
-    var ca = document.cookie.split(';');
-    for (var i = 0; i < ca.length; i++) {
-      var c = ca[i];
-      while (c.charAt(0) === ' ') c = c.substring(1, c.length);
-      if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length, c.length);
-    }
-    return null;
+  getCookie (cName) {
+    const name = cName + '=';
+    const cDecoded = decodeURIComponent(document.cookie);
+    const cArr = cDecoded.split('; ');
+    let res;
+    cArr.forEach(val => {
+      if (val.indexOf(name) === 0) res = val.substring(name.length);
+    });
+    return res;
   }
 
   eraseCookie (name) {
     document.cookie = name + '=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+  }
+
+  checkCookieExists (cookieName) {
+    let cookies = document.cookie.split(';');
+    let isCookieExists = false;
+    for (var i = 0; i < cookies.length; i++) {
+      var cookie = cookies[i].trim();
+      if (cookie.indexOf(cookieName + '=') === 0) {
+        isCookieExists = true;
+        break;
+      }
+    }
+    return isCookieExists;
   }
 }
 
