@@ -15,10 +15,10 @@
 1. Go to the registration page (register.php) i.e. http://hotel.local/register.php
 2. Enter your info.
 3. To make an admin account
-   3.1 go to your hotel database
-   3.2 select table customer
-   3.3 elect an account
-   3.4 change the value of isadmin to 1
+   - 3.1 go to your hotel database
+   - 3.2 select table customer
+   - 3.3 select an account
+   - 3.4 change the value of isadmin to 1
  
 
 ## Screenshots
