@@ -1,4 +1,11 @@
 # Hotel Management System
+
+This project was created as a learning exercise during my early days of exploring web programming. It is not intended for commercial use or enterprise-grade deployment. As a result, the code may contain vulnerabilities, as the focus was on simplicity and functionality rather than robustness or security.
+
+If you’d like to customize or improve the project, feel free to fork it and make your own changes. Please note that I am unable to dedicate time to refactoring or enhancing this project further.
+
+Thank you for understanding!
+
 ## Table of Contents
 - [Setup](#setup)
 - [Screenshots](#screenshots)
